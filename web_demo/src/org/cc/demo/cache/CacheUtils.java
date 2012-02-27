@@ -120,13 +120,14 @@ public class CacheUtils {
 	 * @param key
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T get(final String key) {
 		if (key == null) {
 			return null;
 		}
 		T o = null;
 		try {
-			o = cache.get(key, TIME_OUT);
+			o = (T)cache.get(key, TIME_OUT);
 			logger.debug("get from memcached " + key);
 		} catch (Exception e) {
 			logger.error(CACHE_ERROR, e);

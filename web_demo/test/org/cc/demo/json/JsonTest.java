@@ -2,8 +2,6 @@ package org.cc.demo.json;
 
 import java.util.Date;
 
-import org.cc.core.data.B;
-import org.cc.demo.json.JsonUtils;
 import org.cc.demo.po.Ad;
 import org.junit.Test;
 
@@ -30,13 +28,9 @@ public class JsonTest {
 		ad.setPublishMan("publishMan_123");
 		ad.setUpdateTime(new Date());
 
-		B b = new B();
-		b.setId(999L);
-		b.setName("name");
-		ad.setB(b);
 
 		System.out.println(JsonUtils.toJson(ad));
 		ad = JsonUtils.toObject(JsonUtils.toJson(ad), Ad.class);
-		System.out.println(ad.getB().getName());
+		System.out.println(ad.getName());
 	}
 }

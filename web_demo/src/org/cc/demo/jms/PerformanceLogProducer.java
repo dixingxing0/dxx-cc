@@ -17,7 +17,6 @@ import org.apache.log4j.Logger;
 import org.cc.demo.log.Log;
 import org.fusesource.stomp.jms.StompJmsConnectionFactory;
 
-import sun.reflect.annotation.AnnotationType;
 
 /**
  * 
@@ -65,7 +64,6 @@ public class PerformanceLogProducer {
 	public static void main(String[] args) throws Exception {
 		for (int i = 0; i < 10; i++) {
 			Thread.sleep(1000 * 1L);
-			System.out.println(AnnotationType.getInstance(Log.class));
 			// log(log, 10000L);
 		}
 	}

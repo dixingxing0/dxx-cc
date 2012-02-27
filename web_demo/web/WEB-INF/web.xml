@@ -48,7 +48,7 @@
 
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
-		<servlet-class>web.MainServlet</servlet-class>
+		<servlet-class>org.cc.demo.web.MainServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

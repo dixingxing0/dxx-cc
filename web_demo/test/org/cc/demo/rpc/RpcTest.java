@@ -19,11 +19,11 @@ import org.junit.Test;
 public class RpcTest {
 	@Test
 	public void rpc() throws Exception {
-		Object[] params = new Object[] {};
-		for (int i = 0; i < 100; i++) {
-			Ad result = (Ad) Client.get().execute("AgeHandler.getAge", params);
-			System.out.println("从xmlrpc返回的数据：" + result.getId());
-			Thread.sleep(2000L);
-		}
+//		Object[] params = new Object[] {};
+//		for (int i = 0; i < 100; i++) {
+//			Ad result = (Ad) Client.get().execute("AgeHandler.getAge", params);
+//			System.out.println("从xmlrpc返回的数据：" + result.getId());
+//			Thread.sleep(2000L);
+//		}
 	}
 }

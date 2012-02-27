@@ -12,7 +12,6 @@ import java.util.Date;
 import org.cc.core.dao.annotation.Column;
 import org.cc.core.dao.annotation.Table;
 import org.cc.core.dao.annotation.Transient;
-import org.cc.core.data.B;
 import org.cc.demo.json.DateDeserializer;
 import org.cc.demo.json.DateSerializer;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -60,16 +59,6 @@ public class Ad implements Serializable {
 	@Transient
 	@JsonIgnore
 	private String providerName;
-
-	private B b;
-
-	public B getB() {
-		return b;
-	}
-
-	public void setB(B b) {
-		this.b = b;
-	}
 
 	public Long getProviderId() {
 		return providerId;

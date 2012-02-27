@@ -1,0 +1,13 @@
+文件上传 apache common
+权限控制 shiro
+定时任务 quartz
+邮件发送 javamail ,activation
+jms apollo
+缓存 memcached + xmemcached
+rpc  xmlrpc
+
+
+
+TODO:
+
+问卷调查系统

@@ -5,7 +5,8 @@
  */
 package org.cc.core.dao;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
 
 
 
@@ -15,7 +16,8 @@ import junit.framework.TestCase;
  * @author dixingxing
  * @date Feb 9, 2012
  */
-public class DaoTest extends TestCase {
+public class DaoTest {
+	@Test
 	public void testQueryPage() {
 //		Page<B> page = new BDao().queryPage(
 //				"select * from Ad", 1, 10);

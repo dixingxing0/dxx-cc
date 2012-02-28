@@ -7,11 +7,10 @@ package org.cc.core.common;
 
 import java.lang.reflect.Field;
 
-import org.cc.core.common.ReflectUtils;
-import org.cc.core.data.B;
-
 import junit.framework.Assert;
-import junit.framework.TestCase;
+
+import org.cc.core.data.B;
+import org.junit.Test;
 
 /**
  * 
@@ -19,13 +18,15 @@ import junit.framework.TestCase;
  * @author dixingxing
  * @date Feb 9, 2012
  */
-public class ReflectUtilsTest extends TestCase {
+public class ReflectUtilsTest {
 
+	@Test
 	public void testGetFieldByName() {
 		Field f = ReflectUtils.getFieldByName(new B(), "id");
 		Assert.assertNotNull(f);
 	}
 
+	@Test
 	public void testGetVariableFields() {
 		Field[] fields = ReflectUtils.getVariableFields(B.class);
 		for (Field f : fields) {

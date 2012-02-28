@@ -5,24 +5,23 @@
  */
 package org.cc.core.dao;
 
-import org.cc.core.dao.SqlBuilder;
 import org.cc.core.data.B;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * 
  * @author dixingxing
  * @date Feb 9, 2012
  */
-public class SqlBuilderTest extends TestCase {
+public class SqlBuilderTest {
+	@Test
 	public void testBuildInsert() {
 		B b = new B();
 		b.setId(123L);
 		b.setName("name_b");
 		SqlBuilder.buildInsert(b);
 	}
-
+	@Test
 	public void testBuildUpdate() {
 		B b = new B();
 		b.setId(123L);

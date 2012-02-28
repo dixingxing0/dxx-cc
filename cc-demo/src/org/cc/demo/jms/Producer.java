@@ -45,7 +45,7 @@ public class Producer {
 
 		Message msg = session.createTextMessage(m);
 		producer.send(msg);
-		logger.debug("ÒÑ¾­·¢ËÍÏûÏ¢£º" + m);
+		logger.debug("å·²å‘é€æ¶ˆæ¯:" + m);
 		producer.close();
 		session.close();
 		connection.close();

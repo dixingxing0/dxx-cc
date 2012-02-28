@@ -10,13 +10,6 @@ import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 
-/**
- * 获取IP地址类
- * 
- * @author yanliangbing
- * @version 4.0 Jul 29, 2009
- * @since 4.0
- */
 public class IpHelper {
 	private static final Logger logger = Logger.getLogger(IpHelper.class);
 
@@ -47,7 +40,6 @@ public class IpHelper {
 
 	}
 
-	/** 系统的本地IP地址 */
 	public static final String LOCAL_IP;
 
 	public static final String HOST_NAME;

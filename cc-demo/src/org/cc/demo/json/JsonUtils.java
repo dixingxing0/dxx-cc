@@ -13,7 +13,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 
 /**
- * json 工具�?
+ * json 工具类
  * 
  * @author dixingxing
  * @date Feb 15, 2012
@@ -22,7 +22,7 @@ public class JsonUtils {
 	public final static String dateFormat = "yyyy-MM-dd HH:mm:ss";
 
 	/**
-	 * 使用jackson 序列化成json字符�?
+	 * 使用jackson 序列化成json字符串
 	 * 
 	 * @param o
 	 * @return
@@ -34,7 +34,7 @@ public class JsonUtils {
 			mapper.writeValue(sw, o);
 			return sw.toString();
 		} catch (Exception e) {
-			throw new RuntimeException("序列化对象出�?", e);
+			throw new RuntimeException("序列化对象出错：", e);
 		}
 	}
 

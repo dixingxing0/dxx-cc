@@ -19,8 +19,6 @@ import org.cc.core.web.annotation.ResponseBody;
 import org.cc.demo.po.Ad;
 import org.cc.demo.service.AdManager;
 
-
-
 /**
  * 
  * 
@@ -47,12 +45,11 @@ public class AdController {
 
 	@ResponseBody
 	@RequestMapping("/a(\\w)(.*)x/(\\d+)")
-	public String ajax(@PathVar(1)
-	Date d, @PathVar(2)
+	public String ajax(@PathVar(1) Date d, @PathVar(2)
 	long id) {
 		System.out.println(d);
 		System.out.println(id);
-		return "ÕâÊÇ¸öajaxÇëÇó";
+		return "è¿™æ˜¯ä¸ªajaxè¯·æ±‚";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -65,12 +62,12 @@ public class AdController {
 	@ResponseBody
 	@RequestMapping("/ajax2")
 	public String ajax2() {
-		return "ÕâÊÇ¸öajax2ÇëÇó";
+		return "è¿™æ˜¯ä¸ªajax2è¯·æ±‚";
 	}
 
 	@RequestMapping(value = "/login")
 	public String login() {
-		AuthenticationToken token = new UsernamePasswordToken("root", "secret");// usernameºÍpasswordÊÇ´Ó±íµ¥Ìá½»¹ıÀ´µÄ
+		AuthenticationToken token = new UsernamePasswordToken("root", "secret");// usernameå’Œpasswordæ˜¯ä»è¡¨å•æäº¤è¿‡æ¥çš„
 		Subject currentUser = SecurityUtils.getSubject();
 		currentUser.login(token);
 

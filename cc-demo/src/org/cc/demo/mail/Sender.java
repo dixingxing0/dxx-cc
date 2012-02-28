@@ -21,7 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
- * ¼òµ¥ÓÊ¼ş£¨²»´ø¸½¼şµÄÓÊ¼ş£©·¢ËÍÆ÷
+ * ç®€å•é‚®ä»¶ï¼ˆä¸å¸¦é™„ä»¶çš„é‚®ä»¶ï¼‰å‘é€å™¨
  */
 public class Sender extends Thread {
 	private final static Logger logger = Logger.getLogger(Sender.class);
@@ -30,10 +30,10 @@ public class Sender extends Thread {
 	private boolean isHtml = false;
 
 	/**
-	 * ÓÊ¼şÄÚÈİÎªÆÕÍ¨ÎÄ±¾
+	 * é‚®ä»¶å†…å®¹ä¸ºæ™®é€šæ–‡æœ¬
 	 * 
 	 * @param to
-	 *            ¶à¸öÓÃ¶ººÅ·Ö¸ô
+	 *            å¤šä¸ªç”¨é€—å·åˆ†éš”
 	 * @param subject
 	 * @param content
 	 * @return
@@ -46,10 +46,10 @@ public class Sender extends Thread {
 
 	/**
 	 * 
-	 * ÓÊ¼şÄÚÈİÎªhtml
+	 * é‚®ä»¶å†…å®¹ä¸ºhtml
 	 * 
 	 * @param to
-	 *            ¶à¸öÓÃ¶ººÅ·Ö¸ô
+	 *            å¤šä¸ªç”¨é€—å·åˆ†éš”
 	 * @param subject
 	 * @param content
 	 * @return
@@ -61,7 +61,7 @@ public class Sender extends Thread {
 	}
 
 	/**
-	 * ÇëÊ¹ÓÃÒÔÏÂ·½·¨ <br/>{@link #textSender(String, String, String)} <br/>
+	 * è¯·ä½¿ç”¨ä»¥ä¸‹æ–¹æ³• <br/>{@link #textSender(String, String, String)} <br/>
 	 * {@link #htmlSender(String, String, String)}
 	 * 
 	 * @param to
@@ -70,9 +70,9 @@ public class Sender extends Thread {
 	 */
 	private Sender(String to, String subject, String content) {
 		if (StringUtils.isBlank(to)) {
-			logger.error("ÊÕ¼şÈË²»Ó¦¸ÃÎª¿Õ!");
+			logger.error("æ”¶ä»¶äººä¸åº”è¯¥ä¸ºç©º!");
 		}
-		// Õâ¸öÀàÖ÷ÒªÊÇÉèÖÃÓÊ¼ş
+		// è¿™ä¸ªç±»ä¸»è¦æ˜¯è®¾ç½®é‚®ä»¶
 		mi = new MailInfo(to, subject, content);
 	}
 
@@ -99,22 +99,22 @@ public class Sender extends Thread {
 	}
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 */
 	public boolean sendMail() {
 		Properties pro = mi.getProperties();
 		MyAuthenticator authenticator = new MyAuthenticator(mi.getUserName(),
 				mi.getPassword());
-		// ¸ù¾İÓÊ¼ş»á»°ÊôĞÔºÍÃÜÂëÑéÖ¤Æ÷¹¹ÔìÒ»¸ö·¢ËÍÓÊ¼şµÄsession
+		// æ ¹æ®é‚®ä»¶ä¼šè¯å±æ€§å’Œå¯†ç éªŒè¯å™¨æ„é€ ä¸€ä¸ªå‘é€é‚®ä»¶çš„session
 		Session sendMailSession = Session
 				.getDefaultInstance(pro, authenticator);
 		try {
-			// ¸ù¾İsession´´½¨Ò»¸öÓÊ¼şÏûÏ¢
+			// æ ¹æ®sessionåˆ›å»ºä¸€ä¸ªé‚®ä»¶æ¶ˆæ¯
 			Message mailMessage = new MimeMessage(sendMailSession);
-			// ´´½¨ÓÊ¼ş·¢ËÍÕßµØÖ·
+			// åˆ›å»ºé‚®ä»¶å‘é€è€…åœ°å€
 			Address from = new InternetAddress(mi.getFromAddress());
-			// ÉèÖÃÓÊ¼şÏûÏ¢µÄ·¢ËÍÕß
+			// è®¾ç½®é‚®ä»¶æ¶ˆæ¯çš„å‘é€è€…
 			mailMessage.setFrom(from);
 			String[] tos = mi.getToAddress().trim().split(COMMA);
 
@@ -123,31 +123,31 @@ public class Sender extends Thread {
 				addresses[i] = new InternetAddress(tos[i]);
 			}
 
-			// Message.RecipientType.TOÊôĞÔ±íÊ¾½ÓÊÕÕßµÄÀàĞÍÎªTO
+			// Message.RecipientType.TOå±æ€§è¡¨ç¤ºæ¥æ”¶è€…çš„ç±»å‹ä¸ºTO
 			mailMessage.setRecipients(Message.RecipientType.TO, addresses);
-			// ÉèÖÃÓÊ¼şÏûÏ¢µÄÖ÷Ìâ
+			// è®¾ç½®é‚®ä»¶æ¶ˆæ¯çš„ä¸»é¢˜
 			mailMessage.setSubject(mi.getSubject());
-			// ÉèÖÃÓÊ¼şÏûÏ¢·¢ËÍµÄÊ±¼ä
+			// è®¾ç½®é‚®ä»¶æ¶ˆæ¯å‘é€çš„æ—¶é—´
 			mailMessage.setSentDate(new Date());
 			if (isHtml) {
 
-				// MiniMultipartÀàÊÇÒ»¸öÈİÆ÷Àà£¬°üº¬MimeBodyPartÀàĞÍµÄ¶ÔÏó
+				// MiniMultipartç±»æ˜¯ä¸€ä¸ªå®¹å™¨ç±»ï¼ŒåŒ…å«MimeBodyPartç±»å‹çš„å¯¹è±¡
 				Multipart mainPart = new MimeMultipart();
-				// ´´½¨Ò»¸ö°üº¬HTMLÄÚÈİµÄMimeBodyPart
+				// åˆ›å»ºä¸€ä¸ªåŒ…å«HTMLå†…å®¹çš„MimeBodyPart
 				BodyPart html = new MimeBodyPart();
-				// ÉèÖÃHTMLÄÚÈİ
+				// è®¾ç½®HTMLå†…å®¹
 				html.setContent(mi.getContent(), "text/html; charset=utf-8");
 				mainPart.addBodyPart(html);
-				// ½«MiniMultipart¶ÔÏóÉèÖÃÎªÓÊ¼şÄÚÈİ
+				// å°†MiniMultipartå¯¹è±¡è®¾ç½®ä¸ºé‚®ä»¶å†…å®¹
 				mailMessage.setContent(mainPart);
 			} else {
-				// ÉèÖÃÓÊ¼şÏûÏ¢µÄÖ÷ÒªÄÚÈİ
+				// è®¾ç½®é‚®ä»¶æ¶ˆæ¯çš„ä¸»è¦å†…å®¹
 				String mailContent = mi.getContent();
 				mailMessage.setText(mailContent);
 			}
-			// ·¢ËÍÓÊ¼ş
+			// å‘é€é‚®ä»¶
 			Transport.send(mailMessage);
-			logger.debug(String.format("ÒÑ·¢ËÍÓÊ¼ş(to:%s)", mi.getToAddress()));
+			logger.debug(String.format("å·²å‘é€é‚®ä»¶(to:%s)", mi.getToAddress()));
 			return true;
 		} catch (MessagingException ex) {
 			ex.printStackTrace();
@@ -158,7 +158,7 @@ public class Sender extends Thread {
 	public static void main(String[] args) {
 		System.out.println(1);
 		Sender sender = htmlSender("dixingxing@hc360.com,dixingxing@yeah.net",
-				"ÓÊÏä±êÌâ", "ÓÊÏäÄÚÈİ<div style='color:green'>ÕâÊÇ¸ödiv</div>");
+				"é‚®ç®±æ ‡é¢˜", "é‚®ç®±å†…å®¹<div style='color:green'>è¿™æ˜¯ä¸ªdiv</div>");
 		sender.start();
 		System.out.println(2);
 	}

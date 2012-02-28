@@ -31,7 +31,7 @@ public class MainServlet extends DispatcherServlet {
 			log.setCost(cost);
 			PerformanceLogProducer.log(log);
 		}
-		logger.debug("方法" + webMethod.method.getName() + "耗时" + cost + "毫秒");
+		logger.debug("鏂规硶" + webMethod.method.getName() + "鑰楁椂" + cost + "姣");
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class MainServlet extends DispatcherServlet {
 			log.setError(e);
 			PerformanceLogProducer.log(log);
 		}
-		logger.debug("出现异常耗时" + cost + "毫秒", e);
+		logger.debug("鍑虹幇寮傚父鑰楁椂" + cost + "姣", e);
 	}
 
 	private long costTime(long start) {

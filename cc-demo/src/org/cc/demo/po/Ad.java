@@ -21,7 +21,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 
 /**
- * ¹ã¸æĞÅÏ¢ÊµÌåÀà
+ * å¹¿å‘Šä¿¡æ¯å®ä½“ç±»
  * 
  * @author dixingxing
  * @date Jan 6, 2012
@@ -31,31 +31,31 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public class Ad implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	// ¹ã¸æ±êÊ¾
+	// å¹¿å‘Šæ ‡ç¤º
 	private String name;
-	// ¹ã¸æÏêÇé
+	// å¹¿å‘Šè¯¦æƒ…
 	private String detail;
-	// ÏÔÊ¾Î»ÖÃ
+	// æ˜¾ç¤ºä½ç½®
 	private Long position;
-	// ×´Ì¬
+	// çŠ¶æ€
 	private Long state;
-	// ·¢²¼Ê±¼ä
+	// å‘å¸ƒæ—¶é—´
 	@Column(updatable = false)
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeserializer.class)
 	private Date publishTime;
-	// ·¢²¼ÈË
+	// å‘å¸ƒäºº
 	@Column(updatable = false)
 	private String publishMan;
-	// ĞŞ¸ÄÊ±¼ä
+	// ä¿®æ”¹æ—¶é—´
 	private Date updateTime;
-	// ĞŞ¸ÄÈË
+	// ä¿®æ”¹äºº
 	private String updateMan;
 
 	@JsonIgnore
 	private Long providerId;
 
-	// Õâ¸öÊôĞÔ ²âÊÔ¶à±í²éÑ¯
+	// è¿™ä¸ªå±æ€§ æµ‹è¯•å¤šè¡¨æŸ¥è¯¢
 	@Transient
 	@JsonIgnore
 	private String providerName;

@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * quartz µÄ¼òµ¥Ê¹ÓÃ
+ * quartz çš„ç®€å•ä½¿ç”¨
  * 
  * @author dixingxing
  * @date Feb 14, 2012
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class QuartzScheduler {
 
 	/**
-	 * ´´½¨job
+	 * åˆ›å»ºjob
 	 * 
 	 * @param name
 	 * @param group
@@ -51,7 +51,7 @@ public class QuartzScheduler {
 	}
 
 	/**
-	 * ´´½¨trigger
+	 * åˆ›å»ºtrigger
 	 * 
 	 * @param name
 	 * @param group
@@ -74,24 +74,24 @@ public class QuartzScheduler {
 
 		Date ft = sched.scheduleJob(job, trigger);
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		log.info(job.getKey() + " ÒÑ¾­±»¼ÓÈë£¬ÏÂ´ÎÖ´ĞĞÊ±¼äÎª: " + sdf.format(ft));
+		log.info(job.getKey() + " å·²ç»è¢«åŠ å…¥ï¼Œä¸‹æ¬¡æ‰§è¡Œæ—¶é—´ä¸º: " + sdf.format(ft));
 
 		// job2
 		job = getJob("job2", "group1");
 		trigger = getTrigger("trigger2", "group1", "0/3 * * * * ?");
 
 		ft = sched.scheduleJob(job, trigger);
-		log.info(job.getKey() + " ÒÑ¾­±»¼ÓÈë£¬ÏÂ´ÎÖ´ĞĞÊ±¼äÎª: " + sdf.format(ft));
+		log.info(job.getKey() + " å·²ç»è¢«åŠ å…¥ï¼Œä¸‹æ¬¡æ‰§è¡Œæ—¶é—´ä¸º: " + sdf.format(ft));
 
-		// startÖ®ºójob²Å»áÖ´ĞĞ
+		// startä¹‹åjobæ‰ä¼šæ‰§è¡Œ
 		sched.start();
 
 		Thread.sleep(30L * 1000L);
 
 		sched.shutdown(true);
 
-		log.info("¹²Ö´ĞĞ" + sched.getMetaData().getNumberOfJobsExecuted()
-				+ " ¸öjob");
+		log.info("å…±æ‰§è¡Œ" + sched.getMetaData().getNumberOfJobsExecuted()
+				+ " ä¸ªjob");
 
 	}
 

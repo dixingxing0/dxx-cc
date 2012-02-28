@@ -3,6 +3,7 @@ package org.cc.demo.json;
 import java.util.Date;
 
 import org.cc.demo.po.Ad;
+import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -28,9 +29,7 @@ public class JsonTest {
 		ad.setPublishMan("publishMan_123");
 		ad.setUpdateTime(new Date());
 
-
-		System.out.println(JsonUtils.toJson(ad));
 		ad = JsonUtils.toObject(JsonUtils.toJson(ad), Ad.class);
-		System.out.println(ad.getName());
+		Assert.assertEquals(ad.getName(), "name_123");
 	}
 }

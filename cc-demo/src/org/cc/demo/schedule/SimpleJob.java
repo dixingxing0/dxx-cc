@@ -15,12 +15,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.Trigger;
 
-/**
- * 可以用quartz执行的任务
- * 
- * @author dixingxing
- * @date Feb 14, 2012
- */
 public class SimpleJob implements Job {
 	private final static Logger logger = Logger.getLogger(SimpleJob.class);
 

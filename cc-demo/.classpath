@@ -39,6 +39,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.6.4/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/ws/commons/util/ws-commons-util/1.0.2/ws-commons-util-1.0.2.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/cc_core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cc-core"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

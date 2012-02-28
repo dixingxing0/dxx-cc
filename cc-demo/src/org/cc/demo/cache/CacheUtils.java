@@ -33,44 +33,41 @@ import com.google.code.yanf4j.core.impl.StandardSocketOption;
  */
 public class CacheUtils {
 	private static Logger logger = Logger.getLogger(CacheUtils.class);
-	private static final String CACHE_ERROR = "²Ù×÷»º´æÊ§°Ü£¡";
+	private static final String CACHE_ERROR = "æ“ä½œç¼“å­˜å‡ºé”™";
 	private static MemcachedClient cache;
 
-	// ³¬Ê±Ê±¼äÉèÖÃÎª10Ãë
 	private static long TIME_OUT = 5000L;
 
 	static {
-		logger.debug("---------³õÊ¼»¯memcachedClient ¿ªÊ¼---------");
+		logger.debug("---------åˆå§‹åŒ–memcachedClient å¼€å§‹---------");
 		MemcachedClientBuilder builder = new XMemcachedClientBuilder(
 				getAddresses());
-		builder.setSocketOption(StandardSocketOption.SO_RCVBUF, 128 * 1024); // ÉèÖÃ½ÓÊÕ»º´æÇø£¬Ä¬ÈÏ64K
-		builder.setSocketOption(StandardSocketOption.SO_SNDBUF, 32 * 1024); // ÉèÖÃ·¢ËÍ»º³åÇø£¬Ä¬ÈÏÎª16K
-		builder.setSocketOption(StandardSocketOption.TCP_NODELAY, false); // ÆôÓÃnagleËã·¨£¬Ìá¸ßÍÌÍÂÁ¿£¬Ä¬ÈÏ¹Ø±Õ
+		builder.setSocketOption(StandardSocketOption.SO_RCVBUF, 128 * 1024); // è®¾ç½®æ¥æ”¶ç¼“å­˜åŒºï¼Œé»˜è®¤64K
+		builder.setSocketOption(StandardSocketOption.SO_SNDBUF, 32 * 1024); // è®¾ç½®å‘é€ç¼“å†²åŒºï¼Œé»˜è®¤ä¸º16K
+		builder.setSocketOption(StandardSocketOption.TCP_NODELAY, false); // å¯ç”¨nagleç®—æ³•ï¼Œæé«˜ååé‡ï¼Œé»˜è®¤å…³é—­
 		builder.setConnectionPoolSize(2); //
 		builder.setCommandFactory(new TextCommandFactory());
 		builder.setSessionLocator(new KetamaMemcachedSessionLocator());
 		builder.setTranscoder(new SerializingTranscoder());
 
-		builder.getConfiguration().setSessionIdleTimeout(10000L); // Ä¬ÈÏÈç¹ûÁ¬½Ó³¬¹ı5ÃëÃ»ÓĞÈÎºÎIO²Ù×÷·¢Éú¼´ÈÏÎª¿ÕÏĞ²¢·¢ÆğĞÄÌø¼ì²â
+		builder.getConfiguration().setSessionIdleTimeout(10000L); // é»˜è®¤å¦‚æœè¿æ¥è¶…è¿‡5ç§’æ²¡æœ‰ä»»ä½•IOæ“ä½œå‘ç”Ÿå³è®¤ä¸ºç©ºé—²å¹¶å‘èµ·å¿ƒè·³æ£€æµ‹
 		builder.getConfiguration().setStatisticsServer(true);
 
 		try {
 			cache = builder.build();
 		} catch (Exception e) {
-			logger.error("³õÊ¼»¯xmemcached client Ê§°Ü", e);
+			logger.error("åˆå§‹åŒ–xmemcached client å¤±è´¥", e);
 		}
 		cache.setOpTimeout(TIME_OUT);
 
-		cache.setMergeFactor(50); // Ä¬ÈÏÊÇ150£¬ËõĞ¡µ½50
-		cache.setOptimizeMergeBuffer(false); // ¹Ø±ÕºÏ²¢bufferµÄÓÅ»¯
+		cache.setMergeFactor(50); // é»˜è®¤æ˜¯150ï¼Œç¼©å°åˆ°50
+		cache.setOptimizeMergeBuffer(false); // å…³é—­åˆå¹¶bufferçš„ä¼˜åŒ–
 		cache.setEnableHeartBeat(false);
-
-		logger.debug("---------³õÊ¼»¯memcachedClient ½áÊø---------");
 
 	}
 
 	/**
-	 * ¶¯Ì¬Ìí¼Ómemcached ½Úµã
+	 * åŠ¨æ€æ·»åŠ memcached èŠ‚ç‚¹
 	 * 
 	 * @param host
 	 * @param port
@@ -84,8 +81,8 @@ public class CacheUtils {
 	}
 
 	/**
-	 * Ä¬ÈÏµÄmemcached ·şÎñÆ÷µØÖ·
-	 * 
+	 * é»˜è®¤çš„memcached æœåŠ¡å™¨åœ°å€
+	 *  
 	 * @return
 	 */
 	private static List<InetSocketAddress> getAddresses() {
@@ -95,13 +92,13 @@ public class CacheUtils {
 	}
 
 	/**
-	 * ·ÅÈë»º´æ
+	 * æ”¾å…¥ç¼“å­˜
 	 * 
 	 * @param key
 	 * @param exp
-	 *            Ãë
+	 *            ç§’
 	 * @param value
-	 *            ÒªÊµÏÖSerializable
+	 *            è¦å®ç°Serializable
 	 */
 	public static void set(final String key, final int exp, final Object value) {
 		if (key == null || value == null) {
@@ -136,7 +133,7 @@ public class CacheUtils {
 	}
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param key
 	 */

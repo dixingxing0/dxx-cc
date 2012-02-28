@@ -11,14 +11,6 @@ import java.sql.SQLException;
 import org.cc.core.dao.Dao;
 import org.cc.demo.po.Ad;
 
-
-
-/**
- * “µŒÒ¿‡
- * 
- * @author dixingxing
- * @date Jan 17, 2012
- */
 public class AdManager extends Dao<Ad> {
 	private static final String sql = "update ad set state = ? where id = ?";
 

@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 /**
- * É¨ÃèÖ¸¶¨°ü£¨°üÀ¨jar£©ÏÂµÄclassÎÄ¼ş <br>
+ * æ‰«ææŒ‡å®šåŒ…ï¼ˆåŒ…æ‹¬jarï¼‰ä¸‹çš„classæ–‡ä»¶ <br>
  * <a href="http://sjsky.iteye.com">http://sjsky.iteye.com</a>
  * 
  * @author michael
@@ -36,29 +36,29 @@ public class ScanUtils {
 	private static final Logger logger = Logger.getLogger(ScanUtils.class);
 
 	/**
-	 * ÊÇ·ñÅÅ³ıÄÚ²¿Àà true->ÊÇ false->·ñ
+	 * æ˜¯å¦æ’é™¤å†…éƒ¨ç±» true->æ˜¯ false->å¦
 	 */
 	private boolean excludeInner = true;
 	/**
-	 * ¹ıÂË¹æÔòÊÊÓÃÇé¿ö true¡ª>ËÑË÷·ûºÏ¹æÔòµÄ false->ÅÅ³ı·ûºÏ¹æÔòµÄ
+	 * è¿‡æ»¤è§„åˆ™é€‚ç”¨æƒ…å†µ trueâ€”>æœç´¢ç¬¦åˆè§„åˆ™çš„ false->æ’é™¤ç¬¦åˆè§„åˆ™çš„
 	 */
 	private boolean checkInOrEx = true;
 
 	/**
-	 * ¹ıÂË¹æÔòÁĞ±í Èç¹ûÊÇnull»òÕß¿Õ£¬¼´È«²¿·ûºÏ²»¹ıÂË
+	 * è¿‡æ»¤è§„åˆ™åˆ—è¡¨ å¦‚æœæ˜¯nullæˆ–è€…ç©ºï¼Œå³å…¨éƒ¨ç¬¦åˆä¸è¿‡æ»¤
 	 */
 	private List<String> classFilters = null;
 
 	/**
-	 * ÎŞ²Î¹¹ÔìÆ÷£¬Ä¬ÈÏÊÇÅÅ³ıÄÚ²¿Àà¡¢²¢ËÑË÷·ûºÏ¹æÔò
+	 * æ— å‚æ„é€ å™¨ï¼Œé»˜è®¤æ˜¯æ’é™¤å†…éƒ¨ç±»ã€å¹¶æœç´¢ç¬¦åˆè§„åˆ™
 	 */
 	public ScanUtils() {
 	}
 
 	/**
-	 * excludeInner:ÊÇ·ñÅÅ³ıÄÚ²¿Àà true->ÊÇ false->·ñ<br>
-	 * checkInOrEx£º¹ıÂË¹æÔòÊÊÓÃÇé¿ö true¡ª>ËÑË÷·ûºÏ¹æÔòµÄ false->ÅÅ³ı·ûºÏ¹æÔòµÄ<br>
-	 * classFilters£º×Ô¶¨Òå¹ıÂË¹æÔò£¬Èç¹ûÊÇnull»òÕß¿Õ£¬¼´È«²¿·ûºÏ²»¹ıÂË
+	 * excludeInner:æ˜¯å¦æ’é™¤å†…éƒ¨ç±» true->æ˜¯ false->å¦<br>
+	 * checkInOrExï¼šè¿‡æ»¤è§„åˆ™é€‚ç”¨æƒ…å†µ trueâ€”>æœç´¢ç¬¦åˆè§„åˆ™çš„ false->æ’é™¤ç¬¦åˆè§„åˆ™çš„<br>
+	 * classFiltersï¼šè‡ªå®šä¹‰è¿‡æ»¤è§„åˆ™ï¼Œå¦‚æœæ˜¯nullæˆ–è€…ç©ºï¼Œå³å…¨éƒ¨ç¬¦åˆä¸è¿‡æ»¤
 	 * 
 	 * @param excludeInner
 	 * @param checkInOrEx
@@ -73,12 +73,12 @@ public class ScanUtils {
 	}
 
 	/**
-	 * É¨Ãè°ü
+	 * æ‰«æåŒ…
 	 * 
 	 * @param basePackage
-	 *            »ù´¡°ü
+	 *            åŸºç¡€åŒ…
 	 * @param recursive
-	 *            ÊÇ·ñµİ¹éËÑË÷×Ó°ü
+	 *            æ˜¯å¦é€’å½’æœç´¢å­åŒ…
 	 * @return Set
 	 */
 	public Set<Class<?>> getPackageAllClasses(String basePackage,
@@ -115,10 +115,10 @@ public class ScanUtils {
 	}
 
 	/**
-	 * ÒÔjarµÄ·½Ê½É¨Ãè°üÏÂµÄËùÓĞClassÎÄ¼ş<br>
+	 * ä»¥jarçš„æ–¹å¼æ‰«æåŒ…ä¸‹çš„æ‰€æœ‰Classæ–‡ä»¶<br>
 	 * 
 	 * @param basePackage
-	 *            eg£ºmichael.utils.
+	 *            egï¼šmichael.utils.
 	 * @param url
 	 * @param recursive
 	 * @param classes
@@ -138,19 +138,19 @@ public class ScanUtils {
 					continue;
 				}
 
-				// ÅĞ¶ÏÊÇ·ñµİ¹éËÑË÷×Ó°ü
+				// åˆ¤æ–­æ˜¯å¦é€’å½’æœç´¢å­åŒ…
 				if (!recursive
 						&& name.lastIndexOf('/') != package2Path.length()) {
 					continue;
 				}
-				// ÅĞ¶ÏÊÇ·ñ¹ıÂË inner class
+				// åˆ¤æ–­æ˜¯å¦è¿‡æ»¤ inner class
 				if (this.excludeInner && name.indexOf('$') != -1) {
 					logger.info("exclude inner class with name:" + name);
 					continue;
 				}
 				String classSimpleName = name
 						.substring(name.lastIndexOf('/') + 1);
-				// ÅĞ¶¨ÊÇ·ñ·ûºÏ¹ıÂËÌõ¼ş
+				// åˆ¤å®šæ˜¯å¦ç¬¦åˆè¿‡æ»¤æ¡ä»¶
 				if (this.filterClassName(classSimpleName)) {
 					String className = name.replace('/', '.');
 					className = className.substring(0, className.length() - 6);
@@ -168,7 +168,7 @@ public class ScanUtils {
 	}
 
 	/**
-	 * ÒÔÎÄ¼şµÄ·½Ê½É¨Ãè°üÏÂµÄËùÓĞClassÎÄ¼ş
+	 * ä»¥æ–‡ä»¶çš„æ–¹å¼æ‰«æåŒ…ä¸‹çš„æ‰€æœ‰Classæ–‡ä»¶
 	 * 
 	 * @param packageName
 	 * @param packagePath
@@ -183,7 +183,7 @@ public class ScanUtils {
 		}
 		final boolean fileRecursive = recursive;
 		File[] dirfiles = dir.listFiles(new FileFilter() {
-			// ×Ô¶¨ÒåÎÄ¼ş¹ıÂË¹æÔò
+			// è‡ªå®šä¹‰æ–‡ä»¶è¿‡æ»¤è§„åˆ™
 			public boolean accept(File file) {
 				if (file.isDirectory()) {
 					return fileRecursive;
@@ -215,7 +215,7 @@ public class ScanUtils {
 	}
 
 	/**
-	 * ¸ù¾İ¹ıÂË¹æÔòÅĞ¶ÏÀàÃû
+	 * æ ¹æ®è¿‡æ»¤è§„åˆ™åˆ¤æ–­ç±»å
 	 * 
 	 * @param className
 	 * @return
@@ -290,11 +290,11 @@ public class ScanUtils {
 	 */
 	public static void main(String[] args) {
 
-		// ×Ô¶¨Òå¹ıÂË¹æÔò
+		// è‡ªå®šä¹‰è¿‡æ»¤è§„åˆ™
 		List<String> classFilters = new ArrayList<String>();
 		// classFilters.add("File*");
 
-		// ´´½¨Ò»¸öÉ¨Ãè´¦ÀíÆ÷£¬ÅÅ³ıÄÚ²¿Àà É¨Ãè·ûºÏÌõ¼şµÄÀà
+		// åˆ›å»ºä¸€ä¸ªæ‰«æå¤„ç†å™¨ï¼Œæ’é™¤å†…éƒ¨ç±» æ‰«æç¬¦åˆæ¡ä»¶çš„ç±»
 		ScanUtils handler = new ScanUtils(true, true, classFilters);
 
 		Set<Class<?>> calssList = handler.getPackageAllClasses("web", true);

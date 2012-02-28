@@ -9,12 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * 封装sql 和 执行sql需要的参数
- * 
- * @author dixingxing
- * @date Feb 6, 2012
- */
 public class SqlHolder {
 	private String sql;
 	private List<Object> params = new ArrayList<Object>();

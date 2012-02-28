@@ -7,17 +7,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Èç¹ûÊµ¼ÊservletPath Îª/ad/a12011-11-12x RequestMapping¶¨ÒåµÄÓ³Éä¹æÔòÎª
+ * å¦‚æœå®é™…servletPath ä¸º/ad/a12011-11-12x RequestMappingå®šä¹‰çš„æ˜ å°„è§„åˆ™ä¸º
  * 
- * RequestMapping("/ad/a(\\w)(.*)x")<br/> ´ËÊ±PathVar.value=1±íÃ÷
- * ²ÎÊıÖµÓ¦¸Ã°ó¶¨(.*)µÄÖµ2011-11-12 (¼´valueÊÇ´Ó0¿ªÊ¼µÄ)
+ * RequestMapping("/ad/a(\\w)(.*)x")<br/> æ­¤æ—¶PathVar.value=1è¡¨æ˜
+ * å‚æ•°å€¼åº”è¯¥ç»‘å®š(.*)çš„å€¼2011-11-12 (å³valueæ˜¯ä»0å¼€å§‹çš„)
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface PathVar {
 
-	/** ¶ÔÓ¦requestMapping ÕıÔò±í´ïÊ½ÖĞµÄµÚ¼¸¸ögroup,Ò²¾ÍÊÇµÚ¼¸¸ö£¨£©ÖĞµÄÊı¾İ */
+	/** å¯¹åº”requestMapping æ­£åˆ™è¡¨è¾¾å¼ä¸­çš„ç¬¬å‡ ä¸ªgroup,ä¹Ÿå°±æ˜¯ç¬¬å‡ ä¸ªï¼ˆï¼‰ä¸­çš„æ•°æ® */
 	int value() default 0;
 
 }

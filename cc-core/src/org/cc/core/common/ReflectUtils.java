@@ -5,7 +5,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 /**
- * 反射工具�?
+ * 反射工具类
  * 
  * @author dixingxing
  * @date Feb 8, 2012
@@ -30,7 +30,7 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 获取�?有field，包括父�?(但不包括Object�?) ,不包括常量static,final
+	 * 获取�?有field，包括父�?(但不包括Object�?) ,不包括常量static,final
 	 * 
 	 * @param clazz
 	 * @return
@@ -59,7 +59,7 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 设置对象指定属�?�的�?
+	 * 设置对象指定属�?�的�?
 	 * 
 	 * @param obj
 	 * @param f
@@ -81,7 +81,7 @@ public class ReflectUtils {
 
 	/**
 	 * 
-	 * 获取对象的指定属�?
+	 * 获取对象的指定属�?
 	 * 
 	 * @param obj
 	 * @param f
@@ -107,7 +107,7 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 设置对象指定属�?�的�?
+	 * 设置对象指定属�?�的�?
 	 * 
 	 * @param obj
 	 * @param fieldName
@@ -129,7 +129,7 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 此属性是否是常量(static 或�?? final)
+	 * 此属性是否是常量(static 或�?? final)
 	 * 
 	 * 
 	 * @param f

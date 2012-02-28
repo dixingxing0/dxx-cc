@@ -19,8 +19,8 @@ import org.cc.core.dao.annotation.Transient;
 
 
 /**
- * ¸ù¾İpojo¹¹ÔìSqlHolder <br />
- * Éú³ÉoracleµÄsql
+ * æ ¹æ®pojoæ„é€ SqlHolder <br />
+ * ç”Ÿæˆoracleçš„sql
  * 
  * @see SqlHolder
  * @author dixingxing
@@ -31,7 +31,7 @@ public class SqlBuilder {
 	private final static String ID = "id";
 
 	/**
-	 * ¹¹Ôìinsert
+	 * æ„é€ insert
 	 * 
 	 * @param po
 	 * @return
@@ -66,7 +66,7 @@ public class SqlBuilder {
 	}
 
 	/**
-	 * ¸üĞÂÌõ¼ş where id= po.getId();
+	 * æ›´æ–°æ¡ä»¶ where id= po.getId();
 	 * 
 	 * 
 	 * @param po
@@ -77,10 +77,10 @@ public class SqlBuilder {
 	}
 
 	/**
-	 * °Ñsql·â×°³É·ÖÒ³µÄsql
+	 * æŠŠsqlå°è£…æˆåˆ†é¡µçš„sql
 	 * 
 	 * @param sql
-	 *            ÍêÕûµÄ²éÑ¯Óï¾ä
+	 *            å®Œæ•´çš„æŸ¥è¯¢è¯­å¥
 	 * @param start
 	 * @param end
 	 * @return
@@ -105,10 +105,10 @@ public class SqlBuilder {
 
 	/**
 	 * 
-	 * °Ñsql×ª»»³É²éÑ¯×ÜÊıµÄsql
+	 * æŠŠsqlè½¬æ¢æˆæŸ¥è¯¢æ€»æ•°çš„sql
 	 * 
 	 * @param sql
-	 *            ÍêÕûµÄ²éÑ¯Óï¾ä
+	 *            å®Œæ•´çš„æŸ¥è¯¢è¯­å¥
 	 * @return
 	 */
 	public static String countSql(String sql) {
@@ -119,11 +119,11 @@ public class SqlBuilder {
 	}
 
 	/**
-	 * ¹¹Ôìupdate
+	 * æ„é€ update
 	 * 
 	 * @param po
 	 * @param where
-	 *            ²»ÔÊĞíÎª¿Õ
+	 *            ä¸å…è®¸ä¸ºç©º
 	 * @return
 	 */
 	private static SqlHolder buildUpdate(Object po, String where) {
@@ -150,7 +150,7 @@ public class SqlBuilder {
 	}
 
 	/**
-	 * É¾³ı×îºóÄÇ¸ö¡°,¡±
+	 * åˆ é™¤æœ€åé‚£ä¸ªâ€œ,â€
 	 * 
 	 * @param sb
 	 */
@@ -161,9 +161,9 @@ public class SqlBuilder {
 	}
 
 	/**
-	 * »ñÈ¡ÁĞÃû<br/>
-	 * MyBeanProcessorÖĞ¶¨ÒåÁË²éÑ¯Ê±´ÓÊı¾İ¿â×Ö¶Î×ª -> poÊôĞÔ µÄ¹æÔò,<br />
-	 * ´Ë´¦poÊôĞÔ -> Êı¾İ¿â×Ö¶Î µÄ¹æÔòºÍÇ°Ãæ±£³ÖÒ»ÖÂ
+	 * è·å–åˆ—å<br/>
+	 * MyBeanProcessorä¸­å®šä¹‰äº†æŸ¥è¯¢æ—¶ä»æ•°æ®åº“å­—æ®µè½¬ -> poå±æ€§ çš„è§„åˆ™,<br />
+	 * æ­¤å¤„poå±æ€§ -> æ•°æ®åº“å­—æ®µ çš„è§„åˆ™å’Œå‰é¢ä¿æŒä¸€è‡´
 	 * 
 	 * @see DbUtilsBeanProcessor#prop2column(String)
 	 * @param f
@@ -175,13 +175,13 @@ public class SqlBuilder {
 
 	/**
 	 * 
-	 * ÊôĞÔÊÇ·ñ¿ÉÒÔĞŞ¸Ä
+	 * å±æ€§æ˜¯å¦å¯ä»¥ä¿®æ”¹
 	 * 
 	 * @param obj
 	 * @return
 	 */
 	private static boolean isUpdatable(Field f) {
-		// id ²»ÄÜĞŞ¸Ä
+		// id ä¸èƒ½ä¿®æ”¹
 		if (ID.equals(f.getName())) {
 			return false;
 		}
@@ -191,7 +191,7 @@ public class SqlBuilder {
 
 	/**
 	 * 
-	 * ÊôĞÔÊÇ·ñ²»ĞèÒª³Ö¾Ã»¯
+	 * å±æ€§æ˜¯å¦ä¸éœ€è¦æŒä¹…åŒ–
 	 * 
 	 * @param obj
 	 * @return
@@ -206,7 +206,7 @@ public class SqlBuilder {
 
 	/**
 	 * 
-	 * »ñÈ¡±íÃû
+	 * è·å–è¡¨å
 	 * 
 	 * @param obj
 	 * @return
@@ -222,7 +222,7 @@ public class SqlBuilder {
 
 	/**
 	 * 
-	 * javaÀàĞÍ×ª»»³ÉÊı¾İ¿âÀàĞÍ
+	 * javaç±»å‹è½¬æ¢æˆæ•°æ®åº“ç±»å‹
 	 * 
 	 * @param o
 	 * @return

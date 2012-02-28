@@ -15,7 +15,7 @@ import org.cc.core.dao.SqlBuilder;
 
 /**
  * 
- * ¶¨ÒåpoÄ³¸öÊôĞÔ¶ÔÓ¦µ½Êı¾İ¿âÁĞµÄÏêÏ¸¹æÔò
+ * å®šä¹‰poæŸä¸ªå±æ€§å¯¹åº”åˆ°æ•°æ®åº“åˆ—çš„è¯¦ç»†è§„åˆ™
  * 
  * @see SqlBuilder#buildUpdate(Object, String)
  * @author dixingxing

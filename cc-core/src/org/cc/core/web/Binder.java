@@ -21,7 +21,7 @@ import org.cc.core.web.annotation.PathVar;
 
 
 /**
- * Êı¾İ°ó¶¨Àà
+ * æ•°æ®ç»‘å®šç±»
  * 
  * @author dixingxing
  * @date Feb 7, 2012
@@ -31,7 +31,7 @@ public class Binder {
 
 	/**
 	 * 
-	 * controllerÖĞ·½·¨²ÎÊıµÄ°ó¶¨
+	 * controllerä¸­æ–¹æ³•å‚æ•°çš„ç»‘å®š
 	 * 
 	 * @param request
 	 * @param response
@@ -43,8 +43,8 @@ public class Binder {
 	public static Object[] bind(HttpServletRequest request,
 			HttpServletResponse response, WebMethod webMethod)
 			throws InstantiationException, IllegalAccessException {
-		logger.debug("°ó¶¨controllerÖĞ·½·¨²ÎÊı");
-		// ·½·¨µÄ²ÎÊı
+		logger.debug("ç»‘å®šcontrollerä¸­æ–¹æ³•å‚æ•°");
+		// æ–¹æ³•çš„å‚æ•°
 		Class<?>[] paramClasses = webMethod.method.getParameterTypes();
 
 		Annotation[][] annotations = webMethod.method.getParameterAnnotations();
@@ -71,19 +71,19 @@ public class Binder {
 			}
 			// @PathVariable
 			else if (annotations[i] != null && isPathVar(annotations[i])) {
-				// ´ÓuriÖĞ½âÎö³öÀ´µÄpath variable
+				// ä»uriä¸­è§£æå‡ºæ¥çš„path variable
 				String[] variables = webMethod.getPathVars(request
 						.getServletPath());
 				PathVar pv = (PathVar) getPathVarAnnotation(annotations[i]);
 				if (pv.value() >= variables.length) {
-					logger.warn("PathVar.value()ÖµÎª :" + pv.value()
-							+ ",Ó¦¸ÃĞ¡ÓÚÆ¥Åäµ½µÄ²ÎÊı¸öÊı : " + variables.length);
+					logger.warn("PathVar.value()å€¼ä¸º :" + pv.value()
+							+ ",åº”è¯¥å°äºåŒ¹é…åˆ°çš„å‚æ•°ä¸ªæ•° : " + variables.length);
 					break;
 				}
 				String v = variables[pv.value()];
 				Object value = convertValue(cls, v);
 				if (value != null) {
-					logger.debug("ÉèÖÃpathVariable³É¹¦£¬ÖµÎª:" + value);
+					logger.debug("è®¾ç½®pathVariableæˆåŠŸï¼Œå€¼ä¸º:" + value);
 					paramValues[i] = value;
 				} else {
 					paramValues[i] = cls.newInstance();
@@ -98,13 +98,13 @@ public class Binder {
 	}
 
 	/**
-	 * ½«¶ÔÏó°ó¶¨µ½requestÖĞ,¹©ÊÓÍ¼(jsp)Ê¹ÓÃ
+	 * å°†å¯¹è±¡ç»‘å®šåˆ°requestä¸­,ä¾›è§†å›¾(jsp)ä½¿ç”¨
 	 * 
 	 * @param req
 	 * @param objects
 	 */
 	public static void bind2Request(HttpServletRequest req, Object[] objects) {
-		logger.debug("½«¶ÔÏó°ó¶¨µ½requestÖĞ,¹©ÊÓÍ¼(jsp)Ê¹ÓÃ");
+		logger.debug("å°†å¯¹è±¡ç»‘å®šåˆ°requestä¸­,ä¾›è§†å›¾(jsp)ä½¿ç”¨");
 		for (Object o : objects) {
 			Class<?> clazz = o.getClass();
 			if (clazz.isAssignableFrom(Model.class)) {
@@ -116,7 +116,7 @@ public class Binder {
 	}
 
 	/**
-	 * Í¨¹ı·´Éä°ÑrequestÖĞµÄ²ÎÊı¸³¸øobj¶ÔÓ¦µÄÊôĞÔ
+	 * é€šè¿‡åå°„æŠŠrequestä¸­çš„å‚æ•°èµ‹ç»™objå¯¹åº”çš„å±æ€§
 	 * 
 	 * @param request
 	 * @param obj
@@ -143,7 +143,7 @@ public class Binder {
 
 	/**
 	 * 
-	 * °ÑmodelÖĞµÄ¶ÔÏó·Åµ½requestÖĞ£¬<br/>Èç¹ûÊÇµ÷ÓÃmodel.addAttribute(Object)·½·¨·Åµ½modelÖĞµÄ£¬ÄÇÃ´°Ñ´ËobjectµÄËùÓĞÊôĞÔÖµ·Åµ½requestÖĞ
+	 * æŠŠmodelä¸­çš„å¯¹è±¡æ”¾åˆ°requestä¸­ï¼Œ<br/>å¦‚æœæ˜¯è°ƒç”¨model.addAttribute(Object)æ–¹æ³•æ”¾åˆ°modelä¸­çš„ï¼Œé‚£ä¹ˆæŠŠæ­¤objectçš„æ‰€æœ‰å±æ€§å€¼æ”¾åˆ°requestä¸­
 	 * 
 	 * @see Model#addAttribute(Object)
 	 * @param req
@@ -152,13 +152,13 @@ public class Binder {
 	private static void bindModel2Request(HttpServletRequest req, Model m) {
 		for (String key : m.keySet()) {
 			Object o = m.get(key);
-			// °ó¶¨¶ÔÏóÀïµÄÊôĞÔ
+			// ç»‘å®šå¯¹è±¡é‡Œçš„å±æ€§
 			if (key.startsWith(Model.DEFAULT_KEY)) {
 				for (Field f : ReflectUtils.getVariableFields(o.getClass())) {
 					req.setAttribute(f.getName(), ReflectUtils.get(o, f));
 				}
 			}
-			// Ö±½Ó°ó¶¨¶ÔÏó
+			// ç›´æ¥ç»‘å®šå¯¹è±¡
 			else {
 				req.setAttribute(key, o);
 			}
@@ -166,13 +166,13 @@ public class Binder {
 	}
 
 	/**
-	 * controllerÖĞ·½·¨²ÎÊıµÄ°ó¶¨<br/> Í¨¹ı·´Éä°Ñobj¶ÔÓ¦µÄÊôĞÔ·Åµ½requestÖĞ
+	 * controllerä¸­æ–¹æ³•å‚æ•°çš„ç»‘å®š<br/> é€šè¿‡åå°„æŠŠobjå¯¹åº”çš„å±æ€§æ”¾åˆ°requestä¸­
 	 * 
 	 * @param req
 	 * @param o
 	 */
 	private static void bindObject2Request(HttpServletRequest req, Object o) {
-		// request ºÍ response²ÎÊı²»ĞèÒª´¦Àí
+		// request å’Œ responseå‚æ•°ä¸éœ€è¦å¤„ç†
 		if (o.getClass().isAssignableFrom(HttpServletRequest.class)
 				|| o.getClass().isAssignableFrom(HttpServletResponse.class)) {
 			return;
@@ -183,7 +183,7 @@ public class Binder {
 	}
 
 	/**
-	 * ½âÎödate
+	 * è§£ædate
 	 * 
 	 * 
 	 * @param s
@@ -203,13 +203,13 @@ public class Binder {
 		try {
 			d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s);
 		} catch (ParseException e1) {
-			throw new RuntimeException("½âÎödate³ö´í", e1);
+			throw new RuntimeException("è§£ædateå‡ºé”™", e1);
 		}
 		return d;
 	}
 
 	/**
-	 * »ñÈ¡PathVar×¢½â
+	 * è·å–PathVaræ³¨è§£
 	 * 
 	 * @param annotations
 	 * @return
@@ -224,7 +224,7 @@ public class Binder {
 	}
 
 	/**
-	 * ÊÇ¼ÓÁËPathVar×¢½âµÄ²ÎÊı
+	 * æ˜¯åŠ äº†PathVaræ³¨è§£çš„å‚æ•°
 	 * 
 	 * @param annotations
 	 * @return
@@ -240,7 +240,7 @@ public class Binder {
 
 	/**
 	 * 
-	 * °ÑString ×ª»»³ÉÏàÓ¦ÀàĞÍ
+	 * æŠŠString è½¬æ¢æˆç›¸åº”ç±»å‹
 	 * 
 	 * @param cls
 	 * @param value
@@ -265,11 +265,11 @@ public class Binder {
 			} else if (cls.equals(Date.class)) {
 				value = parseDate(v);
 			} else {
-				logger.error("²»ÄÜ°ó¶¨µ½PathVariable ²ÎÊı");
+				logger.error("ä¸èƒ½ç»‘å®šåˆ°PathVariable å‚æ•°");
 			}
 		} catch (Exception e) {
-			logger.error("ÀàĞÍ×ª»»´íÎó", e);
-			throw new WebException("ÀàĞÍ×ª»»´íÎó", e);
+			logger.error("ç±»å‹è½¬æ¢é”™è¯¯", e);
+			throw new WebException("ç±»å‹è½¬æ¢é”™è¯¯", e);
 		}
 		return value;
 	}

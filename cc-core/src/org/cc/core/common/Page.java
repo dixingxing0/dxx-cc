@@ -9,13 +9,13 @@ import org.cc.core.dao.SqlBuilder;
 
 public class Page<T> implements Serializable {
 	private static final long serialVersionUID = -1241179900114637258L;
-	private int size = 20; // 每页显示记录
-	private int totalPage = 0; // 总页
-	private int totalResult = 0; // 总记录数
-	private int currentPage = 0; // 当前
-	private int currentResult = 0; // 当前记录起始索引
+	private int size = 20; // 姣忛〉鏄剧ず璁板綍
+	private int totalPage = 0; // 鎬婚〉
+	private int totalResult = 0; // 鎬昏褰曟暟
+	private int currentPage = 0; // 褰撳墠
+	private int currentResult = 0; // 褰撳墠璁板綍璧峰绱㈠紩
 
-	private String sql; // 用于查询的sql
+	private String sql; // 鐢ㄤ簬鏌ヨ鐨剆ql
 
 	private String pageSql;
 	private String countSql;
@@ -25,9 +25,9 @@ public class Page<T> implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("总数:").append(totalResult).append(",当前:").append(
+		sb.append("鎬绘暟:").append(totalResult).append(",褰撳墠:").append(
 				getCurrentPage());
-		sb.append(",总页:").append(getTotalPage());
+		sb.append(",鎬婚〉:").append(getTotalPage());
 		return sb.toString();
 	}
 
@@ -114,7 +114,7 @@ public class Page<T> implements Serializable {
 	}
 
 	/**
-	 * 分页用的sql
+	 * 鍒嗛〉鐢ㄧ殑sql
 	 * 
 	 * @return
 	 */
@@ -123,7 +123,7 @@ public class Page<T> implements Serializable {
 	}
 
 	/**
-	 * 查询总数用的sql
+	 * 鏌ヨ鎬绘暟鐢ㄧ殑sql
 	 * 
 	 * @return
 	 */

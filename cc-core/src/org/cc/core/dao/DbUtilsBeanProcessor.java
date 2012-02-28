@@ -19,14 +19,14 @@ import org.apache.commons.dbutils.BeanProcessor;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Êı¾İ¿â×Ö¶Î×ª»»³ÉbeanÊôĞÔµÄÌØÊâ´¦Àí
+ * æ•°æ®åº“å­—æ®µè½¬æ¢æˆbeanå±æ€§çš„ç‰¹æ®Šå¤„ç†
  * 
  * @author dixingxing
  * @date Jan 31, 2012
  */
 public class DbUtilsBeanProcessor extends BeanProcessor {
 	/**
-	 * Êı¾İ¿âÁĞÃû -> javaÊôĞÔÃû
+	 * æ•°æ®åº“åˆ—å -> javaå±æ€§å
 	 * 
 	 * @param column
 	 * @return
@@ -41,10 +41,10 @@ public class DbUtilsBeanProcessor extends BeanProcessor {
 	}
 
 	/**
-	 * javaÊôĞÔ -> Êı¾İ¿âÁĞÃû
+	 * javaå±æ€§ -> æ•°æ®åº“åˆ—å
 	 * 
 	 * @param prop
-	 *            ÃüÃû¹æÔòÎªÍÕ·åÃüÃû·¨£¬²»Ö§³ÖÁ¬ĞøÁ½¸ö´óĞ´×ÖÄ¸
+	 *            å‘½åè§„åˆ™ä¸ºé©¼å³°å‘½åæ³•ï¼Œä¸æ”¯æŒè¿ç»­ä¸¤ä¸ªå¤§å†™å­—æ¯
 	 * @return
 	 */
 	public static String prop2column(String prop) {
@@ -127,7 +127,7 @@ public class DbUtilsBeanProcessor extends BeanProcessor {
 		} else if (propType.equals(Timestamp.class)) {
 			return rs.getTimestamp(index);
 		}
-		// Ôö¼ÓdateÀàĞÍ
+		// å¢åŠ dateç±»å‹
 		else if (propType.equals(Date.class)) {
 			return new Date(rs.getTimestamp(index).getTime());
 		} else {

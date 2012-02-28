@@ -57,10 +57,10 @@ public class DispatcherServlet extends HttpServlet {
 		long start = System.currentTimeMillis();
 		WebMethod webMethod = null;
 		try {
-			logger.debug("(¿ªÊ¼)´¦ÀíÇëÇó: " + request.getServletPath());
+			logger.debug("(å¼€å§‹)å¤„ç†è¯·æ±‚: " + request.getServletPath());
 			webMethod = WebContext.getHandler(request);
 			if (webMethod == null) {
-				logger.debug("(½áÊø)Ã»ÓĞÕÒµ½¿ØÖÆÆ÷!");
+				logger.debug("(ç»“æŸ)æ²¡æœ‰æ‰¾åˆ°æ§åˆ¶å™¨!");
 				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
@@ -69,16 +69,16 @@ public class DispatcherServlet extends HttpServlet {
 			String s = (String) webMethod.method.invoke(webMethod.handler,
 					params);
 			response.setContentType("text/html;charset=UTF-8");
-			// Ö±½Ó·µ»ØÎÄ±¾
+			// ç›´æ¥è¿”å›æ–‡æœ¬
 			if (webMethod.isResponseBody) {
 				response.getWriter().write(s);
-				logger.debug("(½áÊø)Ö±½Ó·µ»ØÎÄ±¾");
+				logger.debug("(ç»“æŸ)ç›´æ¥è¿”å›æ–‡æœ¬");
 				afterProcess(webMethod, start);
 				return;
 			}
 			Binder.bind2Request(request, params);
 
-			logger.debug("(½áÊø)·µ»ØÊÓÍ¼Îª£º" + s);
+			logger.debug("(ç»“æŸ)è¿”å›è§†å›¾ä¸ºï¼š" + s);
 			request.getRequestDispatcher("/WEB-INF/views/" + s).forward(
 					request, response);
 			afterProcess(webMethod, start);

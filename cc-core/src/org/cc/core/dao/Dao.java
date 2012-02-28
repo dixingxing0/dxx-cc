@@ -29,14 +29,14 @@ import org.cc.core.common.Page;
 
 
 /**
- * dbutils dao »ùÀà
+ * dbutils dao åŸºç±»
  * 
  * @author dixingxing
  * @date Jan 17, 2012
  */
 public class Dao<T> {
 	private final static Logger logger = Logger.getLogger(Dao.class);
-	private final static String ERROR = "Ö´ĞĞsql³ö´í";
+	private final static String ERROR = "æ‰§è¡Œsqlå‡ºé”™";
 	private static QueryRunner runner;
 
 	protected final static DataSource ds;
@@ -47,7 +47,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * ³õÊ¼»¯dhcpÊı¾İÔ´
+	 * åˆå§‹åŒ–dhcpæ•°æ®æº
 	 * 
 	 * @return
 	 */
@@ -77,7 +77,7 @@ public class Dao<T> {
 
 	/**
 	 * 
-	 * Ê¹ÓÃ×Ô¶¨ÒåµÄ MyBeanProcessor
+	 * ä½¿ç”¨è‡ªå®šä¹‰çš„ MyBeanProcessor
 	 * 
 	 * @see DbUtilsBeanProcessor
 	 * @param clazz
@@ -89,7 +89,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * Ê¹ÓÃ×Ô¶¨ÒåµÄ MyBeanProcessor
+	 * ä½¿ç”¨è‡ªå®šä¹‰çš„ MyBeanProcessor
 	 * 
 	 * @see DbUtilsBeanProcessor
 	 * @param clazz
@@ -101,19 +101,19 @@ public class Dao<T> {
 	}
 
 	/**
-	 * »ñÈ¡ÔÚ×ÓÀàÖĞ¶¨ÒåµÄ·ºĞÍ
+	 * è·å–åœ¨å­ç±»ä¸­å®šä¹‰çš„æ³›å‹
 	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	private Class<T> poClass() {
-		// Ê¹ÓÃcglib´úÀí£¬»ñÈ¡Êµ¼ÊÀàĞÍÎªgetSuperclass()
+		// ä½¿ç”¨cglibä»£ç†ï¼Œè·å–å®é™…ç±»å‹ä¸ºgetSuperclass()
 		return (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	/**
-	 * ´ÓÄ¬ÈÏµÄÊı¾İÔ´ÖĞ»ñÈ¡Ò»¸öÊı¾İ¿âÁ¬½Ó,²¢ÇÒsetAutoCommit(false)
+	 * ä»é»˜è®¤çš„æ•°æ®æºä¸­è·å–ä¸€ä¸ªæ•°æ®åº“è¿æ¥,å¹¶ä¸”setAutoCommit(false)
 	 * 
 	 * @return
 	 */
@@ -124,13 +124,13 @@ public class Dao<T> {
 //			conn.setAutoCommit(false);
 			return conn;
 		} catch (Exception e) {
-			throw new RuntimeException("»ñÈ¡Êı¾İ¿âÁ¬½ÓÊ§°Ü", e);
+			throw new RuntimeException("è·å–æ•°æ®åº“è¿æ¥å¤±è´¥", e);
 		}
 	}
 
 	/**
 	 * 
-	 * ²éÑ¯·µ»ØÁĞ±í
+	 * æŸ¥è¯¢è¿”å›åˆ—è¡¨
 	 * 
 	 * @param sql
 	 * @param params
@@ -147,7 +147,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * ²éÑ¯·µ»Øµ¥¸ö¶ÔÏó
+	 * æŸ¥è¯¢è¿”å›å•ä¸ªå¯¹è±¡
 	 * 
 	 * @param sql
 	 * @param params
@@ -165,7 +165,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * ²éÑ¯longĞÍÊı¾İ
+	 * æŸ¥è¯¢longå‹æ•°æ®
 	 * 
 	 * @param sql
 	 * @param params
@@ -183,7 +183,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * ²éÑ¯intĞÍÊı¾İ
+	 * æŸ¥è¯¢intå‹æ•°æ®
 	 * 
 	 * 
 	 * @param sql
@@ -202,7 +202,7 @@ public class Dao<T> {
 	}
 
 	/**
-	 * Ö´ĞĞINSERT/UPDATE/DELETEÓï¾ä
+	 * æ‰§è¡ŒINSERT/UPDATE/DELETEè¯­å¥
 	 * 
 	 * @param conn
 	 * @param sql
@@ -248,7 +248,7 @@ public class Dao<T> {
 
 	/**
 	 * 
-	 * ²éÑ¯ÁĞ±í
+	 * æŸ¥è¯¢åˆ—è¡¨
 	 * 
 	 * @param sql
 	 * @return Map<String, Object>
@@ -273,12 +273,12 @@ public class Dao<T> {
 	}
 
 	public static void rollbackAndClose(Connection conn) {
-		logger.debug("»Ø¹öÊÂÎñ²¢¹Ø±ÕÁ¬½Ó");
+		logger.debug("å›æ»šäº‹åŠ¡å¹¶å…³é—­è¿æ¥");
 		DbUtils.rollbackAndCloseQuietly(conn);
 	}
 
 	public static void commitAndClose(Connection conn) {
-		logger.debug("Ìá½»ÊÂÎñ²¢¹Ø±ÕÁ¬½Ó");
+		logger.debug("æäº¤äº‹åŠ¡å¹¶å…³é—­è¿æ¥");
 		DbUtils.commitAndCloseQuietly(conn);
 	}
 

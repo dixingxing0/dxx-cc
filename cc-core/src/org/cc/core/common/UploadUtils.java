@@ -21,7 +21,7 @@ public class UploadUtils {
 	private final static String uploadPath = "file";
 
 	/**
-	 * ÅĞ¶ÏÊÇ·ñÊÇÉÏ´«ÎÄ¼ş
+	 * åˆ¤æ–­æ˜¯å¦æ˜¯ä¸Šä¼ æ–‡ä»¶
 	 * 
 	 * @param request
 	 * @return
@@ -32,10 +32,10 @@ public class UploadUtils {
 	}
 
 	/**
-	 * ÉÏ´«ÎÄ¼ş
+	 * ä¸Šä¼ æ–‡ä»¶
 	 * 
 	 * @param request
-	 * @return ÎÄ¼şÃû£¨ ¶à¸öÓÃ¶ººÅ·Ö¸ô£©
+	 * @return æ–‡ä»¶åï¼ˆ å¤šä¸ªç”¨é€—å·åˆ†éš”ï¼‰
 	 * @throws FileUploadException
 	 */
 	@SuppressWarnings( { "unchecked", "deprecation" })
@@ -66,21 +66,21 @@ public class UploadUtils {
 					sb.append(fileName).append(",");
 
 				} else {
-					logger.debug("ÎÄ¼şÃ»ÓĞÑ¡Ôñ »ò ÎÄ¼şÄÚÈİÎª¿Õ");
+					logger.debug("æ–‡ä»¶æ²¡æœ‰é€‰æ‹© æˆ– æ–‡ä»¶å†…å®¹ä¸ºç©º");
 				}
 			}
 		} catch (Exception e) {
-			logger.error("ÉÏ´«ÎÄ¼ş³ö´í", e);
+			logger.error("ä¸Šä¼ æ–‡ä»¶å‡ºé”™", e);
 		}
 		if (sb.length() > 0) {
 			sb.deleteCharAt(sb.length() - 1);
-			logger.debug("ÒÑÉÏ´«ÎÄ¼ş:" + sb.toString());
+			logger.debug("å·²ä¸Šä¼ æ–‡ä»¶:" + sb.toString());
 		}
 		return sb.toString();
 	}
 
 	/**
-	 * »ñÈ¡ÎÄ¼şÀ©Õ¹Ãû
+	 * è·å–æ–‡ä»¶æ‰©å±•å
 	 * 
 	 * @param fileItem
 	 * @return .jpg
@@ -94,7 +94,7 @@ public class UploadUtils {
 	}
 
 	/**
-	 * »ñÈ¡ÎÄ¼şÃû£¨¸ù¾İµ±Ç°Ê±¼ä£©
+	 * è·å–æ–‡ä»¶åï¼ˆæ ¹æ®å½“å‰æ—¶é—´ï¼‰
 	 * 
 	 * @param basePath
 	 * @param ext

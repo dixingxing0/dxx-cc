@@ -27,7 +27,7 @@ public class WebContext {
 	public final static List<WebMethod> mappings = new ArrayList<WebMethod>();
 
 	/**
-	 * Ìí¼ÓÓ³Éä·½·¨
+	 * æ·»åŠ æ˜ å°„æ–¹æ³•
 	 * 
 	 * @param o
 	 */
@@ -36,7 +36,7 @@ public class WebContext {
 	}
 
 	/**
-	 * ¸ù¾İÓ³Éä»ñÈ¡¶ÔÓ¦µÄwebMethod
+	 * æ ¹æ®æ˜ å°„è·å–å¯¹åº”çš„webMethod
 	 * 
 	 * 
 	 * @param request
@@ -45,7 +45,7 @@ public class WebContext {
 	public static WebMethod getHandler(HttpServletRequest request) {
 		for (WebMethod m : mappings) {
 			if (m.match(request)) {
-				logger.debug("Æ¥Åäµ½handler £º" + m);
+				logger.debug("åŒ¹é…åˆ°handler ï¼š" + m);
 				return m;
 			}
 		}

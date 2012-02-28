@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
- * 加载application.properties中的配置到对应的属�??<br>
+ * 加载application.properties中的配置<br>
  * 
  * @author dixingxing
  * @CreateDate 2011-4-29

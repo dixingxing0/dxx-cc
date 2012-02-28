@@ -24,7 +24,7 @@ import org.cc.core.web.annotation.ResponseBody;
 
 
 /**
- * ³õÊ¼»¯web»·¾³
+ * åˆå§‹åŒ–webç¯å¢ƒ
  * 
  * @author dixingxing
  * @date Feb 7, 2012
@@ -33,12 +33,12 @@ public class ContextLoader implements ServletContextListener {
 	private final static Logger logger = Logger.getLogger(ContextLoader.class);
 
 	public void contextDestroyed(ServletContextEvent arg0) {
-		logger.debug("Ïú»ÙservletContext!");
+		logger.debug("é”€æ¯servletContext!");
 
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
-		logger.debug("³õÊ¼»¯servletContext!");
+		logger.debug("åˆå§‹åŒ–servletContext!");
 		ScanUtils helper = new ScanUtils(true, true, null);
 
 		Set<Class<?>> calssList = helper.getPackageAllClasses("web", true);
@@ -51,12 +51,12 @@ public class ContextLoader implements ServletContextListener {
 			}
 		} catch (Exception e) {
 			System.out.println("11111");
-			throw new WebException("½âÎöcontrollerÊ±³ö´í", e);
+			throw new WebException("è§£æcontrolleræ—¶å‡ºé”™", e);
 		}
 	}
 
 	/**
-	 * Ôö¼ÓÓ³Éä¹ØÏµµ½WebContext
+	 * å¢åŠ æ˜ å°„å…³ç³»åˆ°WebContext
 	 * 
 	 * @param clazz
 	 * @return
@@ -83,7 +83,7 @@ public class ContextLoader implements ServletContextListener {
 				webMethod.requestMethod = rm.method();
 				webMethod.isResponseBody = m
 						.isAnnotationPresent(ResponseBody.class);
-				logger.debug("³õÊ¼»¯urlÓ³Éä - " + clazz.getName() + "."
+				logger.debug("åˆå§‹åŒ–urlæ˜ å°„ - " + clazz.getName() + "."
 						+ m.getName() + ":" + webMethod);
 				WebContext.addMapping(webMethod);
 			}

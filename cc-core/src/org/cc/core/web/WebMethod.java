@@ -17,7 +17,7 @@ import org.cc.core.web.annotation.RequestMethod;
 
 
 /**
- * web请求映射规则
+ * web璇锋眰鏄犲皠瑙勫垯
  * 
  * @author dixingxing
  * @date Feb 7, 2012
@@ -53,7 +53,7 @@ public class WebMethod {
 
 	/**
 	 * 
-	 * 是否匹配当前请求，如果匹配则由此当前方法处理请求
+	 * 鏄惁鍖归厤褰撳墠璇锋眰锛屽鏋滃尮閰嶅垯鐢辨褰撳墠鏂规硶澶勭悊璇锋眰
 	 * 
 	 * @param servletPath
 	 * @return
@@ -101,7 +101,7 @@ public class WebMethod {
 	}
 
 	/**
-	 * 解析path variable
+	 * 瑙ｆ瀽path variable
 	 * 
 	 * @param servletPath
 	 * @return
@@ -140,7 +140,7 @@ public class WebMethod {
 		for (int i = 0; i < m.groupCount(); i++) {
 			s[i] = m.group(i + 1);
 		}
-		logger.debug("解析出pathVariable :" + StringUtils.join(s, ","));
+		logger.debug("瑙ｆ瀽鍑簆athVariable :" + StringUtils.join(s, ","));
 		return s;
 	}
 

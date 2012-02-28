@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ¶¨Òåpo¶ÔÓ¦Êı¾İ¿âµÄ±íÃû
+ * poå¯¹åº”æ•°æ®åº“è¡¨çš„è¡¨å
  * 
  * @author dixingxing
  * @date Feb 6, 2012

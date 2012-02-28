@@ -9,13 +9,13 @@ import org.cc.core.dao.SqlBuilder;
 
 public class Page<T> implements Serializable {
 	private static final long serialVersionUID = -1241179900114637258L;
-	private int size = 20; // æ¯é¡µæ˜¾ç¤ºè®°å½•
-	private int totalPage = 0; // æ€»é¡µ
-	private int totalResult = 0; // æ€»è®°å½•æ•°
-	private int currentPage = 0; // å½“å‰
-	private int currentResult = 0; // å½“å‰è®°å½•èµ·å§‹ç´¢å¼•
+	private int size = 20; // Ã¿Ò³ÏÔÊ¾¼ÇÂ¼
+	private int totalPage = 0; // ×ÜÒ³
+	private int totalResult = 0; // ×Ü¼ÇÂ¼Êı
+	private int currentPage = 0; // µ±Ç°
+	private int currentResult = 0; // µ±Ç°¼ÇÂ¼ÆğÊ¼Ë÷Òı
 
-	private String sql; // ç”¨äºæŸ¥è¯¢çš„sql
+	private String sql; // ÓÃÓÚ²éÑ¯µÄsql
 
 	private String pageSql;
 	private String countSql;
@@ -25,9 +25,9 @@ public class Page<T> implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("æ€»æ•°:").append(totalResult).append(",å½“å‰ï¿½?:").append(
+		sb.append("×ÜÊı:").append(totalResult).append(",µ±Ç°:").append(
 				getCurrentPage());
-		sb.append(",æ€»é¡µï¿½?:").append(getTotalPage());
+		sb.append(",×ÜÒ³:").append(getTotalPage());
 		return sb.toString();
 	}
 
@@ -114,7 +114,7 @@ public class Page<T> implements Serializable {
 	}
 
 	/**
-	 * åˆ†é¡µç”¨çš„sql
+	 * ·ÖÒ³ÓÃµÄsql
 	 * 
 	 * @return
 	 */
@@ -123,7 +123,7 @@ public class Page<T> implements Serializable {
 	}
 
 	/**
-	 * æŸ¥è¯¢æ€»æ•°ç”¨çš„sql
+	 * ²éÑ¯×ÜÊıÓÃµÄsql
 	 * 
 	 * @return
 	 */

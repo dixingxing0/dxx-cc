@@ -64,6 +64,11 @@ public class AdController {
 	public String ajax2() {
 		return "这是个ajax2请求";
 	}
+	
+	@RequestMapping("/index")
+	public String index() {
+		return "index.vm";
+	}
 
 	@RequestMapping(value = "/login")
 	public String login() {

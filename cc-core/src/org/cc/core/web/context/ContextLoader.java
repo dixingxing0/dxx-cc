@@ -41,7 +41,7 @@ public class ContextLoader implements ServletContextListener {
 		logger.debug("初始化servletContext!");
 		ScanUtils helper = new ScanUtils(true, true, null);
 
-		Set<Class<?>> calssList = helper.getPackageAllClasses("web", true);
+		Set<Class<?>> calssList = helper.getPackageAllClasses("org.cc.demo.web", true);
 		try {
 
 			for (Class<?> clazz : calssList) {
@@ -50,7 +50,6 @@ public class ContextLoader implements ServletContextListener {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("11111");
 			throw new WebException("解析controller时出错", e);
 		}
 	}

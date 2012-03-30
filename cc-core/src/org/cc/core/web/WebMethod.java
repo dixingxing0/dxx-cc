@@ -13,28 +13,43 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.cc.core.web.annotation.RequestMapping;
 import org.cc.core.web.annotation.RequestMethod;
 
 
 /**
- * web请求映射规则
+ * controller中方法的封装，是处理web请求的最终单位
  * 
  * @author dixingxing
  * @date Feb 7, 2012
  */
 public class WebMethod {
-	private final static Logger logger = Logger.getLogger(WebMethod.class);
-	public Object handler;
-	public Method method;
+	private static final Logger LOGGER = Logger.getLogger(WebMethod.class);
+	
+	/** controller */
+	private Object handler;
+	
+	/** the original method */
+	private Method method;
 
-	public String[] urlPathMain;
+	/** {@link RequestMapping#value()} on handler*/
+	private String[] urlPathMain;
 
-	public String[] urlPath;
+	/** {@link RequestMapping#value()} on method*/
+	private String[] urlPath;
 
-	public RequestMethod[] requestMethod;
+	/** {@link RequestMapping#method()} */
+	private RequestMethod[] requestMethod;
 
-	public boolean isResponseBody = false;
+	/** write response as normal string*/
+	private boolean responseBody = false;
 
+	/**
+	 * 是否匹配web请求
+	 * 
+	 * @param request
+	 * @return
+	 */
 	public boolean match(HttpServletRequest request) {
 		String servletPath = request.getServletPath();
 		if (!match(servletPath)) {
@@ -55,7 +70,7 @@ public class WebMethod {
 	 * 
 	 * 是否匹配当前请求，如果匹配则由此当前方法处理请求
 	 * 
-	 * @param servletPath
+	 * @param servletPath 
 	 * @return
 	 */
 	public boolean match(String servletPath) {
@@ -76,28 +91,6 @@ public class WebMethod {
 			}
 		}
 		return false;
-	}
-
-	private static String a2s(Object[] a) {
-		if (a == null || a.length == 0) {
-			return "";
-		}
-		StringBuilder sb = new StringBuilder();
-		for (Object s : a) {
-			sb.append(s).append(",");
-		}
-		sb.deleteCharAt(sb.length() - 1);
-		return sb.toString();
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("method : ").append(method.getName()).append(",urlPathMain:")
-				.append(a2s(urlPathMain));
-		sb.append(",urlPath:").append(a2s(urlPath)).append(",requestMethod:")
-				.append(a2s(requestMethod));
-		return sb.toString();
 	}
 
 	/**
@@ -140,8 +133,67 @@ public class WebMethod {
 		for (int i = 0; i < m.groupCount(); i++) {
 			s[i] = m.group(i + 1);
 		}
-		logger.debug("解析出pathVariable :" + StringUtils.join(s, ","));
+		LOGGER.debug("解析出pathVariable :" + StringUtils.join(s, ","));
 		return s;
+	}
+	
+	
+	public Object getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Object handler) {
+		this.handler = handler;
+	}
+
+	public Method getMethod() {
+		return method;
+	}
+
+	public void setMethod(Method method) {
+		this.method = method;
+	}
+
+	public String[] getUrlPathMain() {
+		return urlPathMain;
+	}
+
+	public void setUrlPathMain(String[] urlPathMain) {
+		this.urlPathMain = urlPathMain;
+	}
+
+	public String[] getUrlPath() {
+		return urlPath;
+	}
+
+	public void setUrlPath(String[] urlPath) {
+		this.urlPath = urlPath;
+	}
+
+	public RequestMethod[] getRequestMethod() {
+		return requestMethod;
+	}
+
+	public void setRequestMethod(RequestMethod[] requestMethod) {
+		this.requestMethod = requestMethod;
+	}
+
+	public boolean isResponseBody() {
+		return responseBody;
+	}
+
+	public void setResponseBody(boolean responseBody) {
+		this.responseBody = responseBody;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("method : ").append(method.getName()).append(",urlPathMain:")
+				.append(StringUtils.join(urlPathMain,","));
+		sb.append(",urlPath:").append(StringUtils.join(urlPath, ",")).append(",requestMethod:")
+				.append(StringUtils.join(requestMethod, ","));
+		return sb.toString();
 	}
 
 	public static void main(String[] args) {

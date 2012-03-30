@@ -15,9 +15,11 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityLayoutServlet;
 
 /**
- * 自定义velocity的错误处理
  * 
- * @author liudong
+ * 自定义velocity异常处理
+ * 
+ * @author dixingxing	
+ * @date Mar 30, 2012
  */
 @SuppressWarnings("serial")
 public final class VelocityServlet extends VelocityLayoutServlet {

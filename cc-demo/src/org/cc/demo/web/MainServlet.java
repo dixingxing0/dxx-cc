@@ -11,7 +11,7 @@ import org.cc.core.web.DispatcherServlet;
 import org.cc.core.web.WebMethod;
 
 /**
- * 
+ * {@link DispatcherServlet} 的简单实现
  * 
  * @author dixingxing
  * @date Feb 15, 2012
@@ -23,7 +23,7 @@ public class MainServlet extends DispatcherServlet {
 	@Override
 	protected void afterProcess(WebMethod webMethod, long start) {
 		long cost = costTime(start);
-		logger.debug("方法" + webMethod.method.getName() + "耗时" + cost + "毫秒");
+		logger.debug("方法" + webMethod.getMethod().getName() + "耗时" + cost + "毫秒");
 	}
 
 	@Override

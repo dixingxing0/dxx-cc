@@ -15,11 +15,20 @@ import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-public class UploadUtils {
-	private final static Logger logger = Logger
-			.getLogger(UploadUtils.class);
-	private final static String uploadPath = "file";
+/**
+ * 上传文件的工具类
+ * 
+ * @author dixingxing	
+ * @date Mar 30, 2012
+ */
+public final class UploadUtils {
+	private static final Logger LOGGER = Logger.getLogger(UploadUtils.class);
+	
+	private static final String UPLOAD_PATH = "file";
+	private static final long UPLOAD_MAX_SIZE = 2000000L;
 
+	private UploadUtils() {}
+	
 	/**
 	 * 判断是否是上传文件
 	 * 
@@ -27,8 +36,7 @@ public class UploadUtils {
 	 * @return
 	 */
 	public static boolean isMultipart(HttpServletRequest request) {
-		return FileUpload
-				.isMultipartContent(new ServletRequestContext(request));
+		return FileUpload.isMultipartContent(new ServletRequestContext(request));
 	}
 
 	/**
@@ -46,12 +54,12 @@ public class UploadUtils {
 		StringBuilder sb = new StringBuilder();
 		try {
 
-			String basePath = request.getRealPath("/") + uploadPath;
+			String basePath = request.getRealPath("/") + UPLOAD_PATH;
 
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			factory.setRepository(new File(basePath));
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			upload.setSizeMax(2000000);
+			upload.setSizeMax(UPLOAD_MAX_SIZE);
 			List<FileItem> items = upload.parseRequest(request);
 			for (FileItem fileItem : items) {
 				if (fileItem.isFormField()) {
@@ -66,15 +74,15 @@ public class UploadUtils {
 					sb.append(fileName).append(",");
 
 				} else {
-					logger.debug("文件没有选择 或 文件内容为空");
+					LOGGER.debug("文件没有选择 或 文件内容为空");
 				}
 			}
 		} catch (Exception e) {
-			logger.error("上传文件出错", e);
+			LOGGER.error("上传文件出错", e);
 		}
 		if (sb.length() > 0) {
 			sb.deleteCharAt(sb.length() - 1);
-			logger.debug("已上传文件:" + sb.toString());
+			LOGGER.debug("已上传文件:" + sb.toString());
 		}
 		return sb.toString();
 	}
@@ -110,7 +118,4 @@ public class UploadUtils {
 		return name;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(getFileName("c:/tmp/", ".jpg"));
-	}
 }

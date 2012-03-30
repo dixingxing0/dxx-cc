@@ -26,7 +26,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
  * @author dixingxing
  * @date Jan 6, 2012
  */
-@Table(name = "AD")
+@Table("AD")
 @JsonCachable
 public class Ad implements Serializable {
 	private static final long serialVersionUID = 1L;

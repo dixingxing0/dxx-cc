@@ -10,7 +10,6 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.cc.core.common.Config;
 import org.cc.core.common.ReflectUtils;
 import org.cc.core.dao.annotation.Column;
 import org.cc.core.dao.annotation.Table;
@@ -26,10 +25,12 @@ import org.cc.core.dao.annotation.Transient;
  * @author dixingxing
  * @date Feb 6, 2012
  */
-public class SqlBuilder {
-	private final static Logger logger = Logger.getLogger(SqlBuilder.class);
-	private final static String ID = "id";
+public final class SqlBuilder {
+	public static final Logger LOGGER = Logger.getLogger(SqlBuilder.class);
+	public static final String ID = "id";
 
+	private SqlBuilder(){}
+	
 	/**
 	 * 构造insert
 	 * 
@@ -60,7 +61,7 @@ public class SqlBuilder {
 		sql.append(columns).append(") ");
 		sql.append(" VALUES(").append(values).append(") ");
 		holder.setSql(sql.toString());
-		logger.debug(holder);
+		LOGGER.debug(holder);
 		return holder;
 
 	}
@@ -77,6 +78,15 @@ public class SqlBuilder {
 	}
 
 	/**
+     * sqlite3 insert 后返回生成的主键（id）
+     * @param po
+     * @return
+     */
+    public static String buildGetInsertId(Object po) {
+        return "select max(id) from " + tableName(po);
+    }
+	
+	/**
 	 * 把sql封装成分页的sql
 	 * 
 	 * @param sql
@@ -87,19 +97,7 @@ public class SqlBuilder {
 	 */
 	public static String pageSql(String sql, int start, int end) {
 		StringBuilder pageSql = new StringBuilder();
-		if (Config.isMysql()) {
-			pageSql.append(sql).append(" limit ").append(start).append(",")
-					.append(end);
-		} else if (Config.isOracle()) {
-			pageSql
-					.append("select * from (select tmp_tb.*,ROWNUM row_id from (");
-			pageSql.append(sql);
-			pageSql.append(")  tmp_tb where ROWNUM<=");
-			pageSql.append(end);
-			pageSql.append(") where row_id>");
-			pageSql.append(start);
-		}
-
+		pageSql.append(sql).append(" limit ").append(start).append(",").append(end);
 		return pageSql.toString();
 	}
 
@@ -144,7 +142,7 @@ public class SqlBuilder {
 		deleteLastComma(sql);
 		sql.append(" WHERE ").append(where);
 		holder.setSql(sql.toString());
-		logger.debug(holder);
+		LOGGER.debug(holder);
 		return holder;
 
 	}
@@ -198,7 +196,7 @@ public class SqlBuilder {
 	 */
 	private static boolean isTransient(Field f) {
 		Transient t = f.getAnnotation(Transient.class);
-		if (t != null && t.value() == true) {
+		if (t != null && t.value()) {
 			return true;
 		}
 		return false;
@@ -214,8 +212,8 @@ public class SqlBuilder {
 	private static String tableName(Object obj) {
 		String tableName = obj.getClass().getSimpleName();
 		Table table = obj.getClass().getAnnotation(Table.class);
-		if (table != null && StringUtils.isNotEmpty(table.name())) {
-			tableName = table.name();
+		if (table != null && StringUtils.isNotEmpty(table.value())) {
+			tableName = table.value();
 		}
 		return tableName;
 	}
@@ -233,25 +231,8 @@ public class SqlBuilder {
 		}
 		if (o instanceof Date) {
 			Date date = (Date) o;
-			Timestamp t = new Timestamp(date.getTime());
-			return t;
+			return new Timestamp(date.getTime());
 		}
 		return o;
 	}
-
-	// public static void main(String[] args) {
-	// Ad ad = new Ad();
-	// ad.setId(101L);
-	// ad.setName("123");
-	// ad.setPosition(1L);
-	// ad.setState(1L);
-	// ad.setPublishTime(new Date());
-	// ad.setPublishMan("publishtest");
-	// ad.setUpdateTime(new Date());
-	// ad.setUpdateMan("updatetest");
-	// ad.setDetail("detail");
-	// ad.setProviderId(100001790735L);
-	// buildUpdate(ad, null);
-	// }
-
 }

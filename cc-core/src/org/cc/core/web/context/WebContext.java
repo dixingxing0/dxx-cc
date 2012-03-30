@@ -15,24 +15,26 @@ import org.cc.core.web.WebMethod;
 
 
 /**
- * 
+ * 把所有 {@link WebMethod} 保存在 {@link #MAPPINGS} 中
  * 
  * @author dixingxing
  * @date Feb 7, 2012
  */
-public class WebContext {
-	private final static Logger logger = Logger.getLogger(WebContext.class);
+public final class WebContext {
+	public static final Logger LOGGER = Logger.getLogger(WebContext.class);
 
 	// 
-	public final static List<WebMethod> mappings = new ArrayList<WebMethod>();
+	public static final List<WebMethod> MAPPINGS = new ArrayList<WebMethod>();
 
+	private WebContext(){}
+	
 	/**
 	 * 添加映射方法
 	 * 
 	 * @param o
 	 */
 	public static synchronized void addMapping(WebMethod o) {
-		mappings.add(o);
+		MAPPINGS.add(o);
 	}
 
 	/**
@@ -43,9 +45,9 @@ public class WebContext {
 	 * @return
 	 */
 	public static WebMethod getHandler(HttpServletRequest request) {
-		for (WebMethod m : mappings) {
+		for (WebMethod m : MAPPINGS) {
 			if (m.match(request)) {
-				logger.debug("匹配到handler ：" + m);
+				LOGGER.debug("匹配到handler ：" + m);
 				return m;
 			}
 		}

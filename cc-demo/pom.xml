@@ -14,9 +14,9 @@
 
 	<!-- 项目属性 -->
 	<properties>
-		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
-		<jdbc.driver.version>5.1.13</jdbc.driver.version>
+		<jdbc.driver.groupId>org.xerial</jdbc.driver.groupId>
+		<jdbc.driver.artifactId>sqlite-jdbc</jdbc.driver.artifactId>
+		<jdbc.driver.version>3.7.2</jdbc.driver.version>
 	</properties>
 
 	<!-- 依赖项定义 -->

@@ -14,7 +14,7 @@ import org.cc.core.dao.annotation.Table;
  * @date Feb 9, 2012
  */
 @SuppressWarnings("serial")
-@Table(name = "ad")
+@Table("ad")
 public class B extends A implements I {
 	private String name;
 

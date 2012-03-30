@@ -24,7 +24,7 @@ import org.apache.commons.lang.StringUtils;
  * @author dixingxing
  * @date Jan 31, 2012
  */
-public class DbUtilsBeanProcessor extends BeanProcessor {
+public final class DbUtilsBeanProcessor extends BeanProcessor {
 	/**
 	 * 数据库列名 -> java属性名
 	 * 
@@ -58,10 +58,6 @@ public class DbUtilsBeanProcessor extends BeanProcessor {
 		}
 
 		return result;
-	}
-
-	public static void main(String[] args) {
-		System.out.println(prop2column("publishTimeAB"));
 	}
 
 	@Override
@@ -100,39 +96,43 @@ public class DbUtilsBeanProcessor extends BeanProcessor {
 		if (propType.equals(String.class)) {
 			return rs.getString(index);
 
-		} else if (propType.equals(Integer.TYPE)
-				|| propType.equals(Integer.class)) {
+		} 
+		if (propType.equals(Integer.TYPE) || propType.equals(Integer.class)) {
 			return Integer.valueOf(rs.getInt(index));
 
-		} else if (propType.equals(Boolean.TYPE)
-				|| propType.equals(Boolean.class)) {
+		} 
+		if (propType.equals(Boolean.TYPE) || propType.equals(Boolean.class)) {
 			return Boolean.valueOf(rs.getBoolean(index));
 
-		} else if (propType.equals(Long.TYPE) || propType.equals(Long.class)) {
+		} 
+		if (propType.equals(Long.TYPE) || propType.equals(Long.class)) {
 			return Long.valueOf(rs.getLong(index));
 
-		} else if (propType.equals(Double.TYPE)
-				|| propType.equals(Double.class)) {
+		} 
+		if (propType.equals(Double.TYPE) || propType.equals(Double.class)) {
 			return Double.valueOf(rs.getDouble(index));
 
-		} else if (propType.equals(Float.TYPE) || propType.equals(Float.class)) {
+		} 
+		if (propType.equals(Float.TYPE) || propType.equals(Float.class)) {
 			return Float.valueOf(rs.getFloat(index));
 
-		} else if (propType.equals(Short.TYPE) || propType.equals(Short.class)) {
+		} 
+		if (propType.equals(Short.TYPE) || propType.equals(Short.class)) {
 			return Short.valueOf(rs.getShort(index));
 
-		} else if (propType.equals(Byte.TYPE) || propType.equals(Byte.class)) {
+		}
+		if (propType.equals(Byte.TYPE) || propType.equals(Byte.class)) {
 			return Byte.valueOf(rs.getByte(index));
 
-		} else if (propType.equals(Timestamp.class)) {
+		} 
+		if (propType.equals(Timestamp.class)) {
 			return rs.getTimestamp(index);
 		}
 		// 增加date类型
-		else if (propType.equals(Date.class)) {
+		if (propType.equals(Date.class)) {
 			return new Date(rs.getTimestamp(index).getTime());
-		} else {
-			return rs.getObject(index);
-		}
+		} 
+		return rs.getObject(index);
 	}
 
 }

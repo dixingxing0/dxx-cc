@@ -6,14 +6,21 @@ import java.util.List;
 
 import org.cc.core.dao.SqlBuilder;
 
-
+/**
+ * 分页工具类
+ * 
+ * @author dixingxing	
+ * @date Mar 30, 2012
+ */
 public class Page<T> implements Serializable {
 	private static final long serialVersionUID = -1241179900114637258L;
-	private int size = 20; // 每页显示记录
-	private int totalPage = 0; // 总页
-	private int totalResult = 0; // 总记录数
-	private int currentPage = 0; // 当前
-	private int currentResult = 0; // 当前记录起始索引
+	
+	private static final int DEFAULT_SIZE = 10;
+	
+	private int size; // 每页显示记录
+	private int totalResult; // 总记录数
+	private int currentPage; // 当前
+	private int currentResult = 1; // 当前记录起始索引
 
 	private String sql; // 用于查询的sql
 
@@ -31,15 +38,27 @@ public class Page<T> implements Serializable {
 		return sb.toString();
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param sql 要执行的sql
+	 * @param currentPage 当前页数
+	 * @param size 每页条数
+	 */
 	public Page(String sql, int currentPage, int size) {
 		this.sql = sql;
-		this.size = size;
-		this.currentPage = currentPage;
-		this.pageSql = SqlBuilder.pageSql(sql, getCurrentResult(),
-				getCurrentResult() + getSize());
+		this.currentPage = currentPage < 1 ? 1 : currentPage;
+		this.size = size < 0 ? DEFAULT_SIZE : size;
+		this.currentResult = (this.currentPage - 1) * this.size;
+		this.pageSql = SqlBuilder.pageSql(sql, this.currentResult, this.currentResult + size);
 		this.countSql = SqlBuilder.countSql(sql);
 	}
 
+	/**
+	 * 取得查询返回的数据
+	 * 
+	 * @return
+	 */
 	public List<T> getResult() {
 		if (result == null) {
 			return new ArrayList<T>();
@@ -47,35 +66,58 @@ public class Page<T> implements Serializable {
 		return result;
 	}
 
+	/**
+	 * 设置查询返回的数据
+	 * 
+	 * @param result
+	 */
 	public void setResult(List<T> result) {
 		this.result = result;
 	}
 
+	
+	/**
+	 * 总页数
+	 * 
+	 * @return
+	 */
 	public int getTotalPage() {
-		if (totalResult % size == 0)
-			totalPage = totalResult / size;
-		else
-			totalPage = totalResult / size + 1;
-		return totalPage;
+		if (totalResult % size == 0) {
+			return totalResult / size;
+		}
+		return totalResult / size + 1;
 	}
 
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
-
+	/**
+	 * 总条数
+	 * 
+	 * @return
+	 */
 	public int getTotalResult() {
 		return totalResult;
 	}
 
+	/**
+	 * 设置总条数
+	 * 
+	 * @param totalResult
+	 */
 	public void setTotalResult(int totalResult) {
 		this.totalResult = totalResult;
 	}
 
+	/**
+	 * 当前是第几页 (最小为1)
+	 * 
+	 * @return
+	 */
 	public int getCurrentPage() {
-		if (currentPage <= 0)
-			currentPage = 1;
-		if (currentPage > getTotalPage())
-			currentPage = getTotalPage();
+		if (currentPage <= 0) {
+			return 1;
+		}
+		if (currentPage > getTotalPage()) {
+			return getTotalPage();
+		}
 		return currentPage;
 	}
 
@@ -88,16 +130,15 @@ public class Page<T> implements Serializable {
 	}
 
 	public void setSize(int size) {
-		if (size == 0) {
-			size = 10;
-		}
 		this.size = size;
 	}
 
+	/**
+	 * 当前是第几条
+	 * 
+	 * @return
+	 */
 	public int getCurrentResult() {
-		currentResult = (getCurrentPage() - 1) * getSize();
-		if (currentResult < 0)
-			currentResult = 0;
 		return currentResult;
 	}
 

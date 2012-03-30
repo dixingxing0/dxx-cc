@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 
+ * 使pojo拥有处理web请求的能力
  * 
  * @author dixingxing
  * @date Feb 7, 2012

@@ -57,7 +57,7 @@ public class Client {
 		Ad result = (Ad) client.execute("AgeHandler.getAge", params);
 		System.out.println("age : " + result.getId());
 
-		// make a call using dynamic proxy (¿Í»§¶Ë·þÎñ¶Ë¹²ÓÐ½Ó¿ÚÀà£¬ÊµÏÖÀà½öÔÚserver¶Ë)
+		// make a call using dynamic proxy (ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½Ð½Ó¿ï¿½ï¿½à£¬Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½serverï¿½ï¿½)
 		ClientFactory factory = new ClientFactory(client);
 		Adder adder = (Adder) factory.newInstance(Adder.class);
 

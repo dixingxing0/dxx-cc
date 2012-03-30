@@ -24,61 +24,53 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
-import org.cc.core.common.Config;
 import org.cc.core.common.Page;
+import org.cc.core.common.ReflectUtils;
+import org.cc.core.conf.JdbcConfig;
+
 
 
 /**
  * dbutils dao 基类
- * 
+ *
  * @author dixingxing
  * @date Jan 17, 2012
  */
-public class Dao<T> {
-	private final static Logger logger = Logger.getLogger(Dao.class);
-	private final static String ERROR = "执行sql出错";
-	private static QueryRunner runner;
-
-	protected final static DataSource ds;
+public abstract class Dao<T> {
+	public static final Logger LOGGER = Logger.getLogger(Dao.class);
+	public static final String ERROR = "执行sql出错";
+	
+	
+	/** 数据源 使用前需要初始化*/
+	public static final DataSource DS;
+	/** dbutils queryRunner 使用前需要初始化*/
+	public static final QueryRunner QUERY_RUNNER;
 
 	static {
-		ds = initDataSource();
-		runner = new QueryRunner(ds);
+		// 初始化数据源
+		BasicDataSource ds1 = new BasicDataSource();
+		ds1.setDriverClassName(JdbcConfig.DRIVER_CLASS_NAME);
+		ds1.setUrl(JdbcConfig.DRIVER_CLASS_NAME);
+		
+		DS = ds1;
+		QUERY_RUNNER = new QueryRunner(DS);
 	}
-
-	/**
-	 * 初始化dhcp数据源
-	 * 
-	 * @return
-	 */
-	private static synchronized DataSource initDataSource() {
-		BasicDataSource ds = new BasicDataSource();
-		ds.setDriverClassName(Config.jdbc_driver_class_name);
-		ds.setUsername(Config.jdbc_user_name);
-		ds.setPassword(Config.jdbc_password);
-		ds.setUrl(Config.jdbc_url);
-		// ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-		// ds.setUsername("newhc");
-		// ds.setPassword("bfdds06fd");
-		// ds.setUrl("jdbc:oracle:thin:@192.168.20.203:1521:mktdb4");
-		return ds;
-	}
-
-	private final static ScalarHandler scaleHandler = new ScalarHandler() {
+	
+	private static final ScalarHandler scaleHandler = new ScalarHandler() {
 		@Override
 		public Object handle(ResultSet rs) throws SQLException {
 			Object obj = super.handle(rs);
-			if (obj instanceof BigInteger)
+			if (obj instanceof BigInteger) {
 				return ((BigInteger) obj).longValue();
-
+			}
 			return obj;
 		}
 	};
-
+	
 	/**
-	 * 
+	 *
 	 * 使用自定义的 MyBeanProcessor
-	 * 
+	 *
 	 * @see DbUtilsBeanProcessor
 	 * @param clazz
 	 * @return
@@ -90,7 +82,7 @@ public class Dao<T> {
 
 	/**
 	 * 使用自定义的 MyBeanProcessor
-	 * 
+	 *
 	 * @see DbUtilsBeanProcessor
 	 * @param clazz
 	 * @return
@@ -102,7 +94,7 @@ public class Dao<T> {
 
 	/**
 	 * 获取在子类中定义的泛型
-	 * 
+	 *
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -113,173 +105,168 @@ public class Dao<T> {
 	}
 
 	/**
-	 * 从默认的数据源中获取一个数据库连接,并且setAutoCommit(false)
-	 * 
+	 * 从默认的数据源中获取一个数据库连接
+	 *
 	 * @return
 	 */
 	public static Connection getConn() {
-
 		try {
-			Connection conn = ds.getConnection();
-//			conn.setAutoCommit(false);
-			return conn;
+			return DS.getConnection();
 		} catch (Exception e) {
-			throw new RuntimeException("获取数据库连接失败", e);
+			throw new DbException("获取数据库连接失败", e);
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 * 查询返回列表
-	 * 
+	 *
 	 * @param sql
 	 * @param params
 	 * @return
 	 */
 	public List<T> queryList(String sql, Object... params) {
-		logger.debug(new SqlHolder(sql, params));
+		LOGGER.debug(new SqlHolder(sql, params));
 		try {
-			return (List<T>) runner.query(sql, getBeanListHandler(), params);
+			return (List<T>) QUERY_RUNNER.query(sql, getBeanListHandler(), params);
 		} catch (SQLException e) {
-			logger.error(ERROR, e);
-			throw new RuntimeException(ERROR, e);
+			LOGGER.error(ERROR, e);
+			throw new DbException(ERROR, e);
 		}
 	}
 
 	/**
 	 * 查询返回单个对象
-	 * 
+	 *
 	 * @param sql
 	 * @param params
 	 * @return
 	 */
 	public T query(String sql, Object... params) {
-		logger.debug(new SqlHolder(sql, params));
+		LOGGER.debug(new SqlHolder(sql, params));
 
 		try {
-			return (T) runner.query(sql, getBeanHandler(), params);
+			return (T) QUERY_RUNNER.query(sql, getBeanHandler(), params);
 		} catch (SQLException e) {
-			logger.error(ERROR, e);
-			throw new RuntimeException(ERROR, e);
+			LOGGER.error(ERROR, e);
+			throw new DbException(ERROR, e);
 		}
 	}
 
 	/**
 	 * 查询long型数据
-	 * 
+	 *
 	 * @param sql
 	 * @param params
 	 * @return
 	 */
 	public Long queryLong(String sql, Object... params) {
-		logger.debug(new SqlHolder(sql, params));
+		LOGGER.debug(new SqlHolder(sql, params));
 		try {
-			Number n = (Number) runner.query(sql, scaleHandler, params);
+			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
 			return n.longValue();
 		} catch (SQLException e) {
-			logger.error(ERROR, e);
-			throw new RuntimeException(ERROR, e);
+			LOGGER.error(ERROR, e);
+			throw new DbException(ERROR, e);
 		}
 	}
 
 	/**
 	 * 查询int型数据
-	 * 
-	 * 
+	 *
+	 *
 	 * @param sql
 	 * @param params
 	 * @return
 	 */
 	public Integer queryInt(String sql, Object... params) {
-		logger.debug(new SqlHolder(sql, params));
+		LOGGER.debug(new SqlHolder(sql, params));
 		try {
-			Number n = (Number) runner.query(sql, scaleHandler, params);
+			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
 			return n.intValue();
 		} catch (SQLException e) {
-			logger.error(ERROR, e);
-			throw new RuntimeException(ERROR, e);
+			LOGGER.error(ERROR, e);
+			throw new DbException(ERROR, e);
 		}
 	}
 
 	/**
 	 * 执行INSERT/UPDATE/DELETE语句
-	 * 
+	 *
 	 * @param conn
 	 * @param sql
 	 * @param params
 	 * @return
 	 */
-	public int update(Connection conn, String sql, Object... params) {
-		logger.debug(new SqlHolder(sql, params));
+	public int update(String sql, Object... params) {
+		LOGGER.debug(new SqlHolder(sql, params));
 		try {
-			return runner.update(conn, sql, params);
+            Connection conn = getConn();
+            conn.setAutoCommit(false);
+			int i = QUERY_RUNNER.update(conn, sql, params);
+            DbUtils.commitAndCloseQuietly(conn);
+            return i;
 		} catch (SQLException e) {
-			logger.error(ERROR, e);
-			throw new RuntimeException(ERROR, e);
+			LOGGER.error(ERROR, e);
+			throw new DbException(ERROR, e);
 		}
 	}
 
 	/**
 	 * update
-	 * 
-	 * 
-	 * @param conn
-	 * @param po
 	 * @return
 	 */
-	public int update(Connection conn, Object po) {
-		SqlHolder holder = SqlBuilder.buildUpdate(po);
-		logger.debug(holder);
-		return update(conn, holder.getSql(), holder.getParams());
+	public int update() {
+		SqlHolder holder = SqlBuilder.buildUpdate(this);
+		return update( holder.getSql(), holder.getParams());
 	}
 
 	/**
 	 * insert
-	 * 
-	 * @param conn
-	 * @param po
+     * 默认为自动生成id
 	 * @return
 	 */
-	public int insert(Connection conn, Object po) {
-		SqlHolder holder = SqlBuilder.buildInsert(po);
-		logger.debug(holder);
-		return update(conn, holder.getSql(), holder.getParams());
+	public Long insert() {
+		SqlHolder holder = SqlBuilder.buildInsert(this);
+		update(holder.getSql(), holder.getParams());
+        // 此处查询sqllite3 上一个生成的主键id
+        Long id = queryLong(SqlBuilder.buildGetInsertId(this));
+        ReflectUtils.set(this, "id", id);
+
+        return id;
 	}
 
 	/**
-	 * 
+	 *
 	 * 查询列表
-	 * 
+	 *
 	 * @param sql
 	 * @return Map<String, Object>
 	 */
 	public List<Map<String, Object>> queryMapList(String sql) {
-		logger.debug(sql);
+		LOGGER.debug(sql);
 		try {
-			List<Map<String, Object>> results = (List<Map<String, Object>>) runner
+			List<Map<String, Object>> results = (List<Map<String, Object>>) QUERY_RUNNER
 					.query(sql, new MapListHandler());
 			return results;
 		} catch (SQLException e) {
-			logger.error(ERROR, e);
-			throw new RuntimeException(ERROR, e);
+			LOGGER.error(ERROR, e);
+			throw new DbException(ERROR, e);
 		}
 	}
 
+	/**
+	 * 分页查询
+	 * 
+	 * @param sql
+	 * @param currentPage
+	 * @param pageSize
+	 * @return
+	 */
 	public Page<T> queryPage(String sql, int currentPage, int pageSize) {
 		Page<T> page = new Page<T>(sql, currentPage, pageSize);
 		page.setTotalResult(queryInt(page.getCountSql()));
 		page.setResult(queryList(page.getPageSql()));
 		return page;
 	}
-
-	public static void rollbackAndClose(Connection conn) {
-		logger.debug("回滚事务并关闭连接");
-		DbUtils.rollbackAndCloseQuietly(conn);
-	}
-
-	public static void commitAndClose(Connection conn) {
-		logger.debug("提交事务并关闭连接");
-		DbUtils.commitAndCloseQuietly(conn);
-	}
-
 }

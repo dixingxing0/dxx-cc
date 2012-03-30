@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -28,13 +27,14 @@ import org.apache.log4j.Logger;
  * 
  * @author michael
  */
-public class ScanUtils {
+public final class ScanUtils {
 
 	/**
 	 * logger
 	 */
-	private static final Logger logger = Logger.getLogger(ScanUtils.class);
+	private static final Logger LOGGER = Logger.getLogger(ScanUtils.class);
 
+	private static final int LENGTH_FOR_CLASS = 6;
 	/**
 	 * 是否排除内部类 true->是 false->否
 	 */
@@ -108,7 +108,7 @@ public class ScanUtils {
 				}
 			}
 		} catch (IOException e) {
-			logger.error("IOException error:", e);
+			LOGGER.error("IOException error:", e);
 		}
 
 		return classes;
@@ -139,13 +139,12 @@ public class ScanUtils {
 				}
 
 				// 判断是否递归搜索子包
-				if (!recursive
-						&& name.lastIndexOf('/') != package2Path.length()) {
+				if (!recursive && name.lastIndexOf('/') != package2Path.length()) {
 					continue;
 				}
 				// 判断是否过滤 inner class
 				if (this.excludeInner && name.indexOf('$') != -1) {
-					logger.info("exclude inner class with name:" + name);
+					LOGGER.info("exclude inner class with name:" + name);
 					continue;
 				}
 				String classSimpleName = name
@@ -153,17 +152,16 @@ public class ScanUtils {
 				// 判定是否符合过滤条件
 				if (this.filterClassName(classSimpleName)) {
 					String className = name.replace('/', '.');
-					className = className.substring(0, className.length() - 6);
+					className = className.substring(0, className.length() - LENGTH_FOR_CLASS);
 					try {
-						classes.add(Thread.currentThread()
-								.getContextClassLoader().loadClass(className));
+						classes.add(Thread.currentThread().getContextClassLoader().loadClass(className));
 					} catch (ClassNotFoundException e) {
-						logger.error("Class.forName error:", e);
+						LOGGER.error("Class.forName error:", e);
 					}
 				}
 			}
 		} catch (IOException e) {
-			logger.error("IOException error:", e);
+			LOGGER.error("IOException error:", e);
 		}
 	}
 
@@ -190,7 +188,7 @@ public class ScanUtils {
 				}
 				String filename = file.getName();
 				if (excludeInner && filename.indexOf('$') != -1) {
-					logger.info("exclude inner class with name:" + filename);
+					LOGGER.info("exclude inner class with name:" + filename);
 					return false;
 				}
 				return filterClassName(filename);
@@ -202,13 +200,13 @@ public class ScanUtils {
 						+ file.getName(), file.getAbsolutePath(), recursive);
 			} else {
 				String className = file.getName().substring(0,
-						file.getName().length() - 6);
+						file.getName().length() - LENGTH_FOR_CLASS);
 				try {
 					classes.add(Thread.currentThread().getContextClassLoader()
 							.loadClass(packageName + '.' + className));
 
 				} catch (ClassNotFoundException e) {
-					logger.error("IOException error:", e);
+					LOGGER.error("IOException error:", e);
 				}
 			}
 		}
@@ -227,7 +225,7 @@ public class ScanUtils {
 		if (null == this.classFilters || this.classFilters.isEmpty()) {
 			return true;
 		}
-		String tmpName = className.substring(0, className.length() - 6);
+		String tmpName = className.substring(0, className.length() - LENGTH_FOR_CLASS);
 		boolean flag = false;
 		for (String str : classFilters) {
 			String tmpreg = "^" + str.replace("*", ".*") + "$";
@@ -283,23 +281,5 @@ public class ScanUtils {
 	 */
 	public void setClassFilters(List<String> pClassFilters) {
 		classFilters = pClassFilters;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-		// 自定义过滤规则
-		List<String> classFilters = new ArrayList<String>();
-		// classFilters.add("File*");
-
-		// 创建一个扫描处理器，排除内部类 扫描符合条件的类
-		ScanUtils handler = new ScanUtils(true, true, classFilters);
-
-		Set<Class<?>> calssList = handler.getPackageAllClasses("web", true);
-		for (Class<?> cla : calssList) {
-			System.out.println(cla.getName());
-		}
 	}
 }

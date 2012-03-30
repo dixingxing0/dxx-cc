@@ -26,9 +26,10 @@ import org.cc.core.web.annotation.PathVar;
  * @author dixingxing
  * @date Feb 7, 2012
  */
-public class Binder {
-	private final static Logger logger = Logger.getLogger(Binder.class);
+public final class Binder {
+	private static final Logger LOGGER = Logger.getLogger(Binder.class);
 
+	private Binder() {}
 	/**
 	 * 
 	 * controller中方法参数的绑定
@@ -43,11 +44,11 @@ public class Binder {
 	public static Object[] bind(HttpServletRequest request,
 			HttpServletResponse response, WebMethod webMethod)
 			throws InstantiationException, IllegalAccessException {
-		logger.debug("绑定controller中方法参数");
+		LOGGER.debug("绑定controller中方法参数");
 		// 方法的参数
-		Class<?>[] paramClasses = webMethod.method.getParameterTypes();
+		Class<?>[] paramClasses = webMethod.getMethod().getParameterTypes();
 
-		Annotation[][] annotations = webMethod.method.getParameterAnnotations();
+		Annotation[][] annotations = webMethod.getMethod().getParameterAnnotations();
 
 		Object[] paramValues = new Object[paramClasses.length];
 
@@ -76,14 +77,14 @@ public class Binder {
 						.getServletPath());
 				PathVar pv = (PathVar) getPathVarAnnotation(annotations[i]);
 				if (pv.value() >= variables.length) {
-					logger.warn("PathVar.value()值为 :" + pv.value()
+					LOGGER.warn("PathVar.value()值为 :" + pv.value()
 							+ ",应该小于匹配到的参数个数 : " + variables.length);
 					break;
 				}
 				String v = variables[pv.value()];
 				Object value = convertValue(cls, v);
 				if (value != null) {
-					logger.debug("设置pathVariable成功，值为:" + value);
+					LOGGER.debug("设置pathVariable成功，值为:" + value);
 					paramValues[i] = value;
 				} else {
 					paramValues[i] = cls.newInstance();
@@ -104,7 +105,7 @@ public class Binder {
 	 * @param objects
 	 */
 	public static void bind2Request(HttpServletRequest req, Object[] objects) {
-		logger.debug("将对象绑定到request中,供视图(jsp)使用");
+		LOGGER.debug("将对象绑定到request中,供视图(jsp)使用");
 		for (Object o : objects) {
 			Class<?> clazz = o.getClass();
 			if (clazz.isAssignableFrom(Model.class)) {
@@ -203,7 +204,7 @@ public class Binder {
 		try {
 			d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s);
 		} catch (ParseException e1) {
-			throw new RuntimeException("解析date出错", e1);
+			throw new WebException("解析date出错", e1);
 		}
 		return d;
 	}
@@ -265,10 +266,10 @@ public class Binder {
 			} else if (cls.equals(Date.class)) {
 				value = parseDate(v);
 			} else {
-				logger.error("不能绑定到PathVariable 参数");
+				LOGGER.error("不能绑定到PathVariable 参数");
 			}
 		} catch (Exception e) {
-			logger.error("类型转换错误", e);
+			LOGGER.error("类型转换错误", e);
 			throw new WebException("类型转换错误", e);
 		}
 		return value;

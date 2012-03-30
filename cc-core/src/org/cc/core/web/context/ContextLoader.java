@@ -21,8 +21,6 @@ import org.cc.core.web.annotation.Controller;
 import org.cc.core.web.annotation.RequestMapping;
 import org.cc.core.web.annotation.ResponseBody;
 
-
-
 /**
  * 初始化web环境
  * 
@@ -30,15 +28,15 @@ import org.cc.core.web.annotation.ResponseBody;
  * @date Feb 7, 2012
  */
 public class ContextLoader implements ServletContextListener {
-	private final static Logger logger = Logger.getLogger(ContextLoader.class);
+	private static final Logger LOGGER = Logger.getLogger(ContextLoader.class);
 
 	public void contextDestroyed(ServletContextEvent arg0) {
-		logger.debug("销毁servletContext!");
+		LOGGER.debug("销毁servletContext!");
 
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
-		logger.debug("初始化servletContext!");
+		LOGGER.debug("初始化servletContext!");
 		ScanUtils helper = new ScanUtils(true, true, null);
 
 		Set<Class<?>> calssList = helper.getPackageAllClasses("org.cc.demo.web", true);
@@ -66,23 +64,23 @@ public class ContextLoader implements ServletContextListener {
 		Method[] methods = clazz.getDeclaredMethods();
 
 		String[] urlPathMain = null;
+		// 是否定义了请求的路径
 		if (clazz.isAnnotationPresent(RequestMapping.class)) {
 			RequestMapping rm = clazz.getAnnotation(RequestMapping.class);
 			urlPathMain = rm.value();
 		}
+		
 		for (Method m : methods) {
 			if (m.isAnnotationPresent(RequestMapping.class)) {
-
 				RequestMapping rm = m.getAnnotation(RequestMapping.class);
 				WebMethod webMethod = new WebMethod();
-				webMethod.handler = handler;
-				webMethod.method = m;
-				webMethod.urlPathMain = urlPathMain;
-				webMethod.urlPath = rm.value();
-				webMethod.requestMethod = rm.method();
-				webMethod.isResponseBody = m
-						.isAnnotationPresent(ResponseBody.class);
-				logger.debug("初始化url映射 - " + clazz.getName() + "."
+				webMethod.setHandler(handler);
+				webMethod.setMethod(m);
+				webMethod.setUrlPathMain(urlPathMain);
+				webMethod.setUrlPath(rm.value());
+				webMethod.setRequestMethod(rm.method());
+				webMethod.setResponseBody(m.isAnnotationPresent(ResponseBody.class));
+				LOGGER.debug("初始化url映射 - " + clazz.getName() + "."
 						+ m.getName() + ":" + webMethod);
 				WebContext.addMapping(webMethod);
 			}

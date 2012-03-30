@@ -6,13 +6,14 @@
 package org.cc.core.web;
 
 /**
- * 
+ * web 异常类
  * 
  * @author dixingxing
  * @date Feb 7, 2012
  */
 @SuppressWarnings("serial")
 public class WebException extends RuntimeException {
+	
 	public WebException(String message, Throwable e) {
 		super(message, e);
 	}

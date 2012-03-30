@@ -10,7 +10,9 @@ import java.util.ArrayList;
  * @author dixingxing
  * @date Feb 8, 2012
  */
-public class ReflectUtils {
+public final class ReflectUtils {
+	
+	private ReflectUtils(){}
 	/**
 	 * 获取obj对象fieldName的Field
 	 * 
@@ -30,7 +32,7 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 获取�?有field，包括父�?(但不包括Object�?) ,不包括常量static,final
+	 * 获取所有field，包括父类(但不包括Object类) ,不包括常量static,final
 	 * 
 	 * @param clazz
 	 * @return
@@ -54,12 +56,12 @@ public class ReflectUtils {
 		try {
 			return get(obj, getFieldByName(obj, fieldName));
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new CcException(e);
 		}
 	}
 
 	/**
-	 * 设置对象指定属�?�的�?
+	 * 设置对象指定属性的值
 	 * 
 	 * @param obj
 	 * @param f
@@ -75,13 +77,13 @@ public class ReflectUtils {
 				f.setAccessible(false);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new CcException(e);
 		}
 	}
 
 	/**
 	 * 
-	 * 获取对象的指定属�?
+	 * 获取对象的指定属性
 	 * 
 	 * @param obj
 	 * @param f
@@ -101,13 +103,13 @@ public class ReflectUtils {
 				f.setAccessible(false);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new CcException(e);
 		}
 		return value;
 	}
 
 	/**
-	 * 设置对象指定属�?�的�?
+	 * 设置对象指定属性的值
 	 * 
 	 * @param obj
 	 * @param fieldName
@@ -115,7 +117,14 @@ public class ReflectUtils {
 	 */
 	public static void set(Object obj, String fieldName, Object value) {
 		try {
-			Field f = obj.getClass().getField(fieldName);
+            Field f = null;
+            for(Field fd : obj.getClass().getDeclaredFields()) {
+                if(fd.getName() != null && fd.getName().equals(fieldName)) {
+                    f = fd;
+                    break;
+                }
+            }
+			
 			if (f.isAccessible()) {
 				f.set(obj, value);
 			} else {
@@ -124,12 +133,12 @@ public class ReflectUtils {
 				f.setAccessible(false);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new CcException(e);
 		}
 	}
 
 	/**
-	 * 此属性是否是常量(static 或�?? final)
+	 * 此属性是否是常量(static 或者 final)
 	 * 
 	 * 
 	 * @param f

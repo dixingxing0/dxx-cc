@@ -30,9 +30,10 @@ public class CharacterEncodingFilter implements Filter {
 
 		// Conditionally select and set the character encoding to be used
 		if (ignore || (request.getCharacterEncoding() == null)) {
-			String encoding = selectEncoding(request);
-			if (encoding != null)
-				request.setCharacterEncoding(encoding);
+			String encode = selectEncoding(request);
+			if (encode != null) {
+				request.setCharacterEncoding(encode);
+			}
 		}
 
 		chain.doFilter(request, response);
@@ -49,15 +50,15 @@ public class CharacterEncodingFilter implements Filter {
 
 		this.encoding = filterConfig.getInitParameter("encoding");
 		String value = filterConfig.getInitParameter("ignore");
-		if (value == null)
+		if (value == null) {
 			this.ignore = true;
-		else if (value.equalsIgnoreCase("true"))
+		} else if (value.equalsIgnoreCase("true")) {
 			this.ignore = true;
-		else if (value.equalsIgnoreCase("yes"))
+		} else if (value.equalsIgnoreCase("yes")) {
 			this.ignore = true;
-		else
+		} else {
 			this.ignore = false;
-
+		}
 	}
 
 	protected String selectEncoding(ServletRequest request) {

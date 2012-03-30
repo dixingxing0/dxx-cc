@@ -5,8 +5,6 @@
  */
 package org.cc.demo.rpc;
 
-import org.cc.demo.po.Ad;
-import org.cc.demo.rpc.Client;
 import org.junit.Test;
 
 
@@ -22,7 +20,7 @@ public class RpcTest {
 //		Object[] params = new Object[] {};
 //		for (int i = 0; i < 100; i++) {
 //			Ad result = (Ad) Client.get().execute("AgeHandler.getAge", params);
-//			System.out.println("从xmlrpc返回的数据：" + result.getId());
+//			System.out.println("result.getId());
 //			Thread.sleep(2000L);
 //		}
 	}

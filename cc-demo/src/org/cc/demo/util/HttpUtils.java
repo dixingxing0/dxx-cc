@@ -11,7 +11,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.cc.core.common.CcException;
+import org.cc.demo.json.JsonUtils;
+import org.codehaus.jackson.type.TypeReference;
 
 /**
  * 
@@ -19,15 +22,17 @@ import org.cc.core.common.CcException;
  * @author dixingxing	
  * @date Mar 31, 2012
  */
-public class HttpUtils {
+public final class HttpUtils {
+	private final static Logger LOG = Logger.getLogger(HttpUtils.class);
 
 	/**
-	 * return null if error occured
+	 * http get 方式访问网页，以文本方式返回
 	 * 
 	 * @param link
-	 * @return
+	 * @return 
 	 */
 	public static String getResponseAsString(String link){
+		long start = System.currentTimeMillis();
 		HttpURLConnection conn = null;
 		URL url = null;
 		String result = "";
@@ -46,10 +51,37 @@ public class HttpUtils {
 			reader.close();
 			urlStream.close();
 			conn.disconnect();
+			LOG.debug(System.currentTimeMillis() - start);
 			return result;
 		} catch(Exception e){
 			throw new CcException(e);
 		}
+	}
+	
+	/**
+	 * 访问远程，获取json并解析成对象返回 (单个对象)
+	 * 
+	 * @param <T>
+	 * @param link
+	 * @param clazz
+	 * @return
+	 */
+	public static <T> T getObject(String link,Class<T> clazz) {
+		String s  = getResponseAsString(link);
+		return JsonUtils.toObject(s, clazz);
+	}
+	
+	/**
+	 * 访问远程，获取json并解析成对象返回 (list/map)
+	 * 
+	 * @param <T>
+	 * @param link
+	 * @param typeReference new TypeReference<List<MyBean>>() {}
+	 * @return
+	 */
+	public static <T> T getObject(String link,TypeReference<T> typeReference) {
+		String s  = getResponseAsString(link);
+		return JsonUtils.toObject(s, typeReference);
 	}
 	
 }

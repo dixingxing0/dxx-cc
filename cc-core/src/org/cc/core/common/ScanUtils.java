@@ -32,7 +32,7 @@ public final class ScanUtils {
 	/**
 	 * logger
 	 */
-	private static final Logger LOGGER = Logger.getLogger(ScanUtils.class);
+	private static final Logger LOG = Logger.getLogger(ScanUtils.class);
 
 	private static final int LENGTH_FOR_CLASS = 6;
 	/**
@@ -108,7 +108,7 @@ public final class ScanUtils {
 				}
 			}
 		} catch (IOException e) {
-			LOGGER.error("IOException error:", e);
+			LOG.error("IOException error:", e);
 		}
 
 		return classes;
@@ -144,7 +144,7 @@ public final class ScanUtils {
 				}
 				// 判断是否过滤 inner class
 				if (this.excludeInner && name.indexOf('$') != -1) {
-					LOGGER.info("exclude inner class with name:" + name);
+					LOG.info("exclude inner class with name:" + name);
 					continue;
 				}
 				String classSimpleName = name
@@ -156,12 +156,12 @@ public final class ScanUtils {
 					try {
 						classes.add(Thread.currentThread().getContextClassLoader().loadClass(className));
 					} catch (ClassNotFoundException e) {
-						LOGGER.error("Class.forName error:", e);
+						LOG.error("Class.forName error:", e);
 					}
 				}
 			}
 		} catch (IOException e) {
-			LOGGER.error("IOException error:", e);
+			LOG.error("IOException error:", e);
 		}
 	}
 
@@ -188,7 +188,7 @@ public final class ScanUtils {
 				}
 				String filename = file.getName();
 				if (excludeInner && filename.indexOf('$') != -1) {
-					LOGGER.info("exclude inner class with name:" + filename);
+					LOG.info("exclude inner class with name:" + filename);
 					return false;
 				}
 				return filterClassName(filename);
@@ -206,7 +206,7 @@ public final class ScanUtils {
 							.loadClass(packageName + '.' + className));
 
 				} catch (ClassNotFoundException e) {
-					LOGGER.error("IOException error:", e);
+					LOG.error("IOException error:", e);
 				}
 			}
 		}

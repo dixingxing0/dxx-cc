@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
  * @date Mar 30, 2012
  */
 public final class UploadUtils {
-	private static final Logger LOGGER = Logger.getLogger(UploadUtils.class);
+	private static final Logger LOG = Logger.getLogger(UploadUtils.class);
 	
 	private static final String UPLOAD_PATH = "file";
 	private static final long UPLOAD_MAX_SIZE = 2000000L;
@@ -74,15 +74,15 @@ public final class UploadUtils {
 					sb.append(fileName).append(",");
 
 				} else {
-					LOGGER.debug("文件没有选择 或 文件内容为空");
+					LOG.debug("文件没有选择 或 文件内容为空");
 				}
 			}
 		} catch (Exception e) {
-			LOGGER.error("上传文件出错", e);
+			LOG.error("上传文件出错", e);
 		}
 		if (sb.length() > 0) {
 			sb.deleteCharAt(sb.length() - 1);
-			LOGGER.debug("已上传文件:" + sb.toString());
+			LOG.debug("已上传文件:" + sb.toString());
 		}
 		return sb.toString();
 	}

@@ -24,7 +24,7 @@ import web.context.WebMethod;
  * @date Feb 7, 2012
  */
 public class Binder {
-	private final static Logger logger = Logger.getLogger(Binder.class);
+	private final static Logger LOG = Logger.getLogger(Binder.class);
 
 	private final static SimpleDateFormat d1 = new SimpleDateFormat(
 			"yyyy-MM-dd");
@@ -44,7 +44,7 @@ public class Binder {
 	public static Object[] bindParam(HttpServletRequest request,
 			HttpServletResponse response, WebMethod webMethod)
 			throws InstantiationException, IllegalAccessException {
-		// ·½·¨µÄ²ÎÊý
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
 		Class<?>[] mParams = webMethod.method.getParameterTypes();
 		Object[] params = new Object[mParams.length];
 		if (mParams.length > 0) {
@@ -115,7 +115,7 @@ public class Binder {
 					f.setAccessible(false);
 				}
 			} catch (Exception e) {
-				logger.warn("°ó¶¨ÊôÐÔÊ±·¢ÉúÒì³£", e);
+				LOG.warn("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ì³£", e);
 			}
 		}
 	}
@@ -141,7 +141,7 @@ public class Binder {
 	private static void bindModel(HttpServletRequest req, Model m) {
 		for(String key : m.keySet()) {
 			Object o = m.get(key);
-			// °ó¶¨¶ÔÏóÀïµÄÊôÐÔ
+			// ï¿½ó¶¨¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			if(key.startsWith(Model.DEFAULT_KEY)) {
 				for (Field f : o.getClass().getDeclaredFields()) {
 					String k = f.getName();
@@ -158,13 +158,13 @@ public class Binder {
 							f.setAccessible(false);
 						}
 					} catch (Exception e) {
-						logger.error("·´Éä´íÎó", e);
+						LOG.error("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", e);
 					}
 
 					req.setAttribute(k, fieldValue);
 				}
 			} 
-			// Ö±½Ó°ó¶¨¶ÔÏó
+			// Ö±ï¿½Ó°ó¶¨¶ï¿½ï¿½ï¿½
 			else {
 				req.setAttribute(key,o);
 			}
@@ -191,7 +191,7 @@ public class Binder {
 					f.setAccessible(false);
 				}
 			} catch (Exception e) {
-				logger.error("·´Éä´íÎó", e);
+				LOG.error("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", e);
 			}
 
 			req.setAttribute(key, fieldValue);

@@ -22,7 +22,7 @@ import org.fusesource.stomp.jms.StompJmsConnectionFactory;
  * @date Feb 14, 2012
  */
 public class Producer {
-	private final static Logger logger = Logger.getLogger(Producer.class);
+	private final static Logger LOG = Logger.getLogger(Producer.class);
 
 	private static Connection getConn() throws JMSException {
 		StompJmsConnectionFactory factory = new StompJmsConnectionFactory();
@@ -45,7 +45,7 @@ public class Producer {
 
 		Message msg = session.createTextMessage(m);
 		producer.send(msg);
-		logger.debug("已发送消息:" + m);
+		LOG.debug("已发送消息:" + m);
 		producer.close();
 		session.close();
 		connection.close();

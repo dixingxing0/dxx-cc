@@ -24,7 +24,7 @@ import org.fusesource.stomp.jms.StompJmsConnectionFactory;
  * @date Feb 14, 2012
  */
 public class Consumer {
-	private final static Logger logger = Logger.getLogger(Consumer.class);
+	private final static Logger LOG = Logger.getLogger(Consumer.class);
 
 	private static Connection getConn() throws JMSException {
 		StompJmsConnectionFactory factory = new StompJmsConnectionFactory();
@@ -43,7 +43,7 @@ public class Consumer {
 		consumer.setMessageListener(new MessageListener() {
 			public void onMessage(Message message) {
 				try {
-					logger.debug(((TextMessage) message).getText());
+					LOG.debug(((TextMessage) message).getText());
 				} catch (JMSException e) {
 					e.printStackTrace();
 				}

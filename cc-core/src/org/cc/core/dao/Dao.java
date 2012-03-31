@@ -37,7 +37,7 @@ import org.cc.core.conf.JdbcConfig;
  * @date Jan 17, 2012
  */
 public abstract class Dao<T> {
-	public static final Logger LOGGER = Logger.getLogger(Dao.class);
+	public static final Logger LOG = Logger.getLogger(Dao.class);
 	public static final String ERROR = "执行sql出错";
 	
 	
@@ -126,11 +126,11 @@ public abstract class Dao<T> {
 	 * @return
 	 */
 	public List<T> queryList(String sql, Object... params) {
-		LOGGER.debug(new SqlHolder(sql, params));
+		LOG.debug(new SqlHolder(sql, params));
 		try {
 			return (List<T>) QUERY_RUNNER.query(sql, getBeanListHandler(), params);
 		} catch (SQLException e) {
-			LOGGER.error(ERROR, e);
+			LOG.error(ERROR, e);
 			throw new DbException(ERROR, e);
 		}
 	}
@@ -143,12 +143,12 @@ public abstract class Dao<T> {
 	 * @return
 	 */
 	public T query(String sql, Object... params) {
-		LOGGER.debug(new SqlHolder(sql, params));
+		LOG.debug(new SqlHolder(sql, params));
 
 		try {
 			return (T) QUERY_RUNNER.query(sql, getBeanHandler(), params);
 		} catch (SQLException e) {
-			LOGGER.error(ERROR, e);
+			LOG.error(ERROR, e);
 			throw new DbException(ERROR, e);
 		}
 	}
@@ -161,12 +161,12 @@ public abstract class Dao<T> {
 	 * @return
 	 */
 	public Long queryLong(String sql, Object... params) {
-		LOGGER.debug(new SqlHolder(sql, params));
+		LOG.debug(new SqlHolder(sql, params));
 		try {
 			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
 			return n.longValue();
 		} catch (SQLException e) {
-			LOGGER.error(ERROR, e);
+			LOG.error(ERROR, e);
 			throw new DbException(ERROR, e);
 		}
 	}
@@ -180,12 +180,12 @@ public abstract class Dao<T> {
 	 * @return
 	 */
 	public Integer queryInt(String sql, Object... params) {
-		LOGGER.debug(new SqlHolder(sql, params));
+		LOG.debug(new SqlHolder(sql, params));
 		try {
 			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
 			return n.intValue();
 		} catch (SQLException e) {
-			LOGGER.error(ERROR, e);
+			LOG.error(ERROR, e);
 			throw new DbException(ERROR, e);
 		}
 	}
@@ -199,7 +199,7 @@ public abstract class Dao<T> {
 	 * @return
 	 */
 	public int update(String sql, Object... params) {
-		LOGGER.debug(new SqlHolder(sql, params));
+		LOG.debug(new SqlHolder(sql, params));
 		try {
             Connection conn = getConn();
             conn.setAutoCommit(false);
@@ -207,7 +207,7 @@ public abstract class Dao<T> {
             DbUtils.commitAndCloseQuietly(conn);
             return i;
 		} catch (SQLException e) {
-			LOGGER.error(ERROR, e);
+			LOG.error(ERROR, e);
 			throw new DbException(ERROR, e);
 		}
 	}
@@ -244,13 +244,13 @@ public abstract class Dao<T> {
 	 * @return Map<String, Object>
 	 */
 	public List<Map<String, Object>> queryMapList(String sql) {
-		LOGGER.debug(sql);
+		LOG.debug(sql);
 		try {
 			List<Map<String, Object>> results = (List<Map<String, Object>>) QUERY_RUNNER
 					.query(sql, new MapListHandler());
 			return results;
 		} catch (SQLException e) {
-			LOGGER.error(ERROR, e);
+			LOG.error(ERROR, e);
 			throw new DbException(ERROR, e);
 		}
 	}

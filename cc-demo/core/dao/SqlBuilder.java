@@ -19,17 +19,17 @@ import dao.annotation.Transient;
 import po.Ad;
 
 /**
- * ¸ù¾Ýpojo¹¹ÔìSqlHolder
+ * ï¿½ï¿½ï¿½pojoï¿½ï¿½ï¿½ï¿½SqlHolder
  * 
  * @see SqlHolder
  * @author dixingxing
  * @date Feb 6, 2012
  */
 public class SqlBuilder {
-	private final static Logger logger = Logger.getLogger(SqlBuilder.class);
+	private final static Logger LOG = Logger.getLogger(SqlBuilder.class);
 
 	/**
-	 * ¹¹Ôìinsert
+	 * ï¿½ï¿½ï¿½ï¿½insert
 	 * 
 	 * @param po
 	 * @return
@@ -58,17 +58,17 @@ public class SqlBuilder {
 		sql.append(columns).append(") ");
 		sql.append(" VALUES(").append(values).append(") ");
 		holder.setSql(sql.toString());
-		logger.debug(holder);
+		LOG.debug(holder);
 		return holder;
 
 	}
 
 	/**
-	 * ¹¹Ôìupdate
+	 * ï¿½ï¿½ï¿½ï¿½update
 	 * 
 	 * @param obj
 	 * @param where
-	 *            ²»ÔÊÐíÎª¿Õ
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½
 	 * @return
 	 */
 	public static SqlHolder buildUpdate(Object obj, String where) {
@@ -90,13 +90,13 @@ public class SqlBuilder {
 		sql.append(" WHERE ");
 		sql.append(StringUtils.isNotBlank(where) ? where : "1=2");
 		holder.setSql(sql.toString());
-		logger.debug(holder);
+		LOG.debug(holder);
 		return holder;
 
 	}
 
 	/**
-	 * É¾³ý×îºóÄÇ¸ö¡°,¡±
+	 * É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½,ï¿½ï¿½
 	 * 
 	 * @param sb
 	 */
@@ -107,8 +107,8 @@ public class SqlBuilder {
 	}
 
 	/**
-	 * »ñÈ¡ÁÐÃû<br/> MyBeanProcessorÖÐ¶¨ÒåÁË²éÑ¯Ê±´ÓÊý¾Ý¿â×Ö¶Î×ª -> poÊôÐÔ µÄ¹æÔò,<br />
-	 * ´Ë´¦poÊôÐÔ -> Êý¾Ý¿â×Ö¶Î µÄ¹æÔòºÍÇ°Ãæ±£³ÖÒ»ÖÂ
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½<br/> MyBeanProcessorï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ë²ï¿½Ñ¯Ê±ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ö¶ï¿½×ª -> poï¿½ï¿½ï¿½ï¿½ ï¿½Ä¹ï¿½ï¿½ï¿½,<br />
+	 * ï¿½Ë´ï¿½poï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½Ý¿ï¿½ï¿½Ö¶ï¿½ ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½Ç°ï¿½æ±£ï¿½ï¿½Ò»ï¿½ï¿½
 	 * 
 	 * @see MyBeanProcessor#prop2column(String)
 	 * @param f
@@ -119,7 +119,7 @@ public class SqlBuilder {
 	}
 
 	/**
-	 * »ñÈ¡¶ÔÏóÖÐÄ³¸öÊôÐÔµÄÖµ(Ã»ÓÐÍ¨¹ýgetter·½·¨»ñÈ¡)
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½Öµ(Ã»ï¿½ï¿½Í¨ï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡)
 	 * 
 	 * @param obj
 	 * @param f
@@ -136,15 +136,15 @@ public class SqlBuilder {
 				f.setAccessible(false);
 			}
 		} catch (Exception e) {
-			logger.error("»ñÈ¡ÊôÐÔÖµÊ§°Ü£¡", e);
-			throw new RuntimeException("»ñÈ¡ÊôÐÔÖµÊ§°Ü£¡", e);
+			LOG.error("ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ÖµÊ§ï¿½Ü£ï¿½", e);
+			throw new RuntimeException("ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ÖµÊ§ï¿½Ü£ï¿½", e);
 		}
 		return o;
 	}
 
 	/**
 	 * 
-	 * ÊôÐÔÊÇ·ñ¿ÉÒÔÐÞ¸Ä
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½
 	 * 
 	 * @param obj
 	 * @return
@@ -159,14 +159,14 @@ public class SqlBuilder {
 
 	/**
 	 * 
-	 * ÊôÐÔÊÇ·ñ²»ÐèÒª³Ö¾Ã»¯
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ö¾Ã»ï¿½
 	 * 
 	 * @param obj
 	 * @return
 	 */
 	private static boolean isTransient(Field f) {
 		int m = f.getModifiers();
-		// static »ò finalµÄÊÓÎª³£Á¿
+		// static ï¿½ï¿½ finalï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½
 		if (Modifier.isStatic(m) || Modifier.isFinal(m)) {
 			return true;
 		}
@@ -179,7 +179,7 @@ public class SqlBuilder {
 
 	/**
 	 * 
-	 * »ñÈ¡±íÃû
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param obj
 	 * @return
@@ -195,7 +195,7 @@ public class SqlBuilder {
 
 	/**
 	 * 
-	 * javaÀàÐÍ×ª»»³ÉÊý¾Ý¿âÀàÐÍ
+	 * javaï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param o
 	 * @return

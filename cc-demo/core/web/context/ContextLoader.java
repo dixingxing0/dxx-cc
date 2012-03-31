@@ -21,22 +21,22 @@ import web.annotation.RequestMapping;
 import web.annotation.ResponseBody;
 
 /**
- * ³õÊ¼»¯web»·¾³
+ * ï¿½ï¿½Ê¼ï¿½ï¿½webï¿½ï¿½ï¿½ï¿½
  * 
  * @author dixingxing
  * @date Feb 7, 2012
  */
 public class ContextLoader implements ServletContextListener {
-	private final static Logger logger = Logger.getLogger(ContextLoader.class);
+	private final static Logger LOG = Logger.getLogger(ContextLoader.class);
 
 	public void contextDestroyed(ServletContextEvent arg0) {
-		logger.debug("context destroyed !");
+		LOG.debug("context destroyed !");
 
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
-		logger.debug("context initialized !");
-		// ´´½¨Ò»¸öÉ¨Ãè´¦ÀíÆ÷£¬ÅÅ³ýÄÚ²¿Àà É¨Ãè·ûºÏÌõ¼þµÄÀà
+		LOG.debug("context initialized !");
+		// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½É¨ï¿½è´¦ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ É¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		ClassPathScanUtils handler = new ClassPathScanUtils(true, true, null);
 
 		Set<Class<?>> calssList = handler.getPackageAllClasses("web", true);
@@ -48,7 +48,7 @@ public class ContextLoader implements ServletContextListener {
 	}
 
 	/**
-	 * Ôö¼ÓÓ³Éä¹ØÏµµ½WebContext
+	 * ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½Ïµï¿½ï¿½WebContext
 	 * 
 	 * @param clazz
 	 * @return
@@ -68,8 +68,8 @@ public class ContextLoader implements ServletContextListener {
 				handler = clazz.newInstance();
 				WebContext.handlers.put(clazz.getSimpleName(), handler);
 			} catch (Exception e) {
-				logger.error(clazz.getName() + "ÊµÀý»¯Ê±³ö´í£¡", e);
-				throw new WebException("ÊµÀý»¯Ê±³ö´í£¡", e);
+				LOG.error(clazz.getName() + "Êµï¿½ï¿½Ê±ï¿½ï¿½?", e);
+				throw new WebException("Êµï¿½ï¿½Ê±ï¿½ï¿½?", e);
 			}
 		}
 		for (Method m : methods) {
@@ -83,9 +83,9 @@ public class ContextLoader implements ServletContextListener {
 				webMethod.requestMethod = rm.method();
 				webMethod.isResponseBody = m
 						.isAnnotationPresent(ResponseBody.class);
-				logger.debug(String.format("×°ÔØ%s.%s", clazz.getName(), m
+				LOG.debug(String.format("×°ï¿½ï¿½%s.%s", clazz.getName(), m
 						.getName()));
-				logger.debug(webMethod);
+				LOG.debug(webMethod);
 				WebContext.mappings.add(webMethod);
 			}
 		}

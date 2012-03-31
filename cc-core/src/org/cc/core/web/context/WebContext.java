@@ -21,7 +21,7 @@ import org.cc.core.web.WebMethod;
  * @date Feb 7, 2012
  */
 public final class WebContext {
-	public static final Logger LOGGER = Logger.getLogger(WebContext.class);
+	public static final Logger LOG = Logger.getLogger(WebContext.class);
 
 	// 
 	public static final List<WebMethod> MAPPINGS = new ArrayList<WebMethod>();
@@ -47,7 +47,7 @@ public final class WebContext {
 	public static WebMethod getHandler(HttpServletRequest request) {
 		for (WebMethod m : MAPPINGS) {
 			if (m.match(request)) {
-				LOGGER.debug("匹配到handler ：" + m);
+				LOG.debug("匹配到handler ：" + m);
 				return m;
 			}
 		}

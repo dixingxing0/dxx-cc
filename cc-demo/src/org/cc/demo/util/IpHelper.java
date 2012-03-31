@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 import org.apache.log4j.Logger;
 
 public class IpHelper {
-	private static final Logger logger = Logger.getLogger(IpHelper.class);
+	private static final Logger LOG = Logger.getLogger(IpHelper.class);
 
 	private static String LOCAL_IP_STAR_STR = "192.168.";
 
@@ -32,7 +32,7 @@ public class IpHelper {
 			}
 
 		} catch (UnknownHostException e) {
-			logger.error(e.getMessage());
+			LOG.error(e.getMessage());
 		}
 
 		LOCAL_IP = ip;

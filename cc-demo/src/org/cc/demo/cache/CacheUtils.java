@@ -32,14 +32,14 @@ import com.google.code.yanf4j.core.impl.StandardSocketOption;
  * @date Feb 15, 2012
  */
 public class CacheUtils {
-	private static Logger logger = Logger.getLogger(CacheUtils.class);
+	private static Logger LOG = Logger.getLogger(CacheUtils.class);
 	private static final String CACHE_ERROR = "操作缓存出错";
 	private static MemcachedClient cache;
 
 	private static long TIME_OUT = 5000L;
 
 	static {
-		logger.debug("---------初始化memcachedClient 开始---------");
+		LOG.debug("---------初始化memcachedClient 开始---------");
 		MemcachedClientBuilder builder = new XMemcachedClientBuilder(
 				getAddresses());
 		builder.setSocketOption(StandardSocketOption.SO_RCVBUF, 128 * 1024); // 设置接收缓存区，默认64K
@@ -56,7 +56,7 @@ public class CacheUtils {
 		try {
 			cache = builder.build();
 		} catch (Exception e) {
-			logger.error("初始化xmemcached client 失败", e);
+			LOG.error("初始化xmemcached client 失败", e);
 		}
 		cache.setOpTimeout(TIME_OUT);
 
@@ -106,9 +106,9 @@ public class CacheUtils {
 		}
 		try {
 			cache.set(key, exp, value, TIME_OUT);
-			logger.debug("set into memcached " + key);
+			LOG.debug("set into memcached " + key);
 		} catch (Exception e) {
-			logger.error(CACHE_ERROR, e);
+			LOG.error(CACHE_ERROR, e);
 		}
 	}
 
@@ -125,9 +125,9 @@ public class CacheUtils {
 		T o = null;
 		try {
 			o = (T)cache.get(key, TIME_OUT);
-			logger.debug("get from memcached " + key);
+			LOG.debug("get from memcached " + key);
 		} catch (Exception e) {
-			logger.error(CACHE_ERROR, e);
+			LOG.error(CACHE_ERROR, e);
 		}
 		return (T) o;
 	}
@@ -141,7 +141,7 @@ public class CacheUtils {
 		try {
 			cache.delete(key);
 		} catch (Exception e) {
-			logger.error(CACHE_ERROR, e);
+			LOG.error(CACHE_ERROR, e);
 		}
 	}
 

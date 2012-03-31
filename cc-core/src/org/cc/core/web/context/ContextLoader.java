@@ -28,15 +28,15 @@ import org.cc.core.web.annotation.ResponseBody;
  * @date Feb 7, 2012
  */
 public class ContextLoader implements ServletContextListener {
-	private static final Logger LOGGER = Logger.getLogger(ContextLoader.class);
+	private static final Logger LOG = Logger.getLogger(ContextLoader.class);
 
 	public void contextDestroyed(ServletContextEvent arg0) {
-		LOGGER.debug("销毁servletContext!");
+		LOG.debug("销毁servletContext!");
 
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
-		LOGGER.debug("初始化servletContext!");
+		LOG.debug("初始化servletContext!");
 		ScanUtils helper = new ScanUtils(true, true, null);
 
 		Set<Class<?>> calssList = helper.getPackageAllClasses("org.cc.demo.web", true);
@@ -80,7 +80,7 @@ public class ContextLoader implements ServletContextListener {
 				webMethod.setUrlPath(rm.value());
 				webMethod.setRequestMethod(rm.method());
 				webMethod.setResponseBody(m.isAnnotationPresent(ResponseBody.class));
-				LOGGER.debug("初始化url映射 - " + clazz.getName() + "."
+				LOG.debug("初始化url映射 - " + clazz.getName() + "."
 						+ m.getName() + ":" + webMethod);
 				WebContext.addMapping(webMethod);
 			}

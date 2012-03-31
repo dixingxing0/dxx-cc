@@ -16,7 +16,7 @@ import org.quartz.JobExecutionException;
 import org.quartz.Trigger;
 
 public class SimpleJob implements Job {
-	private final static Logger logger = Logger.getLogger(SimpleJob.class);
+	private final static Logger LOG = Logger.getLogger(SimpleJob.class);
 
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
@@ -25,7 +25,7 @@ public class SimpleJob implements Job {
 
 		String s = new SimpleDateFormat("HH:mm:ss").format(new Date());
 
-		logger.info(String.format("%s - %s , %s", s, job.getKey(), trigger
+		LOG.info(String.format("%s - %s , %s", s, job.getKey(), trigger
 				.getKey()));
 	}
 }

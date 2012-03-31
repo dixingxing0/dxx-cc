@@ -24,7 +24,7 @@ import org.cc.core.web.context.WebContext;
  */
 @SuppressWarnings("serial")
 public class DispatcherServlet extends HttpServlet {
-	private static final Logger LOGGER = Logger.getLogger(DispatcherServlet.class);
+	private static final Logger LOG = Logger.getLogger(DispatcherServlet.class);
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -81,10 +81,10 @@ public class DispatcherServlet extends HttpServlet {
 		long start = System.currentTimeMillis();
 		WebMethod webMethod = null;
 		try {
-			LOGGER.debug("(开始)处理请求: " + request.getServletPath());
+			LOG.debug("(开始)处理请求: " + request.getServletPath());
 			webMethod = WebContext.getHandler(request);
 			if (webMethod == null) {
-				LOGGER.debug("(结束)没有找到控制器!");
+				LOG.debug("(结束)没有找到控制器!");
 				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
@@ -96,19 +96,19 @@ public class DispatcherServlet extends HttpServlet {
 			// 直接返回文本
 			if (webMethod.isResponseBody()) {
 				response.getWriter().write(s);
-				LOGGER.debug("(结束)直接返回文本");
+				LOG.debug("(结束)直接返回文本");
 				afterProcess(webMethod, start);
 				return;
 			}
 			Binder.bind2Request(request, params);
 
-			LOGGER.debug("(结束)返回视图为：" + s);
+			LOG.debug("(结束)返回视图为：" + s);
 			request.getRequestDispatcher("/WEB-INF/views/" + s).forward(
 					request, response);
 			afterProcess(webMethod, start);
 		} catch (Exception e) {
 			exceptionOccured(webMethod, start, e);
-			LOGGER.error(e);
+			LOG.error(e);
 		}
 
 	}

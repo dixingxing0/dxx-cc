@@ -26,13 +26,13 @@ import org.apache.log4j.Logger;
 
 
 /**
- * dbutils dao »ùÀà
+ * dbutils dao ï¿½ï¿½ï¿½ï¿½
  * 
  * @author dixingxing
  * @date Jan 17, 2012
  */
 public class BaseDao<T> {
-	private final static Logger logger = Logger.getLogger(BaseDao.class);
+	private final static Logger LOG = Logger.getLogger(BaseDao.class);
 	private static QueryRunner runner;
 
 	protected static DataSource ds;
@@ -43,7 +43,7 @@ public class BaseDao<T> {
 	}
 
 	/**
-	 * ³õÊ¼»¯dhcpÊý¾ÝÔ´
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½dhcpï¿½ï¿½ï¿½Ô´
 	 * 
 	 * @return
 	 */
@@ -69,7 +69,7 @@ public class BaseDao<T> {
 
 	/**
 	 * 
-	 * Ê¹ÓÃ×Ô¶¨ÒåµÄ MyBeanProcessor
+	 * Ê¹ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ MyBeanProcessor
 	 * 
 	 * @see MyBeanProcessor
 	 * @param clazz
@@ -81,7 +81,7 @@ public class BaseDao<T> {
 	}
 
 	/**
-	 * Ê¹ÓÃ×Ô¶¨ÒåµÄ MyBeanProcessor
+	 * Ê¹ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ MyBeanProcessor
 	 * 
 	 * @see MyBeanProcessor
 	 * @param clazz
@@ -93,7 +93,7 @@ public class BaseDao<T> {
 	}
 
 	/**
-	 * ´ÓÄ¬ÈÏµÄÊý¾ÝÔ´ÖÐ»ñÈ¡Ò»¸öÊý¾Ý¿âÁ¬½Ó
+	 * ï¿½ï¿½Ä¬ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ô´ï¿½Ð»ï¿½È¡Ò»ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½lï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -101,25 +101,25 @@ public class BaseDao<T> {
 		try {
 			return ds.getConnection();
 		} catch (Exception e) {
-			logger.error("»ñÈ¡Êý¾Ý¿âÁ¬½ÓÊ§°Ü!", e);
+			LOG.error("ï¿½ï¿½È¡ï¿½ï¿½Ý¿ï¿½lï¿½ï¿½Ê§ï¿½ï¿½!", e);
 			return null;
 		}
 	}
 
 	/**
-	 * ´òÓ¡ÈÕÖ¾
+	 * ï¿½ï¿½Ó¡ï¿½ï¿½Ö¾
 	 * 
 	 * @param sql
 	 */
 	private static void showSql(String sql) {
 		if (true) {
-			logger.debug(sql);
+			LOG.debug(sql);
 		}
 	}
 
 	/**
 	 * 
-	 * ²éÑ¯·µ»ØÁÐ±í
+	 * ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 	 * 
 	 * @param sql
 	 * @param clazz
@@ -132,13 +132,13 @@ public class BaseDao<T> {
 			return (List<T>) runner.query(sql, getBeanListHandler(clazz),
 					params);
 		} catch (SQLException e) {
-			logger.debug("²éÑ¯Ê§°Ü", e);
+			LOG.debug("ï¿½ï¿½Ñ¯Ê§ï¿½ï¿½", e);
 			return new ArrayList<T>();
 		}
 	}
 
 	/**
-	 * ²éÑ¯·µ»Øµ¥¸ö¶ÔÏó
+	 * ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param sql
 	 * @param clazz
@@ -156,7 +156,7 @@ public class BaseDao<T> {
 	}
 
 	/**
-	 * ·µ»ØlongÐÍÊý¾Ý
+	 * ï¿½ï¿½ï¿½ï¿½longï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param sql
 	 * @param params
@@ -174,7 +174,7 @@ public class BaseDao<T> {
 	}
 
 	/**
-	 * Ö´ÐÐINSERT/UPDATE/DELETEÓï¾ä
+	 * Ö´ï¿½ï¿½INSERT/UPDATE/DELETEï¿½ï¿½ï¿½
 	 * 
 	 * @param conn
 	 * @param sql
@@ -186,14 +186,14 @@ public class BaseDao<T> {
 		try {
 			return runner.update(conn, sql, params);
 		} catch (SQLException e) {
-			logger.debug("¸üÐÂ²Ù×÷Ê§°Ü", e);
+			LOG.debug("ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½Ê§ï¿½ï¿½", e);
 			return 0;
 		}
 	}
 
 	/**
 	 * 
-	 * ²éÑ¯ÁÐ±í
+	 * ï¿½ï¿½Ñ¯ï¿½Ð±ï¿½
 	 * 
 	 * @param sql
 	 * @return Map<String, Object>
@@ -205,7 +205,7 @@ public class BaseDao<T> {
 					.query(sql, new MapListHandler());
 			return results;
 		} catch (SQLException e) {
-			logger.error("²éÑ¯Ê§°Ü", e);
+			LOG.error("ï¿½ï¿½Ñ¯Ê§ï¿½ï¿½", e);
 			return new ArrayList<Map<String, Object>>();
 		}
 	}

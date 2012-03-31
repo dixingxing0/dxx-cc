@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
  * 简单邮件（不带附件的邮件）发送器
  */
 public class Sender extends Thread {
-	private final static Logger logger = Logger.getLogger(Sender.class);
+	private final static Logger LOG = Logger.getLogger(Sender.class);
 	private final static String COMMA = ",";
 	private MailInfo mi;
 	private boolean isHtml = false;
@@ -70,7 +70,7 @@ public class Sender extends Thread {
 	 */
 	private Sender(String to, String subject, String content) {
 		if (StringUtils.isBlank(to)) {
-			logger.error("收件人不应该为空!");
+			LOG.error("收件人不应该为空!");
 		}
 		// 这个类主要是设置邮件
 		mi = new MailInfo(to, subject, content);
@@ -147,7 +147,7 @@ public class Sender extends Thread {
 			}
 			// 发送邮件
 			Transport.send(mailMessage);
-			logger.debug(String.format("已发送邮件(to:%s)", mi.getToAddress()));
+			LOG.debug(String.format("已发送邮件(to:%s)", mi.getToAddress()));
 			return true;
 		} catch (MessagingException ex) {
 			ex.printStackTrace();

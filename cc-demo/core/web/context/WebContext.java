@@ -21,15 +21,15 @@ import org.apache.log4j.Logger;
  * @date Feb 7, 2012
  */
 public class WebContext {
-	private final static Logger logger = Logger.getLogger(WebContext.class);
+	private final static Logger LOG = Logger.getLogger(WebContext.class);
 	// 
 	public final static List<WebMethod> mappings = new ArrayList<WebMethod>();
 
-	// controller µÄÊµÀý
+	// controller ï¿½ï¿½Êµï¿½ï¿½
 	public final static Map<String, Object> handlers = new HashMap<String, Object>();
 
 	/**
-	 * ¸ù¾ÝÓ³Éä»ñÈ¡¶ÔÓ¦µÄwebMethod
+	 * ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½webMethod
 	 * 
 	 * 
 	 * @param request
@@ -38,7 +38,7 @@ public class WebContext {
 	public static WebMethod getHandler(HttpServletRequest request) {
 		for (WebMethod m : mappings) {
 			if (m.match(request)) {
-				logger.debug("Æ¥Åäµ½handler £º" + m);
+				LOG.debug("Æ¥ï¿½äµ½handler ï¿½ï¿½" + m);
 				return m;
 			}
 		}

@@ -24,7 +24,7 @@ import org.cc.core.web.annotation.RequestMethod;
  * @date Feb 7, 2012
  */
 public class WebMethod {
-	private static final Logger LOGGER = Logger.getLogger(WebMethod.class);
+	private static final Logger LOG = Logger.getLogger(WebMethod.class);
 	
 	/** controller */
 	private Object handler;
@@ -133,7 +133,7 @@ public class WebMethod {
 		for (int i = 0; i < m.groupCount(); i++) {
 			s[i] = m.group(i + 1);
 		}
-		LOGGER.debug("解析出pathVariable :" + StringUtils.join(s, ","));
+		LOG.debug("解析出pathVariable :" + StringUtils.join(s, ","));
 		return s;
 	}
 	

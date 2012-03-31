@@ -18,18 +18,18 @@ import org.cc.core.web.WebMethod;
  */
 @SuppressWarnings("serial")
 public class MainServlet extends DispatcherServlet {
-	private final static Logger logger = Logger.getLogger(MainServlet.class);
+	private final static Logger LOG = Logger.getLogger(MainServlet.class);
 
 	@Override
 	protected void afterProcess(WebMethod webMethod, long start) {
 		long cost = costTime(start);
-		logger.debug("方法" + webMethod.getMethod().getName() + "耗时" + cost + "毫秒");
+		LOG.debug("方法" + webMethod.getMethod().getName() + "耗时" + cost + "毫秒");
 	}
 
 	@Override
 	protected void exceptionOccured(WebMethod webMethod, long start, Throwable e) {
 		long cost = costTime(start);
-		logger.debug("出现异常耗时" + cost + "毫秒", e);
+		LOG.debug("出现异常耗时" + cost + "毫秒", e);
 	}
 
 	private long costTime(long start) {

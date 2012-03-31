@@ -26,7 +26,7 @@ import org.cc.core.dao.annotation.Transient;
  * @date Feb 6, 2012
  */
 public final class SqlBuilder {
-	public static final Logger LOGGER = Logger.getLogger(SqlBuilder.class);
+	public static final Logger LOG = Logger.getLogger(SqlBuilder.class);
 	public static final String ID = "id";
 
 	private SqlBuilder(){}
@@ -61,7 +61,7 @@ public final class SqlBuilder {
 		sql.append(columns).append(") ");
 		sql.append(" VALUES(").append(values).append(") ");
 		holder.setSql(sql.toString());
-		LOGGER.debug(holder);
+		LOG.debug(holder);
 		return holder;
 
 	}
@@ -142,7 +142,7 @@ public final class SqlBuilder {
 		deleteLastComma(sql);
 		sql.append(" WHERE ").append(where);
 		holder.setSql(sql.toString());
-		LOGGER.debug(holder);
+		LOG.debug(holder);
 		return holder;
 
 	}

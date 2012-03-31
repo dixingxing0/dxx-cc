@@ -28,7 +28,7 @@ import web.context.WebMethod;
  */
 @SuppressWarnings("serial")
 public class DispatcherServlet extends HttpServlet {
-	private final static Logger logger = Logger
+	private final static Logger LOG = Logger
 			.getLogger(DispatcherServlet.class);
 
 	@Override
@@ -46,11 +46,11 @@ public class DispatcherServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected final void processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		logger.debug("start to process: " + request.getServletPath());
+		LOG.debug("start to process: " + request.getServletPath());
 		long start = System.currentTimeMillis();
 		WebMethod webMethod = WebContext.getHandler(request);
 		if (webMethod == null) {
-			logger.debug("Ã»ÓÐÕÒµ½¿ØÖÆÆ÷!");
+			LOG.debug("Ã»ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			logTime(start);
 			return;
@@ -62,29 +62,29 @@ public class DispatcherServlet extends HttpServlet {
 			String s = (String) webMethod.method.invoke(webMethod.handler,
 					params);
 
-			// Ö±½Ó·µ»ØÎÄ±¾
+			// Ö±ï¿½Ó·ï¿½ï¿½ï¿½ï¿½Ä±ï¿½
 			if (webMethod.isResponseBody) {
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter pw = response.getWriter();
 				pw.write(s);
 				pw.close();
 				logTime(start);
-				logger.debug("Ö±½Ó·µ»ØÎÄ±¾");
+				LOG.debug("Ö±ï¿½Ó·ï¿½ï¿½ï¿½ï¿½Ä±ï¿½");
 				return;
 			}
 			Binder.bind2Request(request, params);
 
-			logger.debug("·µ»ØÊÓÍ¼Îª£º" + s);
+			LOG.debug("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Îªï¿½ï¿½" + s);
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/WEB-INF/views/" + s);
 			dispatcher.forward(request, response);
 			logTime(start);
 		} catch (Exception e) {
-			logger.error("µ÷ÓÃ·½·¨³ö´í£¡", e);
+			LOG.error("ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½?", e);
 		}
 	}
 
 	private void logTime(long start) {
-		logger.debug("ºÄÊ±:" + (System.currentTimeMillis() - start) + "ºÁÃë");
+		LOG.debug("ï¿½ï¿½Ê±:" + (System.currentTimeMillis() - start) + "ï¿½ï¿½ï¿½ï¿½");
 	}
 }

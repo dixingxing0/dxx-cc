@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 /**
- * É¨ÃèÖ¸¶¨°ü£¨°üÀ¨jar£©ÏÂµÄclassÎÄ¼þ <br>
+ * É¨ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½(jarï¿½ï¿½ï¿½Âµï¿½classï¿½Ä¼ï¿½ <br>
  * <a href="http://sjsky.iteye.com">http://sjsky.iteye.com</a>
  * 
  * @author michael
@@ -31,35 +31,35 @@ import org.apache.log4j.Logger;
 public class ClassPathScanUtils {
 
 	/**
-	 * logger
+	 * LOG
 	 */
-	private static final Logger logger = Logger
+	private static final Logger LOG = Logger
 			.getLogger(ClassPathScanUtils.class);
 
 	/**
-	 * ÊÇ·ñÅÅ³ýÄÚ²¿Àà true->ÊÇ false->·ñ
+	 * ï¿½Ç·ï¿½ï¿½Å³ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ true->ï¿½ï¿½ false->ï¿½ï¿½
 	 */
 	private boolean excludeInner = true;
 	/**
-	 * ¹ýÂË¹æÔòÊÊÓÃÇé¿ö true¡ª>ËÑË÷·ûºÏ¹æÔòµÄ false->ÅÅ³ý·ûºÏ¹æÔòµÄ
+	 * ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ trueï¿½ï¿½>ï¿½ï¿½ï¿½ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ false->ï¿½Å³ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½
 	 */
 	private boolean checkInOrEx = true;
 
 	/**
-	 * ¹ýÂË¹æÔòÁÐ±í Èç¹ûÊÇnull»òÕß¿Õ£¬¼´È«²¿·ûºÏ²»¹ýÂË
+	 * ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½nullï¿½ï¿½ï¿½ß¿Õ£ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private List<String> classFilters = null;
 
 	/**
-	 * ÎÞ²Î¹¹ÔìÆ÷£¬Ä¬ÈÏÊÇÅÅ³ýÄÚ²¿Àà¡¢²¢ËÑË÷·ûºÏ¹æÔò
+	 * ï¿½Þ²Î¹ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½ï¿½Ú²ï¿½ï¿½à¡¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½
 	 */
 	public ClassPathScanUtils() {
 	}
 
 	/**
-	 * excludeInner:ÊÇ·ñÅÅ³ýÄÚ²¿Àà true->ÊÇ false->·ñ<br>
-	 * checkInOrEx£º¹ýÂË¹æÔòÊÊÓÃÇé¿ö true¡ª>ËÑË÷·ûºÏ¹æÔòµÄ false->ÅÅ³ý·ûºÏ¹æÔòµÄ<br>
-	 * classFilters£º×Ô¶¨Òå¹ýÂË¹æÔò£¬Èç¹ûÊÇnull»òÕß¿Õ£¬¼´È«²¿·ûºÏ²»¹ýÂË
+	 * excludeInner:ï¿½Ç·ï¿½ï¿½Å³ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ true->ï¿½ï¿½ false->ï¿½ï¿½<br>
+	 * checkInOrExï¿½ï¿½ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ trueï¿½ï¿½>ï¿½ï¿½ï¿½ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ false->ï¿½Å³ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½<br>
+	 * classFiltersï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nullï¿½ï¿½ï¿½ß¿Õ£ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param excludeInner
 	 * @param checkInOrEx
@@ -74,12 +74,12 @@ public class ClassPathScanUtils {
 	}
 
 	/**
-	 * É¨Ãè°ü
+	 * É¨ï¿½ï¿½ï¿½
 	 * 
 	 * @param basePackage
-	 *            »ù´¡°ü
+	 *            ï¿½ï¿½ï¿½
 	 * @param recursive
-	 *            ÊÇ·ñµÝ¹éËÑË÷×Ó°ü
+	 *            ï¿½Ç·ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½
 	 * @return Set
 	 */
 	public Set<Class<?>> getPackageAllClasses(String basePackage,
@@ -100,28 +100,28 @@ public class ClassPathScanUtils {
 				URL url = dirs.nextElement();
 				String protocol = url.getProtocol();
 				if ("file".equals(protocol)) {
-					logger.info("É¨ÃèfileÀàÐÍµÄclassÎÄ¼þ....");
+					LOG.info("É¨ï¿½ï¿½fileï¿½ï¿½ï¿½Íµï¿½classï¿½Ä¼ï¿½....");
 					String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
 					doScanPackageClassesByFile(classes, packageName, filePath,
 							recursive);
 				} else if ("jar".equals(protocol)) {
-					logger.info("É¨ÃèjarÎÄ¼þÖÐµÄÀà....");
+					LOG.info("É¨ï¿½ï¿½jarï¿½Ä¼ï¿½ï¿½Ðµï¿½ï¿½ï¿½....");
 					doScanPackageClassesByJar(packageName, url, recursive,
 							classes);
 				}
 			}
 		} catch (IOException e) {
-			logger.error("IOException error:", e);
+			LOG.error("IOException error:", e);
 		}
 
 		return classes;
 	}
 
 	/**
-	 * ÒÔjarµÄ·½Ê½É¨Ãè°üÏÂµÄËùÓÐClassÎÄ¼þ<br>
+	 * ï¿½ï¿½jarï¿½Ä·ï¿½Ê½É¨ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½Classï¿½Ä¼ï¿½<br>
 	 * 
 	 * @param basePackage
-	 *            eg£ºmichael.utils.
+	 *            egï¿½ï¿½michael.utils.
 	 * @param url
 	 * @param recursive
 	 * @param classes
@@ -141,19 +141,19 @@ public class ClassPathScanUtils {
 					continue;
 				}
 
-				// ÅÐ¶ÏÊÇ·ñµÝ¹éËÑË÷×Ó°ü
+				// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½
 				if (!recursive
 						&& name.lastIndexOf('/') != package2Path.length()) {
 					continue;
 				}
-				// ÅÐ¶ÏÊÇ·ñ¹ýÂË inner class
+				// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ inner class
 				if (this.excludeInner && name.indexOf('$') != -1) {
-					logger.info("exclude inner class with name:" + name);
+					LOG.info("exclude inner class with name:" + name);
 					continue;
 				}
 				String classSimpleName = name
 						.substring(name.lastIndexOf('/') + 1);
-				// ÅÐ¶¨ÊÇ·ñ·ûºÏ¹ýÂËÌõ¼þ
+				// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				if (this.filterClassName(classSimpleName)) {
 					String className = name.replace('/', '.');
 					className = className.substring(0, className.length() - 6);
@@ -161,17 +161,17 @@ public class ClassPathScanUtils {
 						classes.add(Thread.currentThread()
 								.getContextClassLoader().loadClass(className));
 					} catch (ClassNotFoundException e) {
-						logger.error("Class.forName error:", e);
+						LOG.error("Class.forName error:", e);
 					}
 				}
 			}
 		} catch (IOException e) {
-			logger.error("IOException error:", e);
+			LOG.error("IOException error:", e);
 		}
 	}
 
 	/**
-	 * ÒÔÎÄ¼þµÄ·½Ê½É¨Ãè°üÏÂµÄËùÓÐClassÎÄ¼þ
+	 * ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ä·ï¿½Ê½É¨ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½Classï¿½Ä¼ï¿½
 	 * 
 	 * @param packageName
 	 * @param packagePath
@@ -186,14 +186,14 @@ public class ClassPathScanUtils {
 		}
 		final boolean fileRecursive = recursive;
 		File[] dirfiles = dir.listFiles(new FileFilter() {
-			// ×Ô¶¨ÒåÎÄ¼þ¹ýÂË¹æÔò
+			// ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½
 			public boolean accept(File file) {
 				if (file.isDirectory()) {
 					return fileRecursive;
 				}
 				String filename = file.getName();
 				if (excludeInner && filename.indexOf('$') != -1) {
-					logger.info("exclude inner class with name:" + filename);
+					LOG.info("exclude inner class with name:" + filename);
 					return false;
 				}
 				return filterClassName(filename);
@@ -211,14 +211,14 @@ public class ClassPathScanUtils {
 							.loadClass(packageName + '.' + className));
 
 				} catch (ClassNotFoundException e) {
-					logger.error("IOException error:", e);
+					LOG.error("IOException error:", e);
 				}
 			}
 		}
 	}
 
 	/**
-	 * ¸ù¾Ý¹ýÂË¹æÔòÅÐ¶ÏÀàÃû
+	 * ï¿½ï¿½Ý¹ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param className
 	 * @return
@@ -293,11 +293,11 @@ public class ClassPathScanUtils {
 	 */
 	public static void main(String[] args) {
 
-		// ×Ô¶¨Òå¹ýÂË¹æÔò
+		// ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½
 		List<String> classFilters = new ArrayList<String>();
 		// classFilters.add("File*");
 
-		// ´´½¨Ò»¸öÉ¨Ãè´¦ÀíÆ÷£¬ÅÅ³ýÄÚ²¿Àà É¨Ãè·ûºÏÌõ¼þµÄÀà
+		// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½É¨ï¿½è´¦ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ É¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		ClassPathScanUtils handler = new ClassPathScanUtils(true, true,
 				classFilters);
 

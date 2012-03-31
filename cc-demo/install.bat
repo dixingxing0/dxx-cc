@@ -1,1 +1,1 @@
-mvn install
+mvn clean install -Dtest=false -DfailIfNoTests=false

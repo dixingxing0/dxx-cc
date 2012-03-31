@@ -20,8 +20,6 @@ import org.cc.core.web.annotation.RequestMethod;
 import org.cc.core.web.annotation.ResponseBody;
 import org.cc.demo.domain.Memo;
 import org.cc.demo.json.JsonUtils;
-import org.cc.demo.po.Ad;
-import org.cc.demo.service.AdManager;
 
 /**
  * 
@@ -33,14 +31,14 @@ import org.cc.demo.service.AdManager;
 @RequestMapping("/memo")
 public class MemoController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String testAjax(Model model, Ad ad) {
-		Ad ad2 = new Ad();
-		ad2.setId(2L);
-		ad2.setName("ad_2");
-		model.addAttribute(ad2);
+	public String testAjax(Model model, Memo memo) {
+		Memo memo2 = new Memo();
+		memo2.setId(2L);
+		memo2.setName("memo2");
+		model.addAttribute(memo2);
 		model.addAttribute("hello", "hello world");
 
-		Page<Ad> page = new AdManager().queryPage("select * from ad", 1, 10);
+		Page<Memo> page = Memo.DB.queryPage("select * from memo", 1, 10);
 		model.addAttribute("pageStr", page.toString());
 		model.addAttribute("page", page);
 		return "welcome.jsp";

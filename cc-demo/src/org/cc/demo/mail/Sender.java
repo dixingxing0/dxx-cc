@@ -21,11 +21,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
- * 简单邮件（不带附件的邮件）发送器
+ * 简单邮件（不带附件的邮件）发送
  */
-public class Sender extends Thread {
-	private final static Logger LOG = Logger.getLogger(Sender.class);
-	private final static String COMMA = ",";
+public final class Sender extends Thread {
+	private static final Logger LOG = Logger.getLogger(Sender.class);
+	private static final String COMMA = ",";
 	private MailInfo mi;
 	private boolean isHtml = false;
 
@@ -70,9 +70,9 @@ public class Sender extends Thread {
 	 */
 	private Sender(String to, String subject, String content) {
 		if (StringUtils.isBlank(to)) {
-			LOG.error("收件人不应该为空!");
+			LOG.error("收件人不能为空!");
 		}
-		// 这个类主要是设置邮件
+		// 这个类主要是设置邮件内容
 		mi = new MailInfo(to, subject, content);
 	}
 
@@ -154,13 +154,4 @@ public class Sender extends Thread {
 		}
 		return false;
 	}
-
-	public static void main(String[] args) {
-		System.out.println(1);
-		Sender sender = htmlSender("dixingxing@hc360.com,dixingxing@yeah.net",
-				"邮箱标题", "邮箱内容<div style='color:green'>这是个div</div>");
-		sender.start();
-		System.out.println(2);
-	}
-
 }

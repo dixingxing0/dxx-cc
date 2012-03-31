@@ -221,10 +221,7 @@
 		</plugins>
 	</reporting>
 	<repositories>
-		<repository>
-			<id>localRepository</id>
-			<url>http://192.168.0.253:93/maven2/</url>
-		</repository>
+	
         <repository>  
             <id>maven2</id>  
             <url>http://repo1.maven.org/maven2/</url>  

@@ -49,8 +49,8 @@ public abstract class Dao<T> {
 	static {
 		// 初始化数据源
 		BasicDataSource ds1 = new BasicDataSource();
-		ds1.setDriverClassName(JdbcConfig.DRIVER_CLASS_NAME);
-		ds1.setUrl(JdbcConfig.DRIVER_CLASS_NAME);
+		ds1.setDriverClassName(JdbcConfig.getDriverClassName());
+		ds1.setUrl(JdbcConfig.getUrl());
 		
 		DS = ds1;
 		QUERY_RUNNER = new QueryRunner(DS);

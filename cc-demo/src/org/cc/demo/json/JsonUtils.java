@@ -8,9 +8,9 @@ package org.cc.demo.json;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 
-import org.codehaus.jackson.map.DeserializationConfig;
+import org.cc.core.common.CcException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.type.TypeReference;
 
 /**
  * json 工具类
@@ -18,8 +18,21 @@ import org.codehaus.jackson.map.SerializationConfig;
  * @author dixingxing
  * @date Feb 15, 2012
  */
-public class JsonUtils {
-	public final static String dateFormat = "yyyy-MM-dd HH:mm:ss";
+public final class JsonUtils {
+	private final static ObjectMapper sMapper ;
+	private final static ObjectMapper dMapper ;
+	
+	static {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// 序列化 mapper
+		sMapper = new ObjectMapper();
+		sMapper.setSerializationConfig(sMapper.getSerializationConfig().withDateFormat(dateFormat));
+		
+		// 反序列化 mapper
+		dMapper = new ObjectMapper();
+		dMapper.setDeserializationConfig(dMapper.getDeserializationConfig().withDateFormat(dateFormat));
+		
+	}
 
 	/**
 	 * 使用jackson 序列化成json字符串
@@ -28,18 +41,17 @@ public class JsonUtils {
 	 * @return
 	 */
 	public static String toJson(Object o) {
-		ObjectMapper mapper = sMapper();
 		StringWriter sw = new StringWriter();
 		try {
-			mapper.writeValue(sw, o);
+			sMapper.writeValue(sw, o);
 			return sw.toString();
 		} catch (Exception e) {
-			throw new RuntimeException("序列化对象出错：", e);
+			throw new CcException("序列化对象出错：", e);
 		}
 	}
 
 	/**
-	 * 使用jackson 把json字符串反序列化成java对象
+	 * 使用jackson 把json字符串反序列化成java对象 (单个对象)
 	 * 
 	 * @param <T>
 	 * @param s
@@ -47,28 +59,27 @@ public class JsonUtils {
 	 * @return
 	 */
 	public static <T> T toObject(String s, Class<T> clazz) {
-		ObjectMapper mapper = dMapper();
 		try {
-			return mapper.readValue(s, clazz);
+			return dMapper.readValue(s, clazz);
 		} catch (Exception e) {
-			throw new RuntimeException("反序列化对象出错", e);
+			throw new CcException("反序列化对象出错", e);
 		}
 	}
-
-	private static ObjectMapper sMapper() {
-		ObjectMapper mapper = new ObjectMapper();
-		SerializationConfig cfg = mapper.getSerializationConfig()
-				.withDateFormat(new SimpleDateFormat(dateFormat));
-		mapper.setSerializationConfig(cfg);
-		return mapper;
-	}
-
-	private static ObjectMapper dMapper() {
-		ObjectMapper mapper = new ObjectMapper();
-		DeserializationConfig cfg = mapper.getDeserializationConfig()
-				.withDateFormat(new SimpleDateFormat(dateFormat));
-		mapper.setDeserializationConfig(cfg);
-		return mapper;
+	
+	/**
+	 * 使用jackson 把json字符串反序列化成java对象 (list/map 集合)
+	 * 
+	 * @param <T>
+	 * @param s
+	 * @param typeReference new TypeReference<List<MyBean>>() {}
+	 * @return
+	 */
+	public static <T> T toObject(String s, TypeReference<T> typeReference) {
+		try {
+			return dMapper.readValue(s, typeReference);
+		} catch (Exception e) {
+			throw new CcException("反序列化对象出错", e);
+		}
 	}
 
 }

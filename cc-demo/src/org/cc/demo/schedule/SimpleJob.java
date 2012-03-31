@@ -15,8 +15,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.Trigger;
 
+/**
+ * a simple Quartz job
+ * 
+ * @author dixingxing	
+ * @date Mar 31, 2012
+ */
 public class SimpleJob implements Job {
-	private final static Logger LOG = Logger.getLogger(SimpleJob.class);
+	private static final Logger LOG = Logger.getLogger(SimpleJob.class);
 
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
@@ -24,8 +30,7 @@ public class SimpleJob implements Job {
 		Trigger trigger = context.getTrigger();
 
 		String s = new SimpleDateFormat("HH:mm:ss").format(new Date());
-
-		LOG.info(String.format("%s - %s , %s", s, job.getKey(), trigger
-				.getKey()));
+		
+		LOG.info(String.format("%s - %s , %s", s, job.getKey(), trigger.getKey()));
 	}
 }

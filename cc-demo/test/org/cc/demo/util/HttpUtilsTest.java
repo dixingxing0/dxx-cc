@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.cc.demo.common.util.HttpUtils;
 import org.cc.demo.domain.Memo;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Assert;
@@ -22,7 +23,7 @@ import org.junit.Test;
  * @date Mar 31, 2012
  */
 public class HttpUtilsTest {
-	private final static Logger LOG = Logger.getLogger(HttpUtilsTest.class);
+	private static final Logger LOG = Logger.getLogger(HttpUtilsTest.class);
 
 	@Test
 	public void getResponseAsString() {

@@ -82,8 +82,8 @@ public final class Sender extends Thread {
 	}
 
 	static class MyAuthenticator extends Authenticator {
-		String userName = null;
-		String password = null;
+		private String userName = null;
+		private String password = null;
 
 		public MyAuthenticator() {
 		}
@@ -150,7 +150,7 @@ public final class Sender extends Thread {
 			LOG.debug(String.format("已发送邮件(to:%s)", mi.getToAddress()));
 			return true;
 		} catch (MessagingException ex) {
-			ex.printStackTrace();
+			LOG.error("邮件发送失败", ex);
 		}
 		return false;
 	}

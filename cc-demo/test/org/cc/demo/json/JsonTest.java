@@ -24,7 +24,7 @@ import org.junit.Test;
  * @date Feb 15, 2012
  */
 public class JsonTest {
-	private final static Logger LOG = Logger.getLogger(JsonTest.class);
+	private static final Logger LOG = Logger.getLogger(JsonTest.class);
 	private List<Memo> memos;
 	
 	private Memo memo;

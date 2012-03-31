@@ -13,47 +13,53 @@ import javax.jms.Queue;
 import javax.jms.Session;
 
 import org.apache.log4j.Logger;
+import org.cc.demo.common.constant.Constant;
 import org.fusesource.stomp.jms.StompJmsConnectionFactory;
 
 /**
- * 
+ * jms 生产者
  * 
  * @author dixingxing
  * @date Feb 14, 2012
  */
-public class Producer {
-	private final static Logger LOG = Logger.getLogger(Producer.class);
+public final class Producer {
+	private static final Logger LOG = Logger.getLogger(Producer.class);
 
-	private static Connection getConn() throws JMSException {
-		StompJmsConnectionFactory factory = new StompJmsConnectionFactory();
-		factory.setBrokerURI("tcp://localhost:61613");
-
-		Connection connection = factory.createConnection("admin", "password");
-		return connection;
-	}
-
+	private Producer() {}
+	
 	/**
 	 * 
+	 * @throws JMSException 
 	 * @throws JMSException
 	 */
-	public static void sendQueue(String m) throws Exception {
-		Connection connection = getConn();
-		Session session = connection.createSession(false,
-				Session.AUTO_ACKNOWLEDGE);
-		Queue queue = session.createQueue("myTest");
-		MessageProducer producer = session.createProducer(queue);
-
-		Message msg = session.createTextMessage(m);
-		producer.send(msg);
-		LOG.debug("已发送消息:" + m);
-		producer.close();
-		session.close();
-		connection.close();
+	public static void sendQueue(String m) throws JMSException {
+		StompJmsConnectionFactory factory = new StompJmsConnectionFactory();
+		factory.setBrokerURI("tcp://localhost:61613");
+		
+		Connection connection = null;
+		Session session = null;
+		MessageProducer producer = null;
+		try{
+			connection = factory.createConnection("admin", "password");
+			
+			session = connection.createSession(false,
+					Session.AUTO_ACKNOWLEDGE);
+			Queue queue = session.createQueue("myTest");
+			producer = session.createProducer(queue);
+	
+			Message msg = session.createTextMessage(m);
+			producer.send(msg);
+			LOG.debug("已发送消息:" + m);
+		} finally {
+			producer.close();
+			session.close();
+			connection.close();
+		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws JMSException, InterruptedException {
 		for (int i = 0; i < 10; i++) {
-			Thread.sleep(1000 * 1L);
+			Thread.sleep(Constant.TIME_SECONDE);
 			sendQueue("this is message " + i + "!");
 		}
 	}

@@ -72,6 +72,8 @@ public final class CacheUtils {
 		cache.setEnableHeartBeat(false);
 
 	}
+	
+	private CacheUtils() {}
 
 	/**
 	 * 动态添加memcached 节点

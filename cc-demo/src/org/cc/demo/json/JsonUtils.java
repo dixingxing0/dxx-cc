@@ -19,21 +19,22 @@ import org.codehaus.jackson.type.TypeReference;
  * @date Feb 15, 2012
  */
 public final class JsonUtils {
-	private final static ObjectMapper sMapper ;
-	private final static ObjectMapper dMapper ;
+	private static final ObjectMapper S_MAPPER ;
+	private static final ObjectMapper D_MAPPER ;
 	
 	static {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// 序列化 mapper
-		sMapper = new ObjectMapper();
-		sMapper.setSerializationConfig(sMapper.getSerializationConfig().withDateFormat(dateFormat));
+		S_MAPPER = new ObjectMapper();
+		S_MAPPER.setSerializationConfig(S_MAPPER.getSerializationConfig().withDateFormat(dateFormat));
 		
 		// 反序列化 mapper
-		dMapper = new ObjectMapper();
-		dMapper.setDeserializationConfig(dMapper.getDeserializationConfig().withDateFormat(dateFormat));
+		D_MAPPER = new ObjectMapper();
+		D_MAPPER.setDeserializationConfig(D_MAPPER.getDeserializationConfig().withDateFormat(dateFormat));
 		
 	}
 
+	private JsonUtils() {}
 	/**
 	 * 使用jackson 序列化成json字符串
 	 * 
@@ -43,7 +44,7 @@ public final class JsonUtils {
 	public static String toJson(Object o) {
 		StringWriter sw = new StringWriter();
 		try {
-			sMapper.writeValue(sw, o);
+			S_MAPPER.writeValue(sw, o);
 			return sw.toString();
 		} catch (Exception e) {
 			throw new CcException("序列化对象出错：", e);
@@ -60,7 +61,7 @@ public final class JsonUtils {
 	 */
 	public static <T> T toObject(String s, Class<T> clazz) {
 		try {
-			return (T) dMapper.readValue(s, clazz);
+			return (T) D_MAPPER.readValue(s, clazz);
 		} catch (Exception e) {
 			throw new CcException("反序列化对象出错", e);
 		}
@@ -77,7 +78,7 @@ public final class JsonUtils {
 	@SuppressWarnings("unchecked")
 	public static <T> T toObject(String s, TypeReference<T> typeReference) {
 		try {
-			return (T)dMapper.readValue(s, typeReference);
+			return (T)D_MAPPER.readValue(s, typeReference);
 		} catch (Exception e) {
 			throw new CcException("反序列化对象出错", e);
 		}

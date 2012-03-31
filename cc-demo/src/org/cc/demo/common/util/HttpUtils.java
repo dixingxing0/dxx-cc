@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.demo.util;
+package org.cc.demo.common.util;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -13,6 +13,7 @@ import java.net.URL;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.CcException;
+import org.cc.demo.common.constant.Constant;
 import org.cc.demo.json.JsonUtils;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -23,8 +24,10 @@ import org.codehaus.jackson.type.TypeReference;
  * @date Mar 31, 2012
  */
 public final class HttpUtils {
-	private final static Logger LOG = Logger.getLogger(HttpUtils.class);
+	private static final Logger LOG = Logger.getLogger(HttpUtils.class);
 
+	private HttpUtils(){}
+	
 	/**
 	 * http get 方式访问网页，以文本方式返回
 	 * 
@@ -33,17 +36,17 @@ public final class HttpUtils {
 	 */
 	public static String getResponseAsString(String link){
 		long start = System.currentTimeMillis();
-		HttpURLConnection conn = null;
-		URL url = null;
 		String result = "";
 		try {
-			url = new java.net.URL(link);
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setConnectTimeout(2000);
+			URL url = new URL(link);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			// 设置连接超时时间为2秒
+			conn.setConnectTimeout(Constant.TIME_SECONDE_2);
 			conn.connect();
 
 			InputStream urlStream = conn.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(urlStream));
+			
 			String s = "";
 			while ((s = reader.readLine()) != null) {
 				result += s;
@@ -51,6 +54,7 @@ public final class HttpUtils {
 			reader.close();
 			urlStream.close();
 			conn.disconnect();
+			
 			LOG.debug(System.currentTimeMillis() - start);
 			return result;
 		} catch(Exception e){

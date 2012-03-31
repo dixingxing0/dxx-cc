@@ -24,22 +24,23 @@ import org.apache.velocity.tools.view.VelocityLayoutServlet;
 @SuppressWarnings("serial")
 public final class VelocityServlet extends VelocityLayoutServlet {
 
-	private final static Log LOG = LogFactory.getLog(VelocityServlet.class);
+	private static final Log LOG = LogFactory.getLog(VelocityServlet.class);
 
 	@Override
 	protected void error(HttpServletRequest req, HttpServletResponse res,
 			Throwable excp) {
 
 		Throwable t = excp;
-		if (excp instanceof MethodInvocationException)
+		if (excp instanceof MethodInvocationException) {
 			t = ((MethodInvocationException) excp).getWrappedThrowable();
+		}
 
 		try {
 			if (t instanceof ResourceNotFoundException) {
-				LOG.error(t.getMessage() + "(" + req.getRequestURL().toString()
-						+ ")");
-				if (!res.isCommitted())
+				LOG.error(t.getMessage() + "(" + req.getRequestURL().toString() + ")");
+				if (!res.isCommitted()) {
 					res.sendError(HttpServletResponse.SC_NOT_FOUND);
+				}
 			} else {
 				StringBuilder log = new StringBuilder(
 						"ERROR：Unknown Velocity Error，url=");

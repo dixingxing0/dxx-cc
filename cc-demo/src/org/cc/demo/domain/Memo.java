@@ -5,9 +5,16 @@
  */
 package org.cc.demo.domain;
 
+import java.util.Date;
+
 import org.cc.core.dao.Dao;
 import org.cc.core.dao.annotation.Table;
+import org.cc.core.dao.annotation.Transient;
+import org.cc.demo.json.DateDeserializer;
+import org.cc.demo.json.DateSerializer;
 import org.cc.demo.json.JsonUtils;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  * 
@@ -16,14 +23,19 @@ import org.cc.demo.json.JsonUtils;
  */
 @Table("memo")
 public class Memo extends Dao<Memo>{
-	/** 设置一个单例 ，便于泛型查询 Memo.DB.queryList(...)  */
-	public final static Memo DB = new Memo();
+	/** 设置一个实例便于泛型查询 Memo.DB.queryList(...)  */
+	public static final Memo DB = new Memo();
 	
 	private Long id;
 	
 	private String name;
 	
 	private String createTime;
+	
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeserializer.class)
+	@Transient
+	private Date aDate = new Date();
 	
 	public Long getId() {
 		return id;
@@ -43,6 +55,14 @@ public class Memo extends Dao<Memo>{
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+	
+	public Date getADate() {
+		return aDate;
+	}
+	public void setADate(Date date) {
+		aDate = date;
+	}
+	
 	@Override
 	public String toString() {
 		return JsonUtils.toJson(this);

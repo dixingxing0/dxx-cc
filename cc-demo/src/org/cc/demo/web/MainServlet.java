@@ -18,7 +18,7 @@ import org.cc.core.web.WebMethod;
  */
 @SuppressWarnings("serial")
 public class MainServlet extends DispatcherServlet {
-	private final static Logger LOG = Logger.getLogger(MainServlet.class);
+	private static final Logger LOG = Logger.getLogger(MainServlet.class);
 
 	@Override
 	protected void afterProcess(WebMethod webMethod, long start) {

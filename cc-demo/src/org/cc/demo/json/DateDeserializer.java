@@ -10,21 +10,31 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.cc.core.common.CcException;
+import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 
+/**
+ * jackson 反序列化日期格式定义
+ * 
+ * @author dixingxing	
+ * @date Mar 31, 2012
+ */
 public class DateDeserializer extends JsonDeserializer<Date> {
 
 	@Override
-	public Date deserialize(JsonParser jp, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
+	public Date deserialize(JsonParser jp, DeserializationContext ctxt){
 		Date d = null;
 		try {
 			d = new SimpleDateFormat("yyyy-MM-dd").parse(jp.getText());
+		} catch (JsonParseException e) {
+			throw new CcException(e);
 		} catch (ParseException e) {
-			throw new RuntimeException(e);
+			throw new CcException(e);
+		} catch (IOException e) {
+			throw new CcException(e);
 		}
 		return d;
 	}

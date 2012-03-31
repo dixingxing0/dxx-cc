@@ -17,7 +17,7 @@ import org.junit.Test;
  * @date Mar 30, 2012
  */
 public class MemoTest {
-	private final static Logger LOG = Logger.getLogger(MemoTest.class);
+	private static final Logger LOG = Logger.getLogger(MemoTest.class);
 	
 	@Test
 	public void queryList() {

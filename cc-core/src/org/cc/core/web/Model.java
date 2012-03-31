@@ -17,6 +17,16 @@ public class Model extends LinkedHashMap<String, Object> {
 	}
 
 	/**
+	 * 是否是默认的key
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public boolean isDefaultKey(String key) {
+		return key != null && key.startsWith(Model.DEFAULT_KEY);
+	}
+	
+	/**
 	 * Add the supplied attribute under the supplied name.
 	 * 
 	 * @param attributeName

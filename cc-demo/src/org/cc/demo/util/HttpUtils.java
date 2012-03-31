@@ -17,7 +17,7 @@ import org.cc.demo.json.JsonUtils;
 import org.codehaus.jackson.type.TypeReference;
 
 /**
- * 
+ * json协议的rpc访问
  * 
  * @author dixingxing	
  * @date Mar 31, 2012

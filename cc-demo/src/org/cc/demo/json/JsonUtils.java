@@ -60,7 +60,7 @@ public final class JsonUtils {
 	 */
 	public static <T> T toObject(String s, Class<T> clazz) {
 		try {
-			return dMapper.readValue(s, clazz);
+			return (T) dMapper.readValue(s, clazz);
 		} catch (Exception e) {
 			throw new CcException("反序列化对象出错", e);
 		}
@@ -74,9 +74,10 @@ public final class JsonUtils {
 	 * @param typeReference new TypeReference<List<MyBean>>() {}
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T toObject(String s, TypeReference<T> typeReference) {
 		try {
-			return dMapper.readValue(s, typeReference);
+			return (T)dMapper.readValue(s, typeReference);
 		} catch (Exception e) {
 			throw new CcException("反序列化对象出错", e);
 		}

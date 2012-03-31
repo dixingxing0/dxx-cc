@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.cc.demo.domain.Memo;
-import org.cc.demo.json.JsonUtils;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Assert;
 import org.junit.Test;

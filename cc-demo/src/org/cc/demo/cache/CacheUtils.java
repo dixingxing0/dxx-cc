@@ -9,19 +9,15 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.MemcachedClientBuilder;
 import net.rubyeye.xmemcached.XMemcachedClientBuilder;
 import net.rubyeye.xmemcached.command.TextCommandFactory;
-import net.rubyeye.xmemcached.exception.MemcachedException;
 import net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator;
 import net.rubyeye.xmemcached.transcoders.SerializingTranscoder;
 
 import org.apache.log4j.Logger;
-import org.cc.demo.po.Ad;
-
 
 import com.google.code.yanf4j.core.impl.StandardSocketOption;
 
@@ -31,26 +27,37 @@ import com.google.code.yanf4j.core.impl.StandardSocketOption;
  * @author dixingxing
  * @date Feb 15, 2012
  */
-public class CacheUtils {
-	private static Logger LOG = Logger.getLogger(CacheUtils.class);
+public final class CacheUtils {
+	private static final Logger LOG = Logger.getLogger(CacheUtils.class);
 	private static final String CACHE_ERROR = "操作缓存出错";
-	private static MemcachedClient cache;
 
-	private static long TIME_OUT = 5000L;
+	private static final long TIME_OUT = 5000L;
+	private static final long SO_RCVBUF = 128 * 1024L;
+	private static final long SO_SNDBUF = 32 * 1024L;
+	private static final int CONNECTION_POOL_SIZE = 2;
+	private static final long SESSION_IDLE_TIMEOUT = 3000L;
+	private static final int MERGE_FACTOR = 50;
+	
+	private static final String SERVER_ADDRESS = "127.0.0.1";
+	private static final int SERVER_PORT= 11211;
+	
+
+	private static MemcachedClient cache;
 
 	static {
 		LOG.debug("---------初始化memcachedClient 开始---------");
 		MemcachedClientBuilder builder = new XMemcachedClientBuilder(
 				getAddresses());
-		builder.setSocketOption(StandardSocketOption.SO_RCVBUF, 128 * 1024); // 设置接收缓存区，默认64K
-		builder.setSocketOption(StandardSocketOption.SO_SNDBUF, 32 * 1024); // 设置发送缓冲区，默认为16K
+		builder.setSocketOption(StandardSocketOption.SO_RCVBUF, SO_RCVBUF); // 设置接收缓存区，默认64K
+		builder.setSocketOption(StandardSocketOption.SO_SNDBUF, SO_SNDBUF); // 设置发送缓冲区，默认为16K
 		builder.setSocketOption(StandardSocketOption.TCP_NODELAY, false); // 启用nagle算法，提高吞吐量，默认关闭
-		builder.setConnectionPoolSize(2); //
+		builder.setConnectionPoolSize(CONNECTION_POOL_SIZE); //
+		
 		builder.setCommandFactory(new TextCommandFactory());
 		builder.setSessionLocator(new KetamaMemcachedSessionLocator());
 		builder.setTranscoder(new SerializingTranscoder());
 
-		builder.getConfiguration().setSessionIdleTimeout(10000L); // 默认如果连接超过5秒没有任何IO操作发生即认为空闲并发起心跳检测
+		builder.getConfiguration().setSessionIdleTimeout(SESSION_IDLE_TIMEOUT); // 默认如果连接超过5秒没有任何IO操作发生即认为空闲并发起心跳检测
 		builder.getConfiguration().setStatisticsServer(true);
 
 		try {
@@ -60,7 +67,7 @@ public class CacheUtils {
 		}
 		cache.setOpTimeout(TIME_OUT);
 
-		cache.setMergeFactor(50); // 默认是150，缩小到50
+		cache.setMergeFactor(MERGE_FACTOR); // 默认是150，缩小到50
 		cache.setOptimizeMergeBuffer(false); // 关闭合并buffer的优化
 		cache.setEnableHeartBeat(false);
 
@@ -76,7 +83,7 @@ public class CacheUtils {
 		try {
 			cache.addServer(host, port);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error("添加memcached节点失败", e);
 		}
 	}
 
@@ -87,7 +94,7 @@ public class CacheUtils {
 	 */
 	private static List<InetSocketAddress> getAddresses() {
 		List<InetSocketAddress> list = new ArrayList<InetSocketAddress>();
-		list.add(new InetSocketAddress("127.0.0.1", 11211));
+		list.add(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT));
 		return list;
 	}
 
@@ -143,20 +150,5 @@ public class CacheUtils {
 		} catch (Exception e) {
 			LOG.error(CACHE_ERROR, e);
 		}
-	}
-
-	public static void main(String[] args) throws MemcachedException,
-			InterruptedException, TimeoutException {
-		for (int i = 0; i < 200; i++) {
-			CacheUtils.set("test_" + i, 15, "test_v_" + i);
-		}
-		for (int i = 0; i < 200; i++) {
-			System.out.println(CacheUtils.get("test_" + i));
-		}
-		Ad ad = new Ad();
-		ad.setName("ad_name");
-		ad.setId(123L);
-		CacheUtils.set("ad_test", 5, ad);
-		System.out.println(CacheUtils.get("ad_test"));
 	}
 }

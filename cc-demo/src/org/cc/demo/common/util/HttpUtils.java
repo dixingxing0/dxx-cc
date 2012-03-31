@@ -51,10 +51,6 @@ public final class HttpUtils {
 			while ((s = reader.readLine()) != null) {
 				result += s;
 			}
-			reader.close();
-			urlStream.close();
-			conn.disconnect();
-			
 			LOG.debug(System.currentTimeMillis() - start);
 			return result;
 		} catch(Exception e){

@@ -22,12 +22,13 @@ public class SenderTest {
 	 */
 	@Test
 	public void testSendMail() {
-		Sender sender = Sender.htmlSender("dixingxing@yeah.net",
-				"邮箱标题", "邮箱内容<div style='color:green'>这是个div <br />generated at " +new Date()+ "</div>");
+		String to = "dxx.mazzystar@yahoo.com.cn";
+		Sender sender = Sender.htmlSender(to,
+				"html", "邮箱内容<div style='color:green'>这是个div <br />generated at " +new Date()+ "</div>");
 		sender.start();
 		
-		Sender sender2 = Sender.htmlSender("dixingxing@yeah.net",
-				"邮箱标题", "邮箱内容这是个文本邮件 \r\n generated at " +new Date()+ "</div>");
+		Sender sender2 = Sender.htmlSender(to,
+				"text", "邮箱内容这是个文本邮件 \r\n generated at " +new Date()+ "</div>");
 		sender2.start();
 	}
 

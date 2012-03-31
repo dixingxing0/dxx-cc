@@ -15,7 +15,7 @@ import org.cc.core.dao.SqlBuilder;
 public class Page<T> implements Serializable {
 	private static final long serialVersionUID = -1241179900114637258L;
 	
-	private static final int DEFAULT_SIZE = 10;
+	public static final int DEFAULT_SIZE = 10;
 	
 	private int size; // 每页显示记录
 	private int totalResult; // 总记录数

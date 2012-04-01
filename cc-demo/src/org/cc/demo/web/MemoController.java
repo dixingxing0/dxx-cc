@@ -7,8 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.cc.core.common.Page;
 import org.cc.core.common.UploadUtils;
+import org.cc.core.db.Page;
 import org.cc.core.web.Model;
 import org.cc.core.web.annotation.Controller;
 import org.cc.core.web.annotation.PathVar;

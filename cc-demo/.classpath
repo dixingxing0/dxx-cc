@@ -38,7 +38,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7.jar" sourcepath="/M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar" sourcepath="/velocity-tool-src"/>
 	<classpathentry kind="var" path="M2_REPO/org/xerial/sqlite-jdbc/3.7.2/sqlite-jdbc-3.7.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/cc/cc-core/0.0.1-SNAPSHOT/cc-core-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/fusesource/hawtbuf/hawtbuf/1.8/hawtbuf-1.8.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-api-mockito/1.4.11/powermock-api-mockito-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-api-mockito/1.4.11/powermock-api-mockito-1.4.11-sources.jar"/>
@@ -47,5 +46,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4/1.4.11/powermock-module-junit4-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-module-junit4/1.4.11/powermock-module-junit4-1.4.11-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4-common/1.4.11/powermock-module-junit4-common-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-module-junit4-common/1.4.11/powermock-module-junit4-common-1.4.11-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-reflect/1.4.11/powermock-reflect-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-reflect/1.4.11/powermock-reflect-1.4.11-sources.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cc-core"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

@@ -7,9 +7,11 @@ package org.cc.demo.domain;
 
 import java.util.Date;
 
-import org.cc.core.dao.Dao;
-import org.cc.core.dao.annotation.Table;
-import org.cc.core.dao.annotation.Transient;
+import org.cc.core.cache.Cached;
+import org.cc.core.db.CachedDao;
+import org.cc.core.db.annotation.Table;
+import org.cc.core.db.annotation.Transient;
+import org.cc.demo.cache.McClient;
 import org.cc.demo.json.DateDeserializer;
 import org.cc.demo.json.DateSerializer;
 import org.cc.demo.json.JsonUtils;
@@ -21,10 +23,16 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
  * @author dixingxing	
  * @date Mar 30, 2012
  */
+@SuppressWarnings("serial")
 @Table("memo")
-public class Memo extends Dao<Memo>{
+@Cached
+public class Memo extends CachedDao<Memo>  {
 	/** 设置一个实例便于泛型查询 Memo.DB.queryList(...)  */
 	public static final Memo DB = new Memo();
+	
+	static {
+		DB.setClient(new McClient());
+	}
 	
 	private Long id;
 	

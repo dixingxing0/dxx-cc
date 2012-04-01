@@ -17,25 +17,32 @@ import net.rubyeye.xmemcached.command.TextCommandFactory;
 import net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator;
 import net.rubyeye.xmemcached.transcoders.SerializingTranscoder;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
+import org.cc.core.cache.CacheClient;
+import org.cc.core.cache.Cached;
+import org.cc.core.common.AnnotationUtils;
 import org.cc.core.common.CcException;
+import org.cc.core.db.Page;
+import org.cc.demo.domain.Memo;
 
 import com.google.code.yanf4j.core.impl.StandardSocketOption;
 
 /**
- * xmemecached
+ * xmemecached client
  * 
  * @author dixingxing
  * @date Feb 15, 2012
  */
-public final class CacheUtils {
-	private static final Logger LOG = Logger.getLogger(CacheUtils.class);
+public class McClient implements CacheClient{
+	
+	private static final Logger LOG = Logger.getLogger(McClient.class);
 
 	private static final long TIME_OUT = 5000L;
 	/** 接收缓存区，默认64K */
-	private static final long SO_RCVBUF = 128 * 1024L;
+	private static final int SO_RCVBUF = 128 * 1024;
 	/** 发送缓冲区，默认为16K */
-	private static final long SO_SNDBUF = 32 * 1024L;
+	private static final int SO_SNDBUF = 32 * 1024;
 	private static final int CONNECTION_POOL_SIZE = 2;
 	/** 默认如果连接超过5秒没有任何IO操作发生即认为空闲并发起心跳检测 */
 	private static final long SESSION_IDLE_TIMEOUT = 3000L;
@@ -77,7 +84,7 @@ public final class CacheUtils {
 		}
 	}
 	
-	private CacheUtils() {}
+	public McClient() {}
 
 	/**
 	 * 动态添加memcached 节点
@@ -113,7 +120,7 @@ public final class CacheUtils {
 	 * @param value
 	 *            要实现Serializable
 	 */
-	public static void set(final String key, final int exp, final Object value) {
+	public void set(final String key, final int exp, final Object value) {
 		if (key == null || value == null) {
 			return;
 		}
@@ -124,14 +131,15 @@ public final class CacheUtils {
 			throw new CcException(e);
 		}
 	}
-
+	
+	
 	/**
 	 * 
 	 * @param key
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T get(final String key) {
+	public <T> T get(final String key) {
 		if (key == null) {
 			return null;
 		}
@@ -150,11 +158,49 @@ public final class CacheUtils {
 	 * 
 	 * @param key
 	 */
-	public static void delete(final String key) {
+	public void delete(final String key) {
 		try {
 			cache.delete(key);
 		} catch (Exception e) {
 			throw new CcException(e);
 		}
 	}
+
+	public void set(String key, Object obj) {
+		if(obj == null) {
+			return ;
+		}
+		if (obj instanceof List) {
+			List<?> list = (List<?>) obj;
+			if(CollectionUtils.isNotEmpty(list)) {
+				Object content = list.get(0);
+				Cached c = AnnotationUtils.get(content, Cached.class);
+				if(c != null) {
+					LOG.debug("cached " + c.exp());
+//				    set(key, c.listExp(), obj);
+				}
+			}
+		} else if (obj instanceof Page) {
+			Page<?> p = (Page<?>) obj;
+			if(CollectionUtils.isNotEmpty(p.getResult())) {
+				Object content = p.getResult().get(0);
+				Cached c = AnnotationUtils.get(content, Cached.class);
+				if(c != null) {
+					LOG.debug("cached " + c.exp());
+//				    set(key, c.listExp(), obj);
+				}
+			}
+		} else  {
+			Cached c = AnnotationUtils.get(obj, Cached.class);
+			if(c != null) {
+				LOG.debug("cached " + c.exp());
+//				set(key, c.exp(), obj);
+			}
+		}
+		
+	}
+	public static void main(String[] args) {
+		new McClient().set("123123", new Memo());
+	}
+	
 }

@@ -25,7 +25,7 @@ import org.apache.commons.lang.StringUtils;
  * @date Jan 31, 2012
  */
 public final class DbUtilsBeanProcessor extends BeanProcessor {
-	private final static Pattern p = Pattern.compile("([A-Z])");
+	private final static Pattern P = Pattern.compile("([A-Z])");
 	
 	/**
 	 * 数据库列名 -> java属性名
@@ -51,7 +51,7 @@ public final class DbUtilsBeanProcessor extends BeanProcessor {
 	 */
 	public static String j2db(String prop) {
 		String result = prop;
-		Matcher m = p.matcher(prop);
+		Matcher m = P.matcher(prop);
 		while (m.find()) {
 			String s = m.group(1);
 			result = result.replaceFirst(s, "_" + s.toLowerCase());

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.cc.core.conf.WebConfig;
 import org.cc.core.web.binder.Binder;
 import org.cc.core.web.context.WebContext;
 
@@ -27,6 +28,8 @@ import org.cc.core.web.context.WebContext;
 public class DispatcherServlet extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(DispatcherServlet.class);
 
+	private Binder binder = WebConfig.getBinder();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -78,8 +81,8 @@ public class DispatcherServlet extends HttpServlet {
 	 */
 	protected final void processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		beforeProcess();
 		long start = System.currentTimeMillis();
+		beforeProcess();
 		WebMethod webMethod = null;
 		try {
 			LOG.debug("(开始)处理请求: " + request.getServletPath());
@@ -89,7 +92,7 @@ public class DispatcherServlet extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
-			Object[] params = Binder.bind(request, response, webMethod);
+			Object[] params = binder.fromRequest(request, response, webMethod);
 
 			String s = (String) webMethod.getMethod().invoke(webMethod.getHandler(),
 					params);
@@ -101,7 +104,7 @@ public class DispatcherServlet extends HttpServlet {
 				afterProcess(webMethod, start);
 				return;
 			}
-			Binder.bind2Request(request, params);
+			binder.toRequest(request, params);
 
 			LOG.debug("(结束)返回视图为：" + s);
 			request.getRequestDispatcher("/WEB-INF/views/" + s).forward(

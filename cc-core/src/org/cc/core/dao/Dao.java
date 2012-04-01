@@ -56,7 +56,7 @@ public abstract class Dao<T> {
 		QUERY_RUNNER = new QueryRunner(DS);
 	}
 	
-	private static final ScalarHandler scaleHandler = new ScalarHandler() {
+	private static final ScalarHandler SCALE_HANDLER = new ScalarHandler() {
 		@Override
 		public Object handle(ResultSet rs) throws SQLException {
 			Object obj = super.handle(rs);
@@ -161,7 +161,7 @@ public abstract class Dao<T> {
 	public Long queryLong(String sql, Object... params) {
 		LOG.debug(new SqlHolder(sql, params));
 		try {
-			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
+			Number n = (Number) QUERY_RUNNER.query(sql, SCALE_HANDLER, params);
 			return n.longValue();
 		} catch (SQLException e) {
 			throw new DbException(MESSAGE, e);
@@ -179,7 +179,7 @@ public abstract class Dao<T> {
 	public Integer queryInt(String sql, Object... params) {
 		LOG.debug(new SqlHolder(sql, params));
 		try {
-			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
+			Number n = (Number) QUERY_RUNNER.query(sql, SCALE_HANDLER, params);
 			return n.intValue();
 		} catch (SQLException e) {
 			throw new DbException(MESSAGE, e);

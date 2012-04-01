@@ -11,7 +11,9 @@ import java.util.LinkedHashMap;
  */
 @SuppressWarnings("serial")
 public class Model extends LinkedHashMap<String, Object> {
-	public static final String DEFAULT_KEY = "defaultKey_";
+	private String defaultKey = "defaultKey_";
+	
+	private int defaultNum = 0;
 
 	public Model() {
 	}
@@ -23,7 +25,7 @@ public class Model extends LinkedHashMap<String, Object> {
 	 * @return
 	 */
 	public boolean isDefaultKey(String key) {
-		return key != null && key.startsWith(Model.DEFAULT_KEY);
+		return key != null && key.startsWith(defaultKey);
 	}
 	
 	/**
@@ -57,7 +59,7 @@ public class Model extends LinkedHashMap<String, Object> {
 				&& ((Collection<?>) attributeValue).isEmpty()) {
 			return this;
 		}
-		return addAttribute(DEFAULT_KEY + Object.class.getSimpleName(),
+		return addAttribute((defaultKey + defaultNum++) + Object.class.getSimpleName(),
 				attributeValue);
 	}
 

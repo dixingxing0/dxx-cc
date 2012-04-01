@@ -7,7 +7,6 @@ package org.cc.core.web.binder;
 
 import java.lang.annotation.Annotation;
 
-import org.apache.log4j.Logger;
 import org.cc.core.web.WebMethod;
 import org.cc.core.web.annotation.PathVar;
 
@@ -17,8 +16,7 @@ import org.cc.core.web.annotation.PathVar;
  * @author dixingxing	
  * @date Mar 31, 2012
  */
-public final class PathVarBinder {
-	private static final Logger LOG = Logger.getLogger(PathVarBinder.class);
+public interface PathVarBinder {
 	
 	/**
 	 * 参数是否标注了PathVar注解
@@ -26,14 +24,7 @@ public final class PathVarBinder {
 	 * @param annotations
 	 * @return
 	 */
-	public static boolean isPathVar(Annotation[] annotations) {
-		for (Annotation a : annotations) {
-			if (PathVar.class.equals(a.annotationType())) {
-				return true;
-			}
-		}
-		return false;
-	}
+	boolean isPathVar(Annotation[] annotations);
 	
 	/**
 	 * 获取PathVar注解
@@ -41,14 +32,7 @@ public final class PathVarBinder {
 	 * @param annotations
 	 * @return
 	 */
-	public static PathVar getPathVarAnnotation(Annotation[] annotations) {
-		for (Annotation a : annotations) {
-			if (PathVar.class.equals(a.annotationType())) {
-				return (PathVar) a;
-			}
-		}
-		return null;
-	}
+	PathVar getPathVarAnnotation(Annotation[] annotations);
 	
 	/**
 	 * 根据 {@link #PathVar} 的定义，从uri中解析出相应的值
@@ -59,27 +43,5 @@ public final class PathVarBinder {
 	 * @param annotations
 	 * @return
 	 */
-	public static Object getValue(String serletPath,WebMethod webMethod ,Class<?> cls ,Annotation[] annotations) {
-		String[] variables = webMethod.getPathVars(serletPath);
-		Object returnValue = null;
-		PathVar pv = getPathVarAnnotation(annotations);
-		
-		if (pv.value() >= variables.length) {
-			LOG.warn("PathVar.value()值为 :" + pv.value() + ",应该小于匹配到的参数个数 : " + variables.length);
-		} else {
-			String v = variables[pv.value()];
-			returnValue = ObjectBuilder.build(cls, v);
-		}
-		
-		if(returnValue == null) {
-			try {
-				returnValue = cls.newInstance();
-			} catch (Exception e) {
-				// nothing to do 
-			} 
-		}
-		
-		return returnValue;
-		
-	}
+	Object getValue(String serletPath,WebMethod webMethod ,Class<?> cls ,Annotation[] annotations) ;
 }

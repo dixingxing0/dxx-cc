@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
@@ -44,7 +43,6 @@ public final class UploadUtils {
 	 * 
 	 * @param request
 	 * @return 文件名（ 多个用逗号分隔）
-	 * @throws FileUploadException
 	 */
 	@SuppressWarnings( { "unchecked", "deprecation" })
 	public static String upload(HttpServletRequest request) {

@@ -27,12 +27,11 @@ import org.cc.core.web.annotation.ResponseBody;
  * @author dixingxing
  * @date Feb 7, 2012
  */
-public class ContextLoader implements ServletContextListener {
-	private static final Logger LOG = Logger.getLogger(ContextLoader.class);
+public class ContextListener implements ServletContextListener {
+	private static final Logger LOG = Logger.getLogger(ContextListener.class);
 
 	public void contextDestroyed(ServletContextEvent arg0) {
 		LOG.debug("销毁servletContext!");
-
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
@@ -41,7 +40,6 @@ public class ContextLoader implements ServletContextListener {
 
 		Set<Class<?>> calssList = helper.getPackageAllClasses("org.cc.demo.web", true);
 		try {
-
 			for (Class<?> clazz : calssList) {
 				if (clazz.isAnnotationPresent(Controller.class)) {
 					addMappings(clazz.newInstance());

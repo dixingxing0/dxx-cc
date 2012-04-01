@@ -15,8 +15,8 @@ import org.cc.core.common.ReflectUtils;
  * @date Mar 30, 2012
  */
 public final class JdbcConfig {
-	private static Logger LOG = Logger.getLogger(JdbcConfig.class);
-	private static final String JDBC_CONFIG_FILE= "jdbc.properties";
+	private static final Logger LOG = Logger.getLogger(JdbcConfig.class);
+	private static final String JDBC_CONFIG_FILE = "jdbc.properties";
 	
 	private static String driverClassName = null;
 	private static String userName = null;

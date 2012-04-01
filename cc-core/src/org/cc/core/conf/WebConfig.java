@@ -5,12 +5,12 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.ReflectUtils;
-import org.cc.core.web.binder.Binder;
-import org.cc.core.web.binder.BinderImpl;
-import org.cc.core.web.binder.ObjectBuilderImpl;
-import org.cc.core.web.binder.PathVarBinderImpl;
-import org.cc.core.web.binder.ObjectBuilder;
-import org.cc.core.web.binder.PathVarBinder;
+import org.cc.core.web.binding.Binder;
+import org.cc.core.web.binding.BinderImpl;
+import org.cc.core.web.binding.ObjectBuilder;
+import org.cc.core.web.binding.ObjectBuilderImpl;
+import org.cc.core.web.binding.PathVarBinder;
+import org.cc.core.web.binding.PathVarBinderImpl;
 
 /**
  * 加载web配置文件中的配置
@@ -91,27 +91,30 @@ public final class WebConfig {
 		return controllerLocation;
 	}
 
+	/**
+	 * 获取{@link Binder}的实现类
+	 * 
+	 * @return
+	 */
 	public static Binder getBinder() {
 		return binder;
 	}
 
-	public static void setBinder(Binder binder) {
-		WebConfig.binder = binder;
-	}
-
+	/**
+	 * 获取{@link PathVarBinder}的实现类
+	 * 
+	 * @return
+	 */
 	public static PathVarBinder getPathVarBinder() {
 		return pathVarBinder;
 	}
 
-	public static void setPathVarBinder(PathVarBinder pathVarBinder) {
-		WebConfig.pathVarBinder = pathVarBinder;
-	}
-
+	/**
+	 * 获取{@link ObjectBuilder}的实现类
+	 * 
+	 * @return
+	 */
 	public static ObjectBuilder getObjectBuilder() {
 		return objectBuilder;
-	}
-
-	public static void setObjectBuilder(ObjectBuilder objectBuilder) {
-		WebConfig.objectBuilder = objectBuilder;
 	}
 }

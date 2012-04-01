@@ -5,7 +5,7 @@
  */
 package org.cc.core.data;
 
-import org.cc.core.dao.annotation.Table;
+import org.cc.core.db.annotation.Table;
 
 /**
  * 

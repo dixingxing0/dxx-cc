@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.web.binder;
+package org.cc.core.web.binding;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.cc.core.conf.WebConfig;
+import org.cc.core.web.binding.ObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class ObjectBuilderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.core.web.binder.ObjectBuilderImpl#build(java.lang.Class, java.lang.String)}.
+	 * Test method for {@link org.cc.core.web.binding.ObjectBuilderImpl#build(java.lang.Class, java.lang.String)}.
 	 */
 	@Test
 	public void testBuild() {

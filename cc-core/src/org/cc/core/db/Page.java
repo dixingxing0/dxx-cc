@@ -1,10 +1,9 @@
-package org.cc.core.common;
+package org.cc.core.db;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cc.core.dao.SqlBuilder;
 
 /**
  * 分页工具类

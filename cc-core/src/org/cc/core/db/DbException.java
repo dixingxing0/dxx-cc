@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.dao;
+package org.cc.core.db;
 
 /**
  * db 异常类

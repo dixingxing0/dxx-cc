@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.cc.core.conf.WebConfig;
-import org.cc.core.web.binder.Binder;
+import org.cc.core.web.binding.Binder;
 import org.cc.core.web.context.WebContext;
 
 

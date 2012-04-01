@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.web.binder;
+package org.cc.core.web.binding;
 
 
 /**

@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 持有sql 和 执行sql所需的参数
+ * 
+ * @author dixingxing	
+ * @date Apr 1, 2012
+ */
 public class SqlHolder {
 	private String sql;
 	private List<Object> params = new ArrayList<Object>();
@@ -37,6 +43,15 @@ public class SqlHolder {
 		this.sql = sql;
 	}
 
+	/**
+	 * cache key
+	 * 
+	 * @return
+	 */
+	public String cacheKey () {
+		return toString();
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("");

@@ -50,14 +50,16 @@ public final class UploadUtils {
 			return null;
 		}
 		StringBuilder sb = new StringBuilder();
+		
 		try {
-
-			String basePath = request.getRealPath("/") + UPLOAD_PATH;
+			String basePath = request.getSession().getServletContext().getRealPath("/") + UPLOAD_PATH;
 
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			factory.setRepository(new File(basePath));
+			
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			upload.setSizeMax(UPLOAD_MAX_SIZE);
+			
 			List<FileItem> items = upload.parseRequest(request);
 			for (FileItem fileItem : items) {
 				if (fileItem.isFormField()) {
@@ -93,8 +95,7 @@ public final class UploadUtils {
 	 */
 	private static String getExtention(FileItem fileItem) {
 		if (fileItem.getName() != null) {
-			return fileItem.getName()
-					.substring(fileItem.getName().indexOf("."));
+			return fileItem.getName().substring(fileItem.getName().indexOf("."));
 		}
 		return null;
 	}

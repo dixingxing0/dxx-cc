@@ -1,33 +1,71 @@
 /**
- * SqlBuilderTest.java 10:40:01 AM Feb 9, 2012
+ * SqlBuilderTest.java 3:52:18 PM Apr 1, 2012
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
 package org.cc.core.db;
 
-import org.cc.core.data.B;
-import org.cc.core.db.SqlBuilder;
+import org.apache.log4j.Logger;
+import org.cc.core.data.Child;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * 
- * @author dixingxing
- * @date Feb 9, 2012
+ * 
+ * @author dixingxing	
+ * @date Apr 1, 2012
  */
 public class SqlBuilderTest {
+	private static final Logger LOG = Logger.getLogger(SqlBuilderTest.class);
+
+	private Child child;
+	
+	@Before
+	public void setUp() {
+		child =new Child();
+		child.setId(1L);
+		child.setName("child name");
+	}
+	
+	/**
+	 * Test method for {@link org.cc.core.db.SqlBuilder#buildInsert(java.lang.Object)}.
+	 */
 	@Test
 	public void testBuildInsert() {
-		B b = new B();
-		b.setId(123L);
-		b.setName("name_b");
-		SqlBuilder.buildInsert(b);
+		LOG.debug(SqlBuilder.buildInsert(child));
 	}
+
+	/**
+	 * Test method for {@link org.cc.core.db.SqlBuilder#buildUpdate(java.lang.Object)}.
+	 */
 	@Test
 	public void testBuildUpdate() {
-		B b = new B();
-		b.setId(123L);
-		b.setName("name_b");
-		SqlBuilder.buildUpdate(b);
+		LOG.debug(SqlBuilder.buildUpdate(child));
+	}
+
+	/**
+	 * Test method for {@link org.cc.core.db.SqlBuilder#buildGetInsertId(java.lang.Object)}.
+	 */
+	@Test
+	public void testBuildGetInsertId() {
+		LOG.debug(SqlBuilder.buildGetInsertId(child));
+	}
+
+	/**
+	 * Test method for {@link org.cc.core.db.SqlBuilder#pageSql(java.lang.String, int, int)}.
+	 */
+	@Test
+	public void testPageSql() {
+		LOG.debug(SqlBuilder.pageSql("select * from memo", 0, 9));
+	}
+
+	/**
+	 * Test method for {@link org.cc.core.db.SqlBuilder#countSql(java.lang.String)}.
+	 */
+	@Test
+	public void testCountSql() {
+		LOG.debug(SqlBuilder.countSql("select * from memo"));
 	}
 
 }

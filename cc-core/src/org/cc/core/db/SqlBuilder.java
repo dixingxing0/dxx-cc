@@ -85,6 +85,20 @@ public final class SqlBuilder {
     public static String buildGetInsertId(Object po) {
         return "select max(id) from " + tableName(po);
     }
+    
+    /**
+     * 生成按id查询的sql
+     * 
+     * @param po
+     * @param id
+     * @return
+     */
+    public static String buildQueryById(Object po,Long id) {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("select * from ").append(tableName(po));
+    	sb.append(" where id = ").append(id);
+    	return sb.toString();
+    }
 	
 	/**
 	 * 把sql封装成分页的sql

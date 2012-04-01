@@ -13,8 +13,8 @@ package org.cc.core.data;
  * @date Feb 9, 2012
  */
 @SuppressWarnings("serial")
-public class A {
-	private Long id;
+public class Father {
+	protected Long id;
 
 	public Long getId() {
 		return id;

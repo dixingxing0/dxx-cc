@@ -15,7 +15,7 @@ public final class ReflectUtils {
 	private ReflectUtils(){}
 	/**
 	 * 获取obj对象fieldName的Field
-	 * 
+	 * 能获取父类的属性，不能访问接口中的属性
 	 * @param obj
 	 * @param fieldName
 	 * @return
@@ -32,7 +32,7 @@ public final class ReflectUtils {
 	}
 
 	/**
-	 * 获取所有field，包括父类(但不包括Object类) ,不包括常量static,final
+	 * 获取所有field，包括父类(但不包括Object类和接口中的属性) ,不包括常量static,final
 	 * 
 	 * @param clazz
 	 * @return
@@ -52,6 +52,14 @@ public final class ReflectUtils {
 
 	}
 
+	/**
+	 * 获取obj对象fieldName的Field
+	 * 能获取父类的属性，不能访问接口中的属性
+	 * 
+	 * @param obj
+	 * @param fieldName
+	 * @return
+	 */
 	public static Object getValueByFieldName(Object obj, String fieldName) {
 		try {
 			return get(obj, getFieldByName(obj, fieldName));
@@ -111,20 +119,18 @@ public final class ReflectUtils {
 	/**
 	 * 设置对象指定属性的值
 	 * 
+	 * @see #getFieldByName(Object, String)
+	 * 
 	 * @param obj
 	 * @param fieldName
 	 * @param value
 	 */
 	public static void set(Object obj, String fieldName, Object value) {
 		try {
-            Field f = null;
-            for(Field fd : obj.getClass().getDeclaredFields()) {
-                if(fd.getName() != null && fd.getName().equals(fieldName)) {
-                    f = fd;
-                    break;
-                }
-            }
-			
+            Field f = getFieldByName(obj, fieldName);
+			if(f == null) {
+				return;
+			}
 			if (f.isAccessible()) {
 				f.set(obj, value);
 			} else {

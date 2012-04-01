@@ -11,6 +11,6 @@ package org.cc.core.data;
  * @author dixingxing
  * @date Feb 9, 2012
  */
-public interface I {
-	public String fromInterface = "fromInterface";
+public interface People {
+	int age = 100;
 }

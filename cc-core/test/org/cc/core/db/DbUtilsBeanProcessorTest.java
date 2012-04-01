@@ -5,7 +5,6 @@
  */
 package org.cc.core.db;
 
-import org.cc.core.db.DbUtilsBeanProcessor;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +15,6 @@ import org.junit.Test;
  * @date Mar 30, 2012
  */
 public class DbUtilsBeanProcessorTest {
-
 	/**
 	 * Test method for {@link org.cc.core.db.DbUtilsBeanProcessor#j2db(java.lang.String)}.
 	 */

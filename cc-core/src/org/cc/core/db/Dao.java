@@ -55,7 +55,7 @@ public abstract class Dao<T> {
 		QUERY_RUNNER = new QueryRunner(DS);
 	}
 	
-	private static final ScalarHandler SCALE_HANDLER = new ScalarHandler() {
+	protected ScalarHandler scaleHandler = new ScalarHandler() {
 		@Override
 		public Object handle(ResultSet rs) throws SQLException {
 			Object obj = super.handle(rs);
@@ -74,7 +74,7 @@ public abstract class Dao<T> {
 	 * @param clazz
 	 * @return
 	 */
-	private BeanListHandler<T> getBeanListHandler() {
+	protected BeanListHandler<T> getBeanListHandler() {
 		return new BeanListHandler<T>(poClass(), new BasicRowProcessor(
 				new DbUtilsBeanProcessor()));
 	}
@@ -86,7 +86,7 @@ public abstract class Dao<T> {
 	 * @param clazz
 	 * @return
 	 */
-	private BeanHandler<T> getBeanHandler() {
+	protected BeanHandler<T> getBeanHandler() {
 		return new BeanHandler<T>(poClass(), new BasicRowProcessor(
 				new DbUtilsBeanProcessor()));
 	}
@@ -149,6 +149,7 @@ public abstract class Dao<T> {
 			throw new DbException(MESSAGE, e);
 		}
 	}
+	
 
 	/**
 	 * 查询long型数据
@@ -160,7 +161,7 @@ public abstract class Dao<T> {
 	public Long queryLong(String sql, Object... params) {
 		LOG.debug(new SqlHolder(sql, params));
 		try {
-			Number n = (Number) QUERY_RUNNER.query(sql, SCALE_HANDLER, params);
+			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
 			return n.longValue();
 		} catch (SQLException e) {
 			throw new DbException(MESSAGE, e);
@@ -178,7 +179,7 @@ public abstract class Dao<T> {
 	public Integer queryInt(String sql, Object... params) {
 		LOG.debug(new SqlHolder(sql, params));
 		try {
-			Number n = (Number) QUERY_RUNNER.query(sql, SCALE_HANDLER, params);
+			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
 			return n.intValue();
 		} catch (SQLException e) {
 			throw new DbException(MESSAGE, e);

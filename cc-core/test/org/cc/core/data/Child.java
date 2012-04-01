@@ -15,7 +15,9 @@ import org.cc.core.db.annotation.Table;
  */
 @SuppressWarnings("serial")
 @Table("ad")
-public class B extends A implements I {
+public class Child extends Father implements People {
+	public static final int UUID = 0;
+	
 	private String name;
 
 	public String getName() {

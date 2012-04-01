@@ -38,7 +38,7 @@ import org.cc.core.conf.JdbcConfig;
  */
 public abstract class Dao<T> {
 	public static final Logger LOG = Logger.getLogger(Dao.class);
-	public static final String ERROR = "执行sql出错";
+	public static final String MESSAGE = "sql执行失败";
 	
 	
 	/** 数据源 使用前需要初始化*/
@@ -130,8 +130,7 @@ public abstract class Dao<T> {
 		try {
 			return (List<T>) QUERY_RUNNER.query(sql, getBeanListHandler(), params);
 		} catch (SQLException e) {
-			LOG.error(ERROR, e);
-			throw new DbException(ERROR, e);
+			throw new DbException(MESSAGE, e);
 		}
 	}
 
@@ -148,8 +147,7 @@ public abstract class Dao<T> {
 		try {
 			return (T) QUERY_RUNNER.query(sql, getBeanHandler(), params);
 		} catch (SQLException e) {
-			LOG.error(ERROR, e);
-			throw new DbException(ERROR, e);
+			throw new DbException(MESSAGE, e);
 		}
 	}
 
@@ -166,8 +164,7 @@ public abstract class Dao<T> {
 			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
 			return n.longValue();
 		} catch (SQLException e) {
-			LOG.error(ERROR, e);
-			throw new DbException(ERROR, e);
+			throw new DbException(MESSAGE, e);
 		}
 	}
 
@@ -185,8 +182,7 @@ public abstract class Dao<T> {
 			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
 			return n.intValue();
 		} catch (SQLException e) {
-			LOG.error(ERROR, e);
-			throw new DbException(ERROR, e);
+			throw new DbException(MESSAGE, e);
 		}
 	}
 
@@ -207,8 +203,7 @@ public abstract class Dao<T> {
             DbUtils.commitAndCloseQuietly(conn);
             return i;
 		} catch (SQLException e) {
-			LOG.error(ERROR, e);
-			throw new DbException(ERROR, e);
+			throw new DbException(MESSAGE, e);
 		}
 	}
 
@@ -229,7 +224,7 @@ public abstract class Dao<T> {
 	public Long insert() {
 		SqlHolder holder = SqlBuilder.buildInsert(this);
 		update(holder.getSql(), holder.getParams());
-        // 此处查询sqllite3 上一个生成的主键id
+        // 此处查询sqllite3 上一个生成的主键id TODO 不使用自动生成时 此处会出错
         Long id = queryLong(SqlBuilder.buildGetInsertId(this));
         ReflectUtils.set(this, "id", id);
 
@@ -250,8 +245,7 @@ public abstract class Dao<T> {
 					.query(sql, new MapListHandler());
 			return results;
 		} catch (SQLException e) {
-			LOG.error(ERROR, e);
-			throw new DbException(ERROR, e);
+			throw new DbException(MESSAGE, e);
 		}
 	}
 

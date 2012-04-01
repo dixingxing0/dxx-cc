@@ -25,13 +25,15 @@ import org.apache.commons.lang.StringUtils;
  * @date Jan 31, 2012
  */
 public final class DbUtilsBeanProcessor extends BeanProcessor {
+	private final static Pattern p = Pattern.compile("([A-Z])");
+	
 	/**
 	 * 数据库列名 -> java属性名
 	 * 
 	 * @param column
 	 * @return
 	 */
-	private static String column2Prop(String column) {
+	private static String db2j(String column) {
 		String[] strs = column.split("_");
 		StringBuilder conventName = new StringBuilder();
 		for (int i = 0; i < strs.length; i++) {
@@ -47,11 +49,9 @@ public final class DbUtilsBeanProcessor extends BeanProcessor {
 	 *            命名规则为驼峰命名法，不支持连续两个大写字母
 	 * @return
 	 */
-	public static String prop2column(String prop) {
-		Pattern p = Pattern.compile("([A-Z])");
-		Matcher m = p.matcher(prop);
-
+	public static String j2db(String prop) {
 		String result = prop;
+		Matcher m = p.matcher(prop);
 		while (m.find()) {
 			String s = m.group(1);
 			result = result.replaceFirst(s, "_" + s.toLowerCase());
@@ -73,7 +73,7 @@ public final class DbUtilsBeanProcessor extends BeanProcessor {
 			if (null == columnName || 0 == columnName.length()) {
 				columnName = rsmd.getColumnName(col);
 			}
-			columnName = column2Prop(columnName);
+			columnName = db2j(columnName);
 			for (int i = 0; i < props.length; i++) {
 
 				if (columnName.equalsIgnoreCase(props[i].getName())) {

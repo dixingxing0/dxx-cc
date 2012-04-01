@@ -17,11 +17,11 @@ import org.junit.Test;
 public class DbUtilsBeanProcessorTest {
 
 	/**
-	 * Test method for {@link org.cc.core.dao.DbUtilsBeanProcessor#prop2column(java.lang.String)}.
+	 * Test method for {@link org.cc.core.dao.DbUtilsBeanProcessor#j2db(java.lang.String)}.
 	 */
 	@Test
 	public void testProp2column() {
-		Assert.assertEquals("publish_time_a_b", DbUtilsBeanProcessor.prop2column("publishTimeAB"));
+		Assert.assertEquals("publish_time_a_b", DbUtilsBeanProcessor.j2db("publishTimeAB"));
 	}
 
 }

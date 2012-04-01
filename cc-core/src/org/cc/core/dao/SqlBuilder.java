@@ -163,12 +163,12 @@ public final class SqlBuilder {
 	 * MyBeanProcessor中定义了查询时从数据库字段转 -> po属性 的规则,<br />
 	 * 此处po属性 -> 数据库字段 的规则和前面保持一致
 	 * 
-	 * @see DbUtilsBeanProcessor#prop2column(String)
+	 * @see DbUtilsBeanProcessor#j2db(String)
 	 * @param f
 	 * @return
 	 */
 	private static String columnName(Field f) {
-		return DbUtilsBeanProcessor.prop2column(f.getName());
+		return DbUtilsBeanProcessor.j2db(f.getName());
 	}
 
 	/**

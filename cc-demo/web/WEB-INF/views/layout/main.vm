@@ -1,24 +1,25 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml>
 <head>
-	<meta charset="utf-8" />
-    <title>cc j2ee without spring</title>
-	<link href="http://cc.pagekite.me/resources/alice/base.css" rel="stylesheet" type="text/css" />
-	<link href="http://cc.pagekite.me/resources/alice/tpl/tpl.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>欢迎您!</title>
+	<link rel="stylesheet" href="http://localhost:8080/resources/blueprint/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="http://localhost:8080/resources/blueprint/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="http://localhost:8080/resources/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]--> 
 </head>
+
 <body>
-<div class="ui-nav">
-    <div class="ui-title fn-clear">
-        <h2 class="ui-title-cnt fn-left">这是标题</h2>
-        <div class="ui-title-subcnt fn-left">
-            <!-- 标题中的其他内容 -->
-    		这是标题中的其他内容
-        </div>
-    </div> <!-- .ui-title -->
-    <!-- 如果标题没有其他内容，直接这样写 -->
-    <h2>标题</h2>
+<div class="container showgrid" style="border:1px solid #000;">
+	<div class="span-24 last" >
+		<h2>cc project</h2><p>web演示</p>
+		<hr>
+	</div>
+	$screen_content
+
+	<div class="span-24 last" style="height:35px;">
+		<hr>
+		<p>@2012 GitHub Inc. All rights reserved.</p>
+	</div>
 </div>
-$screen_content
-<p>结尾</p>
 </body>
 </html>

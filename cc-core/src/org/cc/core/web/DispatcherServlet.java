@@ -104,6 +104,13 @@ public class DispatcherServlet extends HttpServlet {
 				afterProcess(webMethod, start);
 				return;
 			}
+			
+			if(s == null) {
+				LOG.debug("没有定义返回视图");
+				afterProcess(webMethod, start);
+				return;
+			}
+			
 			binder.toRequest(request, params);
 
 			LOG.debug("(结束)返回视图为：" + s);

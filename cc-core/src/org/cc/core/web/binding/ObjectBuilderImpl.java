@@ -72,7 +72,8 @@ public class ObjectBuilderImpl implements ObjectBuilder{
 				LOG.warn("不支持的绑定类型 " + cls.getName());
 			}
 		} catch (Exception e) {
-			LOG.warn("类型转换错误 ：" + v + "->" + cls.getName(), e);
+			//do nothing
+			//LOG.warn("类型转换错误 ：" + v + "->" + cls.getName(), e);
 		}
 		return value;
 	}

@@ -86,6 +86,8 @@ public final class SqlBuilder {
         return "select max(id) from " + tableName(po);
     }
     
+    
+    
     /**
      * 生成按id查询的sql
      * 
@@ -93,11 +95,25 @@ public final class SqlBuilder {
      * @param id
      * @return
      */
-    public static String buildQueryById(Object po,Long id) {
+    public static SqlHolder buildQueryById(Object po,Long id) {
     	StringBuilder sb = new StringBuilder();
     	sb.append("select * from ").append(tableName(po));
-    	sb.append(" where id = ").append(id);
-    	return sb.toString();
+    	sb.append(" where id = ?");
+    	return new SqlHolder(sb.toString(),id);
+    }
+    
+    /**
+     * 生成根据id删除的sql
+     * 
+     * @param po
+     * @param id
+     * @return
+     */
+    public static SqlHolder buildDelete(Object po,Long id) {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("delete from ").append(tableName(po));
+    	sb.append(" where id = ?");
+    	return new SqlHolder(sb.toString(),id);
     }
 	
 	/**

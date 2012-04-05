@@ -1,0 +1,31 @@
+<div class="span-24 last">
+    <form id="memo" action="/memo" method="post">
+      <fieldset>
+        <legend>编辑memo表单</legend>
+        <p>
+          <label for="id">编号</label><br>
+          <input type="text" class="title" name="id" id="id" value="$!id" readonly="true" />
+        </p>
+    
+        <p>
+          <label for="name">名称</label><br>
+          <input type="text" class="text" id="name" name="name" value="$!name" />
+        </p>
+    
+        <p>
+          <label for="dummy2">内容</label><br>
+          <textarea name="dummy2" id="dummy2" rows="5" cols="20"></textarea>
+        </p>
+    
+        <p>
+          <label for="createTime">创建时间</label><br>
+          <input type="text" class="text" id="createTime" name="createTime" value="$!createTime" readonly="true" />
+        </p>
+    
+        <p>
+          <input type="submit" value="保存">
+        </p>
+    
+      </fieldset>
+    </form>
+</div>

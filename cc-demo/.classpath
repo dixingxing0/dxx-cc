@@ -46,6 +46,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4/1.4.11/powermock-module-junit4-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-module-junit4/1.4.11/powermock-module-junit4-1.4.11-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4-common/1.4.11/powermock-module-junit4-common-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-module-junit4-common/1.4.11/powermock-module-junit4-common-1.4.11-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-reflect/1.4.11/powermock-reflect-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-reflect/1.4.11/powermock-reflect-1.4.11-sources.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/cc-core"/>
+	<classpathentry kind="var" path="M2_REPO/org/cc/cc-core/0.0.1-SNAPSHOT/cc-core-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

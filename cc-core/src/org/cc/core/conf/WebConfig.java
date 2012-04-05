@@ -76,15 +76,6 @@ public final class WebConfig {
 			LOG.debug(WEB_CONFIG_FILE, e);
 		} 
 		
-		if(binder == null) {
-			binder = new BinderImpl();
-		}
-		if(objectBuilder == null) {
-			objectBuilder = new ObjectBuilderImpl();
-		}
-		if(pathVarBinder == null) {
-			pathVarBinder = new PathVarBinderImpl();
-		}
 	}
 
 	public static String getControllerLocation() {
@@ -97,6 +88,9 @@ public final class WebConfig {
 	 * @return
 	 */
 	public static Binder getBinder() {
+		if(binder == null) {
+			binder = new BinderImpl();
+		}
 		return binder;
 	}
 
@@ -106,6 +100,9 @@ public final class WebConfig {
 	 * @return
 	 */
 	public static PathVarBinder getPathVarBinder() {
+		if(pathVarBinder == null) {
+			pathVarBinder = new PathVarBinderImpl();
+		}
 		return pathVarBinder;
 	}
 
@@ -115,6 +112,9 @@ public final class WebConfig {
 	 * @return
 	 */
 	public static ObjectBuilder getObjectBuilder() {
+		if(objectBuilder == null) {
+			objectBuilder = new ObjectBuilderImpl();
+		}
 		return objectBuilder;
 	}
 }

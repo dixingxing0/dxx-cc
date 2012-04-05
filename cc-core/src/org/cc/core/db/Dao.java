@@ -132,7 +132,7 @@ public abstract class Dao<T> {
 			throw new DbException(MESSAGE, e);
 		}
 	}
-
+	
 	/**
 	 * 查询返回单个对象
 	 *
@@ -148,6 +148,34 @@ public abstract class Dao<T> {
 		} catch (SQLException e) {
 			throw new DbException(MESSAGE, e);
 		}
+	}
+	
+	/**
+	 * 根据id查询对象
+	 *
+	 * @param id
+	 * @return
+	 */
+	public T queryById(Long id) {
+		SqlHolder holder = SqlBuilder.buildQueryById(this,id);
+		LOG.debug(holder);
+		try {
+			return (T) QUERY_RUNNER.query(holder.getSql(), getBeanHandler(),holder.getParams());
+		} catch (SQLException e) {
+			throw new DbException(MESSAGE, e);
+		}
+	}
+	
+	/**
+	 * 根据id从数据库中查询出实体
+	 * <font color="red">如果id == null 则抛出异常</font>
+	 * 
+	 * @return
+	 */
+	public T get() {
+		Long id = (Long) ReflectUtils.getValueByFieldName(this, "id");
+		assertNotNull("不能执行查询，id属性为空！",id);
+		return queryById(id);
 	}
 	
 
@@ -177,13 +205,8 @@ public abstract class Dao<T> {
 	 * @return
 	 */
 	public Integer queryInt(String sql, Object... params) {
-		LOG.debug(new SqlHolder(sql, params));
-		try {
-			Number n = (Number) QUERY_RUNNER.query(sql, scaleHandler, params);
-			return n.intValue();
-		} catch (SQLException e) {
-			throw new DbException(MESSAGE, e);
-		}
+		Long result = queryLong(sql, params);
+		return result != null ? result.intValue() : 0;
 	}
 
 	/**
@@ -230,6 +253,28 @@ public abstract class Dao<T> {
 
         return id;
 	}
+	
+	/**
+	 * 根据id删除
+	 * 
+	 * @param id
+	 */
+	public void delete(Long id) {
+		SqlHolder holder = SqlBuilder.buildDelete(this,id);
+		update(holder.getSql(), holder.getParams());
+	}
+	
+	/**
+	 * 删除
+	 * <br/>
+	 * <font color="red">如果id == null 则抛出异常 </font>
+	 * @param id
+	 */
+	public void delete() {
+		Long id = (Long) ReflectUtils.getValueByFieldName(this, "id");
+		assertNotNull("不能执行删除操作，id属性为空！",id);
+		delete(id);
+	}
 
 	/**
 	 *
@@ -262,5 +307,17 @@ public abstract class Dao<T> {
 		page.setTotalResult(queryInt(page.getCountSql()));
 		page.setResult(queryList(page.getPageSql()));
 		return page;
+	}
+	
+	/**
+	 * check not null
+	 * 
+	 * @param msg
+	 * @param obj
+	 */
+	protected void assertNotNull(String msg,Object obj) {
+		if(obj == null) {
+			throw new DbException(msg);
+		}
 	}
 }

@@ -1,0 +1,35 @@
+<div class="span-24 last">
+    <h6>memo 列表</h6>
+    <a href="/memo/add">新增</a>
+    <p>查询语句为：$pageSql</p>
+	#pager("",$page)
+</div>
+<div class="span-24 last">
+	<div class="span-2 border">
+		编号
+	</div>
+	<div class="span-4 border">
+		名称
+	</div>
+	<div class="span-12 border">
+		创建时间
+	</div>
+	<div class="span-6 last">
+		操作
+	</div>
+	#foreach($memo in $page.result) 
+		<div class="span-2">
+			$memo.id
+    	</div>
+    	<div class="span-4">
+    		$memo.name
+    	</div>
+    	<div class="span-12">
+    		$memo.createTime
+    	</div>
+    	<div class="span-6 last">
+            <a href="/memo/$memo.id">修改</a>/
+			<a href="/memo/d/$memo.id">删除</a>
+    	</div>
+	#end
+</div>

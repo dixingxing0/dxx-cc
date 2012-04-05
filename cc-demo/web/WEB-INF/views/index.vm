@@ -1,3 +1,14 @@
-
-这是首页!3
-<a href="www.baidu.com">百度</a>
+<div class="span-24 last">
+	<div class="span-8">
+		Box1
+	</div>
+	<div class="span-4">
+		Box2
+	</div>
+	<div class="span-12 last">
+		<a href="/memo">查看memo示例</a>
+	</div>
+	<div class="span-16 last">
+		Main content
+	</div>
+</div>

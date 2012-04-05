@@ -255,3 +255,66 @@ hr.space {background:#fff;color:#fff;visibility:hidden;}
 .clearfix:after, .container:after {content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
 .clearfix, .container {display:block;}
 .clear {clear:both;}
+
+<!-- ×Ô¶¨Òå -->
+.pager {
+    height: 24px;
+    line-height: 24px;
+    margin: 2px 0;
+}
+.pager li {
+    display: inline;
+    font-size: 90%;
+    margin: 0 2px 0 0;
+    text-align: center;
+}
+.pager li a {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #F2F2F2;
+    border-color: #DDDDDD #999999 #999999 #DDDDDD;
+    border-right: 1px solid #999999;
+    border-style: solid;
+    border-width: 1px;
+    color: #58595B;
+    font-family: Courier New,Arial;
+    padding: 3px 5px;
+    text-decoration: none;
+}
+.pager li a:hover {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #AAAAAA #DDDDDD #DDDDDD #AAAAAA;
+    border-right: 1px solid #DDDDDD;
+    border-style: solid;
+    border-width: 1px;
+    color: #000000;
+}
+.pager li.prev a {
+    background-color: #CCCCCC;
+    color: #666666;
+}
+.pager li.next a {
+    background-color: #CCCCCC;
+    color: #666666;
+}
+.pager li.current a {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #58595B;
+    border-color: #58595B -moz-use-text-color -moz-use-text-color;
+    border-right: 0 none;
+    border-style: solid none none;
+    border-width: 1px 0 0;
+    color: #FFFFFF;
+    font-weight: bold;
+}

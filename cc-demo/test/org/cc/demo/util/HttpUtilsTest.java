@@ -34,12 +34,12 @@ public class HttpUtilsTest {
 	
 	@Test
 	public void getObject() {
-		long start = System.currentTimeMillis();
-		List<Memo> memos = HttpUtils.getObject("http://localhost:8080/memo/json", new TypeReference<List<Memo>>(){});
-		for(Memo m :memos) {
-			LOG.debug(m);
-		}
-		LOG.debug("cost : " + (System.currentTimeMillis() - start));
+//		long start = System.currentTimeMillis();
+//		List<Memo> memos = HttpUtils.getObject("http://localhost:8080/memo/json", new TypeReference<List<Memo>>(){});
+//		for(Memo m :memos) {
+//			LOG.debug(m);
+//		}
+//		LOG.debug("cost : " + (System.currentTimeMillis() - start));
 	}
 	
 }

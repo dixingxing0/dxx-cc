@@ -42,6 +42,14 @@ public class CcLinkTool extends LinkTool{
 	 * @return
 	 */
 	public String getPageLink(String uri,int i) {
-		return uri.replaceFirst(pageRegex, "/p") + i;
+		if(uri == null) {
+			return null;
+		}
+		String suffix = "/p";
+		uri = uri.replaceFirst(pageRegex, suffix);
+		if(!uri.endsWith(suffix)) {
+			uri = uri + suffix;
+		}
+		return uri + i;
 	}
 }

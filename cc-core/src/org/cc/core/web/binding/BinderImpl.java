@@ -83,6 +83,9 @@ public class BinderImpl implements Binder{
 	public void toRequest(HttpServletRequest req, Object[] objects) {
 		LOG.debug("将对象绑定到request中,供视图使用");
 		for (Object o : objects) {
+			if(o == null ) {
+				continue;
+			}
 			Class<?> clazz = o.getClass();
 			if (clazz.isAssignableFrom(Model.class)) {
 				bindModel2Request(req, (Model) o);

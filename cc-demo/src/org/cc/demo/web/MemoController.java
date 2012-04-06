@@ -34,7 +34,7 @@ public class MemoController {
 	
 	@RequestMapping(value = "(/p(\\d+))?" , method = RequestMethod.GET)
 	public String list(@PathVar(1) Integer currentPage ,Model model,HttpServletRequest req) {
-		Page<Memo> page = Memo.DB.queryPage("select * from memo", currentPage, Page.DEFAULT_SIZE);
+		Page<Memo> page = Memo.DB.queryPage("select * from memo order by id desc", currentPage, Page.DEFAULT_SIZE);
 		
 		model.addAttribute("pageStr", page.toString());
 		model.addAttribute("pageSql", page.getPageSql());

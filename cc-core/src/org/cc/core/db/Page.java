@@ -44,10 +44,10 @@ public class Page<T> implements Serializable {
 	 * @param currentPage 当前页数
 	 * @param size 每页条数
 	 */
-	public Page(String sql, int currentPage, int size) {
+	public Page(String sql, Integer currentPage, Integer size) {
 		this.sql = sql;
-		this.currentPage = currentPage < 1 ? 1 : currentPage;
-		this.size = size < 0 ? DEFAULT_SIZE : size;
+		this.currentPage = (currentPage == null || currentPage < 1) ? 1 : currentPage;
+		this.size = (size == null || size < 0 )? DEFAULT_SIZE : size;
 		this.currentResult = (this.currentPage - 1) * this.size;
 		this.pageSql = SqlBuilder.pageSql(sql, this.currentResult, this.currentResult + size);
 		this.countSql = SqlBuilder.countSql(sql);

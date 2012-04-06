@@ -302,7 +302,7 @@ public abstract class Dao<T> {
 	 * @param pageSize
 	 * @return
 	 */
-	public Page<T> queryPage(String sql, int currentPage, int pageSize) {
+	public Page<T> queryPage(String sql, Integer currentPage, Integer pageSize) {
 		Page<T> page = new Page<T>(sql, currentPage, pageSize);
 		page.setTotalResult(queryInt(page.getCountSql()));
 		page.setResult(queryList(page.getPageSql()));

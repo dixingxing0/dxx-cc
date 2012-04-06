@@ -40,12 +40,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/xerial/sqlite-jdbc/3.7.2/sqlite-jdbc-3.7.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/fusesource/hawtbuf/hawtbuf/1.8/hawtbuf-1.8.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-api-mockito/1.4.11/powermock-api-mockito-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-api-mockito/1.4.11/powermock-api-mockito-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-api-support/1.4.11/powermock-api-support-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-api-support/1.4.11/powermock-api-support-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-core/1.4.11/powermock-core-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-core/1.4.11/powermock-core-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4/1.4.11/powermock-module-junit4-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-module-junit4/1.4.11/powermock-module-junit4-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4-common/1.4.11/powermock-module-junit4-common-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-module-junit4-common/1.4.11/powermock-module-junit4-common-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-reflect/1.4.11/powermock-reflect-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-reflect/1.4.11/powermock-reflect-1.4.11-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/cc/cc-core/0.0.1-SNAPSHOT/cc-core-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/aggregate/jetty-webapp/7.6.1.v20120215/jetty-webapp-7.6.1.v20120215.jar" sourcepath="M2_REPO/org/eclipse/jetty/aggregate/jetty-webapp/7.6.1.v20120215/jetty-webapp-7.6.1.v20120215-sources.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

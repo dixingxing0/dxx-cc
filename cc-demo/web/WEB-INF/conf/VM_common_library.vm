@@ -2,17 +2,10 @@
  * 生成翻页链接
  * 作者: Winter Lau
  *#
-#macro(pager $uri $page)
+#macro(pager $page)
 #if($page.totalResult > $page.size)
-    #if($uri.indexOf("?")>=0)#set($param_char='&')#else#set($param_char='?')#end
-    #if(!$uri.endsWith("?") && !$uri.endsWith("&"))
-		#set($p_uri = "${uri}${param_char}")
-	#else
-		#set($p_uri = $uri)
-	#end
     #set($PAGE_COUNT = $page.totalPage)
-    #set($p = $link.param("p",1))
-	#if(!$p)#set($p=1)#end
+    #set($p = $link.getPage($uri))
 	#if($p <= $PAGE_COUNT)
         #set($pre_page = $p - 1)
         #set($next_page = $p + 1)
@@ -24,7 +17,7 @@
         #set($end_idx = $begin_idx + 9)
         #if($end_idx > $PAGE_COUNT)#set($end_idx = $PAGE_COUNT)#end
         <ul class="pager">
-            #if($p > 1)<li class='page prev'><a href="${p_uri}p=$pre_page">&lt;</a></li>#end#if($begin_idx > 1)<li class='page'><a href="${p_uri}">1</a></li>#end#foreach($idx in [$begin_idx..$end_idx])#if($idx != $p)<li class='page'><a href="${p_uri}p=$idx">$idx</a></li>#else<li class='page current'><a href="${p_uri}p=$idx">$idx</a></li>#end#end#if($end_idx < $PAGE_COUNT)<li class='page'><a href="${p_uri}p=$PAGE_COUNT">$PAGE_COUNT</a></li>#end#if($p < $PAGE_COUNT)<li class='page next'><a href="${p_uri}p=$next_page">&gt;</a></li>#end
+            #if($p > 1)<li class='page prev'><a href="$link.getPageLink($uri,$pre_page)">&lt;</a></li>#end#if($begin_idx > 1)<li class='page'><a href="$link.getPageLink($uri,1)">1</a></li>#end#foreach($idx in [$begin_idx..$end_idx])#if($idx != $p)<li class='page'><a href="$link.getPageLink($uri,$idx)">$idx</a></li>#else<li class='page current'><a href="$link.getPageLink($uri,$idx)">$idx</a></li>#end#end#if($end_idx < $PAGE_COUNT)<li class='page'><a href="$link.getPageLink($uri,$PAGE_COUNT)">$PAGE_COUNT</a></li>#end#if($p < $PAGE_COUNT)<li class='page next'><a href="$link.getPageLink($uri,$next_page)">&gt;</a></li>#end
         </ul>
 	#end
 #end

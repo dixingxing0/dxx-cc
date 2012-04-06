@@ -176,16 +176,11 @@
         <class>org.apache.velocity.tools.struts.MessageTool</class>
     </tool>
     
-    <!-- [ StrutsLinkTool ]
-        LinkTool         
-        @see http://www.jajakarta.org/velocity/tools/velocity-tools-1.1/docs-ja/struts/StrutsLinkTool.html  (ja)
-        @see http://velocity.apache.org/tools/devel/struts/StrutsLinkTool.html  (en)
-        @since VelocityTools 1.0
-    -->
+    <!-- link -->
     <tool>
-        <key>slink</key>
+        <key>link</key>
         <scope>request</scope>
-        <class>org.apache.velocity.tools.struts.StrutsLinkTool</class>
+        <class>org.cc.demo.web.CcLinkTool</class>
     </tool>
     
     <!-- [ SecureLinkTool ]

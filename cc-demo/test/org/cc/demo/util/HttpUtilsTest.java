@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.cc.demo.common.util.HttpUtils;
 import org.cc.demo.domain.Memo;
+import org.cc.demo.test.JettyUtils;
 import org.codehaus.jackson.type.TypeReference;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,13 +34,15 @@ public class HttpUtilsTest {
 	}
 	
 	@Test
-	public void getObject() {
-//		long start = System.currentTimeMillis();
-//		List<Memo> memos = HttpUtils.getObject("http://localhost:8080/memo/json", new TypeReference<List<Memo>>(){});
-//		for(Memo m :memos) {
-//			LOG.debug(m);
-//		}
-//		LOG.debug("cost : " + (System.currentTimeMillis() - start));
+	public void getObject() throws Exception {
+		JettyUtils.start();
+		
+		long start = System.currentTimeMillis();
+		List<Memo> memos = HttpUtils.getObject("http://localhost:1988/memo/json", new TypeReference<List<Memo>>(){});
+		for(Memo m :memos) {
+			LOG.debug(m);
+		}
+		LOG.debug("cost : " + (System.currentTimeMillis() - start));
 	}
 	
 }

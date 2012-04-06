@@ -32,9 +32,10 @@ import org.cc.demo.json.JsonUtils;
 public class MemoController {
 	private static final Logger LOG = Logger.getLogger(MemoController.class);
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model) {
-		Page<Memo> page = Memo.DB.queryPage("select * from memo", 1, Page.DEFAULT_SIZE);
+	@RequestMapping(value = "(/p(\\d+))?" , method = RequestMethod.GET)
+	public String list(@PathVar(1) Integer currentPage ,Model model,HttpServletRequest req) {
+		Page<Memo> page = Memo.DB.queryPage("select * from memo", currentPage, Page.DEFAULT_SIZE);
+		
 		model.addAttribute("pageStr", page.toString());
 		model.addAttribute("pageSql", page.getPageSql());
 		model.addAttribute("page", page);

@@ -3,9 +3,11 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>欢迎您!</title>
-	<link rel="stylesheet" href="http://localhost:8080/resources/blueprint/screen.css" type="text/css" media="screen, projection">
-	<link rel="stylesheet" href="http://localhost:8080/resources/blueprint/print.css" type="text/css" media="print">
+	<link rel="stylesheet" href="/resources/blueprint/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="/resources/blueprint/print.css" type="text/css" media="print">
 	<!--[if lt IE 8]><link rel="stylesheet" href="http://localhost:8080/resources/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]--> 
+	
+	<script src="/resources/js/common.js"></script>
 </head>
 
 <body>

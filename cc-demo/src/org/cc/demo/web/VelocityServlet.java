@@ -69,7 +69,6 @@ public final class VelocityServlet extends VelocityLayoutServlet {
 	@Override
 	protected void doRequest(HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
-
 		long start = System.currentTimeMillis();
 		super.doRequest(req, res);
 

@@ -2,7 +2,7 @@
     <h6>memo 列表</h6>
     <a href="/memo/add">新增</a>
     <p>查询语句为：$pageSql</p>
-	#pager("",$page)
+	#pager($page)
 </div>
 <div class="span-24 last">
 	<div class="span-2 border">

@@ -9,16 +9,24 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
- * 创建Jetty Server的工厂类.
+ * jetty 工具类
  * 
- * @author calvin
+ * 
+ * @author dixingxing	
+ * @date Apr 6, 2012
  */
 public class JettyUtils {
 
+	private static final int port = 1988;
+	
+	public static String BASE_URL = null;
+	
 	private static Server server = null;
 	
+	
 	static {
-		server = buildNormalServer(1988, "");
+		BASE_URL = "http://localhost:" + port;
+		server = buildNormalServer(port, "");
 	}
 
 	/**
@@ -41,7 +49,6 @@ public class JettyUtils {
 		}
 		try {
 			server.start();
-			server.join();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

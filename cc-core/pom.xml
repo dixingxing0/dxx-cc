@@ -12,14 +12,6 @@
 	<packaging>jar</packaging>
 	<name>cc core</name>
 
-	<!-- 项目属性 -->
-	<!-- 项目属性 -->
-	<properties>
-		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
-		<jdbc.driver.version>5.1.13</jdbc.driver.version>
-	</properties>
-
 	<!-- 依赖项定义 -->
 	<dependencies>
 
@@ -55,16 +47,8 @@
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
 		</dependency>
-					
-
-
-		<!-- jdbc driver -->
-		<dependency>
-			<groupId>${jdbc.driver.groupId}</groupId>
-			<artifactId>${jdbc.driver.artifactId}</artifactId>
-			<version>${jdbc.driver.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+				
+		
 		<!-- database end -->
 
 		<!-- web begin -->
@@ -109,13 +93,24 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-module-junit4</artifactId>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 		
 		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-api-mockito</artifactId>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- testing end -->

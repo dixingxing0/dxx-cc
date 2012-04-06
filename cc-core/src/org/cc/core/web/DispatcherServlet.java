@@ -85,7 +85,9 @@ public class DispatcherServlet extends HttpServlet {
 		beforeProcess();
 		WebMethod webMethod = null;
 		try {
-			LOG.debug("(开始)处理请求: " + request.getServletPath());
+			String servletPath = request.getServletPath();
+			
+			LOG.debug("(开始)处理请求: " + servletPath);
 			webMethod = WebContext.getHandler(request);
 			if (webMethod == null) {
 				LOG.debug("(结束)没有找到控制器!");
@@ -113,6 +115,9 @@ public class DispatcherServlet extends HttpServlet {
 			
 			binder.toRequest(request, params);
 
+			// 把地址栏中的路径传给页面
+			request.setAttribute("uri", servletPath);
+			
 			LOG.debug("(结束)返回视图为：" + s);
 			request.getRequestDispatcher("/WEB-INF/views/" + s).forward(
 					request, response);

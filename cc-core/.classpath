@@ -17,12 +17,7 @@
 	<classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.6.4/slf4j-log4j12-1.6.4.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-api-mockito/1.4.11/powermock-api-mockito-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-api-mockito/1.4.11/powermock-api-mockito-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-api-support/1.4.11/powermock-api-support-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-api-support/1.4.11/powermock-api-support-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-core/1.4.11/powermock-core-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-core/1.4.11/powermock-core-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4/1.4.11/powermock-module-junit4-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-module-junit4/1.4.11/powermock-module-junit4-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4-common/1.4.11/powermock-module-junit4-common-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-module-junit4-common/1.4.11/powermock-module-junit4-common-1.4.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/powermock/powermock-reflect/1.4.11/powermock-reflect-1.4.11.jar" sourcepath="M2_REPO/org/powermock/powermock-reflect/1.4.11/powermock-reflect-1.4.11-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/aggregate/jetty-webapp/7.6.1.v20120215/jetty-webapp-7.6.1.v20120215.jar" sourcepath="M2_REPO/org/eclipse/jetty/aggregate/jetty-webapp/7.6.1.v20120215/jetty-webapp-7.6.1.v20120215-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

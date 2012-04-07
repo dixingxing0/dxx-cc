@@ -5,6 +5,7 @@
  */
 package org.cc.demo.test;
 
+import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 
@@ -15,25 +16,27 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * @author dixingxing	
  * @date Apr 6, 2012
  */
-public class JettyUtils {
+public final class JettyUtils {
+	private static final Logger LOG = Logger.getLogger(JettyUtils.class);
 
-	private static final int port = 1988;
+	private static final int PORT = 1988;
 	
-	public static String BASE_URL = null;
+	public static final String BASE_URL;
 	
 	private static Server server = null;
 	
+	private JettyUtils() {}
 	
 	static {
-		BASE_URL = "http://localhost:" + port;
-		server = buildNormalServer(port, "");
+		BASE_URL = "http://localhost:" + PORT;
+		buildNormalServer(PORT, "");
 	}
 
 	/**
 	 * 创建用于开发运行调试的Jetty Server, 以web目录为Web应用目录.
 	 */
 	private static Server buildNormalServer(int port, String contextPath) {
-		Server server = new Server(port);
+		server = new Server(port);
 		WebAppContext webContext = new WebAppContext("web", contextPath);
 		server.setHandler(webContext);
 		server.setStopAtShutdown(true);
@@ -50,7 +53,7 @@ public class JettyUtils {
 		try {
 			server.start();
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("启动jetty server 出错", e);
 		}
 	}
 }

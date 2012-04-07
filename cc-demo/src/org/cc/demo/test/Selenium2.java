@@ -23,7 +23,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class Selenium2 {
 
-	public static int DEFAULT_WAIT_TIME = 20;
+	private static final int DEFAULT_WAIT_TIME = 20;
 	private WebDriver driver;
 	private String baseUrl;
 
@@ -66,7 +66,7 @@ public class Selenium2 {
 	/**
 	 * 设置如果查找不到Element时的默认最大等待时间。
 	 */
-	public void setImplicitlyWait(int seconds) {
+	private void setImplicitlyWait(int seconds) {
 		driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
 	}
 

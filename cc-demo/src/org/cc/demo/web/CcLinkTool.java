@@ -46,10 +46,10 @@ public class CcLinkTool extends LinkTool{
 			return null;
 		}
 		String suffix = "/p";
-		uri = uri.replaceFirst(pageRegex, suffix);
-		if(!uri.endsWith(suffix)) {
-			uri = uri + suffix;
+		String u = uri.replaceFirst(pageRegex, suffix);
+		if(!u.endsWith(suffix)) {
+			u = u + suffix;
 		}
-		return uri + i;
+		return u + i;
 	}
 }

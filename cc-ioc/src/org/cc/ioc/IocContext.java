@@ -6,7 +6,9 @@
 package org.cc.ioc;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,7 +23,8 @@ import org.cc.ioc.annotation.Ioc;
  * ioc 容器 所有对象都是单例的
  * 保证加Ioc 的类要有默认的构造器
  * 不根据setter注入
- * TODO 接口
+ * 
+ * 注入接口必须保证该接口的实现类有且仅有一个定义了 Ioc注解
  * TODO 循环依赖
  * 
  * @author dixingxing
@@ -31,6 +34,14 @@ public final class IocContext {
 	private static final Logger LOG = Logger.getLogger(IocContext.class);
 	
 	private static Map<Class<?>, Object> map = new HashMap<Class<?>, Object>();
+	
+	/**
+	 * 保存接口和实现类
+	 */
+	public static final Map<Class<?>,List<Class<?>>> iMap = new HashMap<Class<?>,List<Class<?>>>();
+	
+	/** 一个计数器 看注入bean的个数 */
+	private static int i = 0;
 
 	private IocContext() {}
 	
@@ -40,10 +51,11 @@ public final class IocContext {
 	public static void init() {
 		ScanUtils helper = new ScanUtils(true, true, null);
 
-		Set<Class<?>> calssList = helper.getPackageAllClasses("org.cc.ioc",
+		Set<Class<?>> clazzSet = helper.getPackageAllClasses("org.cc.ioc",
 				true);
-
-		for (Class<?> clazz : calssList) {
+		initInterfaceMap(clazzSet);
+		
+		for (Class<?> clazz : clazzSet) {
 			if (clazz.isAnnotation() || clazz.isInterface()) {
 				continue;
 			}
@@ -53,12 +65,45 @@ public final class IocContext {
 			}
 		}
 	}
+	
+	/**
+	 * 遍历所有class 构造iMap
+	 * 
+	 * @param clazzSet
+	 */
+	@SuppressWarnings("unchecked")
+	private static void initInterfaceMap(Set<Class<?>> clazzSet) {
+		// 把所有接口放到iMap中
+		for (Class<?> clazz : clazzSet) {
+			if(clazz.isInterface() && !iMap.containsKey(clazz)) {
+				iMap.put(clazz, new ArrayList());
+			}
+		}
+		// 再次遍历
+		for (Class<?> clazz : clazzSet) {
+			// 不再处理接口 ，不处理没有标注Ioc注解的类
+			if(clazz.isInterface() || !clazz.isAnnotationPresent(Ioc.class)) {
+				continue;
+			}
+			Class<?>[] interfaces = clazz.getInterfaces();
+			// 如果类实现了接口 那么对应的放到iMa中
+			for(Class<?> i : interfaces) {
+				if(iMap.containsKey(i)) {
+					List<Class<?>> impls = iMap.get(i);
+					if(!impls.contains(clazz)) {
+						impls.add(clazz);
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * 清空容器内所有实例
 	 */
 	public static synchronized void clear() {
 		map = new HashMap<Class<?>, Object>();
+		i = 0;
 	}
 	
 	/**
@@ -95,11 +140,7 @@ public final class IocContext {
 			obj = newInstance(clazz);
 			return obj;
 		}
-		LOG.debug(String.format("构造 %s 对象",clazz.getSimpleName()));
 		obj = newInstance(clazz);
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append(clazz.getSimpleName()).append("的属性需要注入---------------\r\n");
 		
 		for (Field f : fields) {
 			// 不处理
@@ -109,7 +150,33 @@ public final class IocContext {
 			Class<?> c = f.getType();
 			
 			if(c.isInterface()) {
-				LOG.debug("不能注入接口");
+				// 取出接口的实现类
+				List<Class<?>> impls = iMap.get(c);
+				if(impls.size() == 0) {
+					LOG.debug(String.format("没有找到%s的实现类，或者实现类没有定义Ioc注解",c.getName()));
+					continue;
+				} else  if (impls.size() > 1) {
+					StringBuilder sb = new StringBuilder();
+					for(Class<?> impl : impls) {
+						sb.append(impl.getName()).append(",");
+					}
+					
+					LOG.debug(String.format("找到多个%s的实现类 %s (都有Ioc注解)，不能确定使用哪个实现类",c.getName(),sb.toString()));
+					continue;
+				} else {
+					Class<?> impl = impls.get(0);
+					Object fValue = get(impl);
+					if(fValue == null) {
+						fValue = getInstance(impl);
+						// 要把fValue放入容器中，避免重复实例化
+						add(impl, fValue);
+					}
+					
+					ReflectUtils.set(obj, f, fValue);
+					LOG.debug(String.format("%d注入%s.%s (实现类-%s)", i++,clazz.getSimpleName(),f.getName(),impl.getSimpleName()));
+				}
+				
+				continue;
 			}
 			
 			// 如果要注入的类没有Ioc标记
@@ -128,10 +195,9 @@ public final class IocContext {
 				// 要把fValue放入容器中，避免重复实例化
 				add(c, fValue);
 			}
-			sb.append("                                      ");
-			sb.append(f.getName()).append(":").append(fValue);
+			
 			ReflectUtils.set(obj, f, fValue);
-			LOG.debug(sb.toString());
+			LOG.debug(String.format("%d注入%s.%s", i++,clazz.getSimpleName(),f.getName()));
 		}
 		return obj;
 	}
@@ -167,8 +233,20 @@ public final class IocContext {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param <T>
+	 * @param clazz 可以是接口类
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T get(Class<T> clazz) {
+		if(clazz.isInterface()) {
+			List<Class<?>> impls = iMap.get(clazz);
+			if(impls.size() == 1) {
+				return (T) map.get(impls.get(0));
+			}
+		}
 		return (T) map.get(clazz);
 	}
 }

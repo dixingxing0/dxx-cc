@@ -16,6 +16,9 @@ import org.cc.ioc.annotation.Inject;
 public class Order {
 	@Inject
 	private Product product;
+	
+	@Inject
+	private User user;
 
 	public Product getProduct() {
 		return product;
@@ -23,6 +26,14 @@ public class Order {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

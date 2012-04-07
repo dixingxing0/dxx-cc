@@ -5,8 +5,13 @@
  */
 package org.cc.ioc;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +23,7 @@ import org.junit.Test;
  * @date Apr 7, 2012
  */
 public class IocContextTest {
+	private static final Logger LOG = Logger.getLogger(IocContextTest.class);
 
 	/**
 	 * 
@@ -47,7 +53,24 @@ public class IocContextTest {
 		
 		assertNotNull(IocContext.get(ProductDetail.class));
 		assertNotNull(IocContext.get(Product.class));
-		assertNotNull(IocContext.get(Order.class));
+		
+		Order order = IocContext.get(Order.class);
+		assertNotNull(order);
+		
+		User user = IocContext.get(User.class);
+		User userImpl = IocContext.get(UserMan.class);
+		assertNotNull(user);
+		assertNotNull(userImpl);
+		assertTrue(user == userImpl);
+		
+		assertTrue(order.getUser() == user);
+		
+		for(Class<?> key : IocContext.iMap.keySet()) {
+			List<Class<?>> impls = IocContext.iMap.get(key);
+			for(Class<?> impl : impls) {
+				LOG.debug(key.getName() + ":" + impl.getName());
+			}
+		}
 	}
 
 	/**

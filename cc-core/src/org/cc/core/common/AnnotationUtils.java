@@ -12,7 +12,9 @@ package org.cc.core.common;
  * @author dixingxing	
  * @date Apr 1, 2012
  */
-public class AnnotationUtils {
+public final class AnnotationUtils {
+	
+	private AnnotationUtils() {}
 	
 	/**
 	 * 没有则返回 null

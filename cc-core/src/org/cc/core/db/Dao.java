@@ -55,7 +55,7 @@ public abstract class Dao<T> {
 		QUERY_RUNNER = new QueryRunner(DS);
 	}
 	
-	protected final ScalarHandler scaleHandler = new ScalarHandler() {
+	private final ScalarHandler scaleHandler = new ScalarHandler() {
 		@Override
 		public Object handle(ResultSet rs) throws SQLException {
 			Object obj = super.handle(rs);

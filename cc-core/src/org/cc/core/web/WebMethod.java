@@ -6,6 +6,7 @@
 package org.cc.core.web;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -159,7 +160,9 @@ public class WebMethod {
 	}
 
 	public void setUrlPathMain(String[] urlPathMain) {
-		this.urlPathMain = urlPathMain;
+		if(urlPathMain != null) {
+			this.urlPathMain = Arrays.copyOf(urlPathMain, urlPathMain.length);
+		}
 	}
 
 	public String[] getUrlPath() {
@@ -167,7 +170,9 @@ public class WebMethod {
 	}
 
 	public void setUrlPath(String[] urlPath) {
-		this.urlPath = urlPath;
+		if(urlPath != null) {
+			this.urlPath = Arrays.copyOf(urlPath, urlPath.length);
+		}
 	}
 
 	public RequestMethod[] getRequestMethod() {
@@ -175,7 +180,9 @@ public class WebMethod {
 	}
 
 	public void setRequestMethod(RequestMethod[] requestMethod) {
-		this.requestMethod = requestMethod;
+		if(requestMethod != null) {
+			this.requestMethod = Arrays.copyOf(requestMethod, requestMethod.length);
+		}
 	}
 
 	public boolean isResponseBody() {

@@ -277,6 +277,12 @@
 		            <directory>resources</directory>  
 		        </resource>    
         </resources> 
+        
+        <testResources>  
+            <testResource>  
+		         <directory>resources</directory>  
+		    </testResource>    
+        </testResources> 
         <plugins>  
             <plugin>  
                 <artifactId>maven-war-plugin</artifactId>  

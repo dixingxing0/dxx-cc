@@ -20,11 +20,11 @@ import org.cc.ioc.annotation.Inject;
 import org.cc.ioc.annotation.Ioc;
 
 /**
- * ioc 容器 所有对象都是单例的
- * 保证加Ioc 的类要有默认的构造器
- * 不根据setter注入
+ * <li>ioc 容器 所有对象都是单例的</li>
+ * <li>保证加Ioc 的类要有默认的构造器</li>
+ * <li>不根据setter注入</li>
  * 
- * 注入接口必须保证该接口的实现类有且仅有一个定义了 Ioc注解
+ * <li>注入接口必须保证该接口的实现类有且仅有一个定义了 Ioc注解</li>
  * TODO 循环依赖
  * 
  * @author dixingxing

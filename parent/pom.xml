@@ -14,7 +14,8 @@
 
 	<properties>
 		<!-- 主要依赖库的版本定义 -->
-		<cc.version>0.1-SNAPSHOT</cc.version>
+		<cc-core.version>0.2-SNAPSHOT</cc-core.version>
+		<cc-web.version>0.1-SNAPSHOT</cc-web.version>
 		<shiro.version>1.2.0</shiro.version>
 		<jackson.version>1.9.4</jackson.version>
 		<slf4j.version>1.6.4</slf4j.version>
@@ -82,7 +83,12 @@
 			<dependency>
 				<groupId>org.cc</groupId>
 				<artifactId>cc-core</artifactId>
-				<version>${cc.version}</version>
+				<version>${cc-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.cc</groupId>
+				<artifactId>cc-web</artifactId>
+				<version>${cc-web.version}</version>
 			</dependency>
 			<!-- SPRINGSIDE MODULES end -->
 			<!-- DB -->

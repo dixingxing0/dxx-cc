@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.cc.core.common.UploadUtils;
 import org.cc.core.db.Page;
-import org.cc.core.web.Model;
-import org.cc.core.web.annotation.Controller;
-import org.cc.core.web.annotation.PathVar;
-import org.cc.core.web.annotation.RequestMapping;
-import org.cc.core.web.annotation.RequestMethod;
-import org.cc.core.web.annotation.ResponseBody;
 import org.cc.demo.domain.Memo;
 import org.cc.demo.json.JsonUtils;
+import org.cc.web.Model;
+import org.cc.web.annotation.Controller;
+import org.cc.web.annotation.PathVar;
+import org.cc.web.annotation.RequestMapping;
+import org.cc.web.annotation.RequestMethod;
+import org.cc.web.annotation.ResponseBody;
+import org.cc.web.common.UploadUtils;
 
 /**
  * 

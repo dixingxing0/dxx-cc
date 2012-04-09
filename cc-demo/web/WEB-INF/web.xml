@@ -20,7 +20,7 @@
 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
-		<filter-class>org.cc.core.web.CharacterEncodingFilter</filter-class>
+		<filter-class>org.cc.web.CharacterEncodingFilter</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
@@ -38,7 +38,7 @@
 
 
 	<listener>
-		<listener-class>org.cc.core.web.context.ContextListener</listener-class>
+		<listener-class>org.cc.web.context.ContextListener</listener-class>
 	</listener>
 
 	<listener>

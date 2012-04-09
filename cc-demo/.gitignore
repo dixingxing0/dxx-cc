@@ -1,0 +1,6 @@
+/bin
+/target
+/tmp/
+/web/WEB-INF/classes
+/web/WEB-INF/lib
+*.DS_Store

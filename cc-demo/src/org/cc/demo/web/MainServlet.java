@@ -7,8 +7,8 @@ package org.cc.demo.web;
 
 
 import org.apache.log4j.Logger;
-import org.cc.core.web.DispatcherServlet;
-import org.cc.core.web.WebMethod;
+import org.cc.web.DispatcherServlet;
+import org.cc.web.WebMethod;
 
 /**
  * {@link DispatcherServlet} 的简单实现

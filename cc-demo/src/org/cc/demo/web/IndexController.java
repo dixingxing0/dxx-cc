@@ -1,7 +1,7 @@
 package org.cc.demo.web;
 
-import org.cc.core.web.annotation.Controller;
-import org.cc.core.web.annotation.RequestMapping;
+import org.cc.web.annotation.Controller;
+import org.cc.web.annotation.RequestMapping;
 
 /**
  * 

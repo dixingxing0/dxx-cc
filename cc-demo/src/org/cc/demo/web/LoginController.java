@@ -9,8 +9,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.cc.core.web.annotation.Controller;
-import org.cc.core.web.annotation.RequestMapping;
+import org.cc.web.annotation.Controller;
+import org.cc.web.annotation.RequestMapping;
 
 /**
  * 

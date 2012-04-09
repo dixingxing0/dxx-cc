@@ -26,6 +26,11 @@
 			<groupId>org.cc</groupId>
 			<artifactId>cc-core</artifactId>
 		</dependency>
+		<!-- cc web -->
+		<dependency>
+			<groupId>org.cc</groupId>
+			<artifactId>cc-web</artifactId>
+		</dependency>
 
 		<!-- apache common -->
 		<dependency>

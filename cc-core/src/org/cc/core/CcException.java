@@ -1,9 +1,5 @@
-/**
- * WebException.java 3:01:04 PM Feb 7, 2012
- *
- * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
- */
-package org.cc.core.common;
+package org.cc.core;
+
 
 /**
  * 异常类

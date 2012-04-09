@@ -55,5 +55,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/seleniumhq/selenium/selenium-chrome-driver/2.20.0/selenium-chrome-driver-2.20.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/cc/cc-core/0.2-SNAPSHOT/cc-core-0.2-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/cc/cc-web/0.1-SNAPSHOT/cc-web-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/cc/cc-db/0.1-SNAPSHOT/cc-db-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

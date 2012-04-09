@@ -74,8 +74,8 @@ public class IocContextTest extends IocTestCase{
 		
 		assertTrue(order.getUser() == user);
 		
-		for(Class<?> key : IocContext.iMap.keySet()) {
-			List<Class<?>> impls = IocContext.iMap.get(key);
+		for(Class<?> key : IocContext.I_MAP.keySet()) {
+			List<Class<?>> impls = IocContext.I_MAP.get(key);
 			for(Class<?> impl : impls) {
 				LOG.debug(key.getName() + ":" + impl.getName());
 			}

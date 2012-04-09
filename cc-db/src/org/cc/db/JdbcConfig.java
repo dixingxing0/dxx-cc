@@ -1,4 +1,4 @@
-package org.cc.core.conf;
+package org.cc.db;
 
 import java.io.IOException;
 import java.io.InputStream;

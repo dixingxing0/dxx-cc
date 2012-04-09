@@ -8,7 +8,7 @@ package org.cc.demo.json;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 
-import org.cc.core.common.CcException;
+import org.cc.core.CcException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 

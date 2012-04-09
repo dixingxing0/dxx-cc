@@ -3,8 +3,9 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.db;
+package org.cc.db;
 
+import org.cc.db.DbUtilsBeanProcessor;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ import org.junit.Test;
  */
 public class DbUtilsBeanProcessorTest {
 	/**
-	 * Test method for {@link org.cc.core.db.DbUtilsBeanProcessor#j2db(java.lang.String)}.
+	 * Test method for {@link org.cc.db.DbUtilsBeanProcessor#j2db(java.lang.String)}.
 	 */
 	@Test
 	public void testProp2column() {

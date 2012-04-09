@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.db;
+package org.cc.db;
 
 import java.lang.reflect.ParameterizedType;
 import java.math.BigInteger;
@@ -25,7 +25,6 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 import org.cc.core.common.ReflectUtils;
-import org.cc.core.conf.JdbcConfig;
 
 
 

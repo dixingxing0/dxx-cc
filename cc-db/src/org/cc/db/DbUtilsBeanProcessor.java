@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.db;
+package org.cc.db;
 
 import java.beans.PropertyDescriptor;
 import java.sql.ResultSet;

@@ -6,7 +6,6 @@
 package org.cc.ioc.test;
 
 import org.cc.ioc.IocContext;
-import org.cc.ioc.annotation.Inject;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
@@ -29,7 +28,7 @@ public class IocJunit4Runner extends BlockJUnit4ClassRunner{
 	 */
 	private Object iocTarget;
 	
-	public IocJunit4Runner(Class<?> klass) throws InitializationError {
+	public IocJunit4Runner(Class<?> klass) throws InitializationError{
 		super(klass);
 		this.iocTarget = IocContext.get(klass);
 	}

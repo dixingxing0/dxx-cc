@@ -2,7 +2,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.db;
+package org.cc.db;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
@@ -11,9 +11,9 @@ import java.util.Date;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.cc.core.common.ReflectUtils;
-import org.cc.core.db.annotation.Column;
-import org.cc.core.db.annotation.Table;
-import org.cc.core.db.annotation.Transient;
+import org.cc.db.annotation.Column;
+import org.cc.db.annotation.Table;
+import org.cc.db.annotation.Transient;
 
 
 

@@ -31,6 +31,11 @@
 			<groupId>org.cc</groupId>
 			<artifactId>cc-web</artifactId>
 		</dependency>
+		<!-- cc db -->
+		<dependency>
+			<groupId>org.cc</groupId>
+			<artifactId>cc-db</artifactId>
+		</dependency>
 
 		<!-- apache common -->
 		<dependency>

@@ -7,9 +7,9 @@ package org.cc.demo.domain;
 
 import java.util.Date;
 
-import org.cc.core.db.Dao;
-import org.cc.core.db.annotation.Table;
-import org.cc.core.db.annotation.Transient;
+import org.cc.db.Dao;
+import org.cc.db.annotation.Table;
+import org.cc.db.annotation.Transient;
 import org.cc.demo.json.DateDeserializer;
 import org.cc.demo.json.DateSerializer;
 import org.cc.demo.json.JsonUtils;

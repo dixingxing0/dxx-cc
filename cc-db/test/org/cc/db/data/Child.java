@@ -3,7 +3,9 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.data;
+package org.cc.db.data;
+
+import org.cc.db.annotation.Table;
 
 /**
  * 
@@ -12,6 +14,7 @@ package org.cc.core.data;
  * @date Feb 9, 2012
  */
 @SuppressWarnings("serial")
+@Table("ad")
 public class Child extends Father implements People {
 	public static final int UUID = 0;
 	

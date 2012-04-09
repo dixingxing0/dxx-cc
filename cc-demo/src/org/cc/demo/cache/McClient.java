@@ -18,7 +18,7 @@ import net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator;
 import net.rubyeye.xmemcached.transcoders.SerializingTranscoder;
 
 import org.apache.log4j.Logger;
-import org.cc.core.common.CcException;
+import org.cc.core.CcException;
 
 import com.google.code.yanf4j.core.impl.StandardSocketOption;
 

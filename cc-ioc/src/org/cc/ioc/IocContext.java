@@ -5,6 +5,7 @@
  */
 package org.cc.ioc;
 
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.cc.core.common.CcException;
+import org.cc.core.CcException;
 import org.cc.core.common.ReflectUtils;
 import org.cc.core.common.ScanUtils;
 import org.cc.ioc.annotation.Inject;
@@ -42,10 +43,10 @@ public final class IocContext {
 	/**
 	 * 存储接口和实现类
 	 */
-	public static final Map<Class<?>,List<Class<?>>> iMap = new HashMap<Class<?>,List<Class<?>>>();
+	public static final Map<Class<?>,List<Class<?>>> I_MAP = new HashMap<Class<?>,List<Class<?>>>();
 	
 	/** 一个计数器 看注入bean的个数 */
-	private static int i = 0;
+	private static int instanceCount = 0;
 	
 	/**
 	 * 一个标记，防止重复初始化
@@ -88,7 +89,7 @@ public final class IocContext {
 		}
 		
 		initInterfaceMap(clazzSet);
-		LOG.debug(String.format("扫描%d个class文件,其中有%d个接口",clazzSet.size(),iMap.size()));
+		LOG.debug(String.format("扫描%d个class文件,其中有%d个接口",clazzSet.size(),I_MAP.size()));
 		
 		for (Class<?> clazz : clazzSet) {
 			if (clazz.isAnnotation() || clazz.isInterface()) {
@@ -99,7 +100,7 @@ public final class IocContext {
 				add(clazz, getInstance(clazz));
 			}
 		}
-		LOG.debug(String.format("初始化IocContext完毕，实例化%d个对象，耗时%d毫秒", i,System.currentTimeMillis() - start));
+		LOG.debug(String.format("初始化IocContext完毕，实例化%d个对象，耗时%d毫秒", instanceCount,System.currentTimeMillis() - start));
 	}
 	
 	/**
@@ -111,8 +112,8 @@ public final class IocContext {
 	private static void initInterfaceMap(Set<Class<?>> clazzSet) {
 		// 把所有接口放到iMap中
 		for (Class<?> clazz : clazzSet) {
-			if(clazz.isInterface() && !iMap.containsKey(clazz)) {
-				iMap.put(clazz, new ArrayList());
+			if(clazz.isInterface() && !I_MAP.containsKey(clazz)) {
+				I_MAP.put(clazz, new ArrayList());
 			}
 		}
 		// 再次遍历
@@ -124,8 +125,8 @@ public final class IocContext {
 			Class<?>[] interfaces = clazz.getInterfaces();
 			// 如果类实现了接口 那么对应的放到iMa中
 			for(Class<?> i : interfaces) {
-				if(iMap.containsKey(i)) {
-					List<Class<?>> impls = iMap.get(i);
+				if(I_MAP.containsKey(i)) {
+					List<Class<?>> impls = I_MAP.get(i);
 					if(!impls.contains(clazz)) {
 						impls.add(clazz);
 					}
@@ -179,7 +180,7 @@ public final class IocContext {
 			
 			if(c.isInterface()) {
 				// 取出接口的实现类
-				List<Class<?>> impls = iMap.get(c);
+				List<Class<?>> impls = I_MAP.get(c);
 				if(impls.size() == 0) {
 					LOG.debug(String.format("没有找到%s的实现类，或者实现类没有定义Ioc注解",c.getName()));
 					continue;
@@ -201,7 +202,7 @@ public final class IocContext {
 					}
 					
 					ReflectUtils.set(obj, f, fValue);
-					LOG.debug(String.format("%d注入%s.%s (实现类-%s)", ++i,clazz.getSimpleName(),f.getName(),impl.getSimpleName()));
+					LOG.debug(String.format("%d注入%s.%s (实现类-%s)", ++instanceCount,clazz.getSimpleName(),f.getName(),impl.getSimpleName()));
 				}
 				
 				continue;
@@ -225,8 +226,8 @@ public final class IocContext {
 			}
 			
 			ReflectUtils.set(obj, f, fValue);
-			i++;
-			LOG.debug(String.format("%d注入%s.%s", i,clazz.getSimpleName(),f.getName()));
+			instanceCount++;
+			LOG.debug(String.format("%d注入%s.%s", instanceCount,clazz.getSimpleName(),f.getName()));
 		}
 		return obj;
 	}
@@ -275,7 +276,7 @@ public final class IocContext {
 		}
 		
 		if(clazz.isInterface()) {
-			List<Class<?>> impls = iMap.get(clazz);
+			List<Class<?>> impls = I_MAP.get(clazz);
 			if(impls.size() == 1) {
 				return (T) map.get(impls.get(0));
 			}

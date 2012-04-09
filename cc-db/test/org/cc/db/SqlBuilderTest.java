@@ -3,10 +3,12 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.db;
+package org.cc.db;
 
 import org.apache.log4j.Logger;
-import org.cc.core.data.Child;
+import org.cc.db.SqlBuilderTest;
+import org.cc.db.SqlBuilder;
+import org.cc.db.data.Child;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +31,7 @@ public class SqlBuilderTest {
 	}
 	
 	/**
-	 * Test method for {@link org.cc.core.db.SqlBuilder#buildInsert(java.lang.Object)}.
+	 * Test method for {@link org.cc.db.SqlBuilder#buildInsert(java.lang.Object)}.
 	 */
 	@Test
 	public void testBuildInsert() {
@@ -37,7 +39,7 @@ public class SqlBuilderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.core.db.SqlBuilder#buildUpdate(java.lang.Object)}.
+	 * Test method for {@link org.cc.db.SqlBuilder#buildUpdate(java.lang.Object)}.
 	 */
 	@Test
 	public void testBuildUpdate() {
@@ -45,7 +47,7 @@ public class SqlBuilderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.core.db.SqlBuilder#buildGetInsertId(java.lang.Object)}.
+	 * Test method for {@link org.cc.db.SqlBuilder#buildGetInsertId(java.lang.Object)}.
 	 */
 	@Test
 	public void testBuildGetInsertId() {
@@ -53,7 +55,7 @@ public class SqlBuilderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.core.db.SqlBuilder#pageSql(java.lang.String, int, int)}.
+	 * Test method for {@link org.cc.db.SqlBuilder#pageSql(java.lang.String, int, int)}.
 	 */
 	@Test
 	public void testPageSql() {
@@ -61,7 +63,7 @@ public class SqlBuilderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.core.db.SqlBuilder#countSql(java.lang.String)}.
+	 * Test method for {@link org.cc.db.SqlBuilder#countSql(java.lang.String)}.
 	 */
 	@Test
 	public void testCountSql() {

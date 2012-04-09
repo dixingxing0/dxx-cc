@@ -7,21 +7,56 @@
 		<version>0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.cc</groupId>
-	<artifactId>cc-core</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<artifactId>cc-db</artifactId>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>cc core</name>
+	<name>cc db</name>
 
 	<!-- 依赖项定义 -->
 	<dependencies>
 
+		<!-- cc core -->
+		<dependency>
+			<groupId>org.cc</groupId>
+			<artifactId>cc-core</artifactId>
+		</dependency>
 		
+		<!-- apache common -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+
+		<!-- database begin -->
+		<dependency>
+			<groupId>commons-dbutils</groupId>
+			<artifactId>commons-dbutils</artifactId>
+		</dependency>
+            
 		
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+		</dependency>
+				
+		
+		<!-- database end -->
+
+		
+		<!-- logging begin -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
 		</dependency>
+		<!-- logging end -->
+
+		<!-- testing  -->
 		
 		<dependency>
 			<groupId>junit</groupId>
@@ -29,6 +64,7 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
+		<!-- testing end -->
 	</dependencies>
 
 	<build>

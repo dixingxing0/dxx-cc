@@ -12,7 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
-import org.cc.core.common.CcException;
+import org.cc.core.CcException;
 import org.cc.demo.common.constant.Constant;
 import org.cc.demo.json.JsonUtils;
 import org.codehaus.jackson.type.TypeReference;

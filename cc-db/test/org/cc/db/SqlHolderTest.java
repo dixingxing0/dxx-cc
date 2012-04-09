@@ -3,10 +3,11 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.core.db;
+package org.cc.db;
 
 import static org.junit.Assert.assertTrue;
 
+import org.cc.db.SqlHolder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +29,7 @@ public class SqlHolderTest {
 	
 	
 	/**
-	 * Test method for {@link org.cc.core.db.SqlHolder#addParam(java.lang.Object)}.
+	 * Test method for {@link org.cc.db.SqlHolder#addParam(java.lang.Object)}.
 	 */
 	@Test
 	public void testAddParam() {
@@ -37,7 +38,7 @@ public class SqlHolderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.core.db.SqlHolder#getParams()}.
+	 * Test method for {@link org.cc.db.SqlHolder#getParams()}.
 	 */
 	@Test
 	public void testGetParams() {
@@ -45,7 +46,7 @@ public class SqlHolderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.core.db.SqlHolder#getSql()}.
+	 * Test method for {@link org.cc.db.SqlHolder#getSql()}.
 	 */
 	@Test
 	public void testGetSql() {
@@ -53,7 +54,7 @@ public class SqlHolderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.core.db.SqlHolder#setSql(java.lang.String)}.
+	 * Test method for {@link org.cc.db.SqlHolder#setSql(java.lang.String)}.
 	 */
 	@Test
 	public void testSetSql() {

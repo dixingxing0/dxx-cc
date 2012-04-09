@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.cc.core.db.Page;
+import org.cc.db.Page;
 import org.cc.demo.domain.Memo;
 import org.cc.demo.json.JsonUtils;
 import org.cc.web.Model;

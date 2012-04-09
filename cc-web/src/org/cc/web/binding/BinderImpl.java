@@ -5,6 +5,7 @@
  */
 package org.cc.web.binding;
 
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.cc.core.common.CcException;
+import org.cc.core.CcException;
 import org.cc.core.common.ReflectUtils;
 import org.cc.web.Model;
 import org.cc.web.WebConfig;

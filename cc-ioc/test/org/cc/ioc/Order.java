@@ -6,6 +6,7 @@
 package org.cc.ioc;
 
 import org.cc.ioc.annotation.Inject;
+import org.cc.ioc.annotation.Ioc;
 
 /**
  * 用来测试的类：订单
@@ -13,6 +14,7 @@ import org.cc.ioc.annotation.Inject;
  * @author dixingxing	
  * @date Apr 7, 2012
  */
+@Ioc
 public class Order {
 	@Inject
 	private Product product;

@@ -8,6 +8,7 @@ package org.cc.ioc;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,27 +34,61 @@ import org.cc.ioc.annotation.Ioc;
 public final class IocContext {
 	private static final Logger LOG = Logger.getLogger(IocContext.class);
 	
+	/**
+	 * 存储实例化好的bean
+	 */
 	private static Map<Class<?>, Object> map = new HashMap<Class<?>, Object>();
 	
 	/**
-	 * 保存接口和实现类
+	 * 存储接口和实现类
 	 */
 	public static final Map<Class<?>,List<Class<?>>> iMap = new HashMap<Class<?>,List<Class<?>>>();
 	
 	/** 一个计数器 看注入bean的个数 */
 	private static int i = 0;
+	
+	/**
+	 * 一个标记，防止重复初始化
+	 */
+	private static boolean initialized = false;
 
 	private IocContext() {}
 	
 	/**
+	 * 
+	 * @param <T>
+	 * @param clazz 可以是接口类
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T get(Class<T> clazz) {
+		return get(clazz, false);
+	}
+	
+	/**
 	 * 初始化容器
 	 */
-	public static void init() {
+	private static void init() {
+		LOG.debug("开始初始化IocContext");
+		initialized = true;
+		long start = System.currentTimeMillis();
+		String packages = IocConfig.getIocPackages();
+		if(packages == null || "".equals(packages)) {
+			throw new CcException("没有指定IocPackages");
+		}
 		ScanUtils helper = new ScanUtils(true, true, null);
-
-		Set<Class<?>> clazzSet = helper.getPackageAllClasses("org.cc.ioc",
-				true);
+		
+		// 获取指定包路径下的所有class文件
+		Set<Class<?>> clazzSet = new LinkedHashSet<Class<?>>();
+		for(String pkg : packages.split(",")) {
+			if(pkg != null && !pkg.equals("")) {
+				LOG.debug(String.format("扫描 %s 包",pkg));
+				clazzSet.addAll(helper.getPackageAllClasses(pkg,true));
+			}
+		}
+		
 		initInterfaceMap(clazzSet);
+		LOG.debug(String.format("扫描%d个class文件,其中有%d个接口",clazzSet.size(),iMap.size()));
 		
 		for (Class<?> clazz : clazzSet) {
 			if (clazz.isAnnotation() || clazz.isInterface()) {
@@ -64,6 +99,7 @@ public final class IocContext {
 				add(clazz, getInstance(clazz));
 			}
 		}
+		LOG.debug(String.format("初始化IocContext完毕，实例化%d个对象，耗时%d毫秒", i,System.currentTimeMillis() - start));
 	}
 	
 	/**
@@ -97,14 +133,6 @@ public final class IocContext {
 			}
 		}
 	}
-
-	/**
-	 * 清空容器内所有实例
-	 */
-	public static synchronized void clear() {
-		map = new HashMap<Class<?>, Object>();
-		i = 0;
-	}
 	
 	/**
 	 * 把实例好的对象放入容器中
@@ -125,7 +153,7 @@ public final class IocContext {
 	 */
 	private static <T> T getInstance(Class<T> clazz) {
 		Field[] fields = ReflectUtils.getVariableFields(clazz);
-		T obj = get(clazz);
+		T obj = getInside(clazz);
 		if(obj != null) {
 			return obj;
 		}
@@ -165,7 +193,7 @@ public final class IocContext {
 					continue;
 				} else {
 					Class<?> impl = impls.get(0);
-					Object fValue = get(impl);
+					Object fValue = getInside(impl);
 					if(fValue == null) {
 						fValue = getInstance(impl);
 						// 要把fValue放入容器中，避免重复实例化
@@ -173,7 +201,7 @@ public final class IocContext {
 					}
 					
 					ReflectUtils.set(obj, f, fValue);
-					LOG.debug(String.format("%d注入%s.%s (实现类-%s)", i++,clazz.getSimpleName(),f.getName(),impl.getSimpleName()));
+					LOG.debug(String.format("%d注入%s.%s (实现类-%s)", ++i,clazz.getSimpleName(),f.getName(),impl.getSimpleName()));
 				}
 				
 				continue;
@@ -188,7 +216,7 @@ public final class IocContext {
 			}
 			
 			// 取容器中已实例化好的对象
-			Object fValue = get(c);
+			Object fValue = getInside(c);
 			// 如果还没有实例化，则递归方法本身进行实例化
 			if(fValue == null) {
 				fValue = getInstance(c);
@@ -197,7 +225,8 @@ public final class IocContext {
 			}
 			
 			ReflectUtils.set(obj, f, fValue);
-			LOG.debug(String.format("%d注入%s.%s", i++,clazz.getSimpleName(),f.getName()));
+			i++;
+			LOG.debug(String.format("%d注入%s.%s", i,clazz.getSimpleName(),f.getName()));
 		}
 		return obj;
 	}
@@ -240,7 +269,11 @@ public final class IocContext {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T get(Class<T> clazz) {
+	private static <T> T get(Class<T> clazz,boolean inside) {
+		if(!inside && !initialized) {
+			init();
+		}
+		
 		if(clazz.isInterface()) {
 			List<Class<?>> impls = iMap.get(clazz);
 			if(impls.size() == 1) {
@@ -249,4 +282,16 @@ public final class IocContext {
 		}
 		return (T) map.get(clazz);
 	}
+	
+	/**
+	 * 在 init 方法中调用
+	 * 
+	 * @param <T>
+	 * @param clazz
+	 * @return
+	 */
+	private static <T> T getInside(Class<T> clazz) {
+		return get(clazz, true);
+	}
+	
 }

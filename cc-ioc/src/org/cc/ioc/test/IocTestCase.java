@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
  * <p>仅支持JUnit4</p>
  * <p>继承此类可以使测试类有Ioc能力。</p>
  * <p>如：需定义UserService类并标注{@link　Ioc}注解。</p>
- * <p>public class UserServiceTest {</p>
+ * <p>public class UserServiceTest <strong>extends IocTestCase </strong>{</p>
  * <p>@Inject </p>
  * <p>private UserService service;</p>
  * <p>@Test</p>

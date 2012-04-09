@@ -11,7 +11,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 标记是需要注入的属性，需要保证该属性是标记过{@link Ioc}的类型，否则会抛出异常
+ * 标记是需要注入的属性，需要配合{@link Ioc} 使用 。
+ * 
+ * @see Ioc
  * 
  * @author dixingxing	
  * @date Apr 7, 2012

@@ -7,7 +7,7 @@ package org.cc.db;
 
 import org.apache.log4j.Logger;
 import org.cc.db.SqlBuilderTest;
-import org.cc.db.SqlBuilder;
+import org.cc.db.dao.SqlBuilder;
 import org.cc.db.data.Child;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class SqlBuilderTest {
 	}
 	
 	/**
-	 * Test method for {@link org.cc.db.SqlBuilder#buildInsert(java.lang.Object)}.
+	 * Test method for {@link org.cc.db.dao.SqlBuilder#buildInsert(java.lang.Object)}.
 	 */
 	@Test
 	public void testBuildInsert() {
@@ -39,7 +39,7 @@ public class SqlBuilderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.SqlBuilder#buildUpdate(java.lang.Object)}.
+	 * Test method for {@link org.cc.db.dao.SqlBuilder#buildUpdate(java.lang.Object)}.
 	 */
 	@Test
 	public void testBuildUpdate() {
@@ -47,15 +47,15 @@ public class SqlBuilderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.SqlBuilder#buildGetInsertId(java.lang.Object)}.
+	 * Test method for {@link org.cc.db.dao.SqlBuilder#buildGetInsertId(java.lang.Object)}.
 	 */
 	@Test
 	public void testBuildGetInsertId() {
-		LOG.debug(SqlBuilder.buildGetInsertId(child));
+		LOG.debug(SqlBuilder.buildGetInsertId(child.getClass()));
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.SqlBuilder#pageSql(java.lang.String, int, int)}.
+	 * Test method for {@link org.cc.db.dao.SqlBuilder#pageSql(java.lang.String, int, int)}.
 	 */
 	@Test
 	public void testPageSql() {
@@ -63,7 +63,7 @@ public class SqlBuilderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.SqlBuilder#countSql(java.lang.String)}.
+	 * Test method for {@link org.cc.db.dao.SqlBuilder#countSql(java.lang.String)}.
 	 */
 	@Test
 	public void testCountSql() {

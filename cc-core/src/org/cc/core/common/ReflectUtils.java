@@ -2,6 +2,7 @@ package org.cc.core.common;
 
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
@@ -54,6 +55,7 @@ public final class ReflectUtils {
 		return list.toArray(new Field[0]);
 
 	}
+	
 
 	/**
 	 * 获取obj对象fieldName的Field
@@ -156,5 +158,26 @@ public final class ReflectUtils {
 	private static boolean isConstant(Field f) {
 		return Modifier.isStatic(f.getModifiers())
 				|| Modifier.isFinal(f.getModifiers());
+	}
+	
+	
+	
+	/**
+	 * 获取所有method，包括父类(但不包括Object类的方法)
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public static Method[] getVariableMethods(Class<?> clazz) {
+		ArrayList<Method> list = new ArrayList<Method>();
+		for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass
+				.getSuperclass()) {
+			Method[] methods = superClass.getDeclaredMethods();
+			for (Method m : methods) {
+				list.add(m);
+			}
+		}
+		return list.toArray(new Method[0]);
+
 	}
 }

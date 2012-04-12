@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.db;
+package org.cc.db.dao;
 
 import java.util.ArrayList;
 import java.util.Arrays;

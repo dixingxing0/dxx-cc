@@ -2,15 +2,15 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.db;
+package org.cc.db.dao;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.cc.core.common.ReflectUtils;
+import org.cc.core.common.Strings;
 import org.cc.db.annotation.Column;
 import org.cc.db.annotation.Table;
 import org.cc.db.annotation.Transient;
@@ -57,11 +57,10 @@ public final class SqlBuilder {
 		deleteLastComma(values);
 
 		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO ").append(tableName(po)).append(" (");
+		sql.append("INSERT INTO ").append(tableName(po.getClass())).append(" (");
 		sql.append(columns).append(") ");
 		sql.append(" VALUES(").append(values).append(") ");
 		holder.setSql(sql.toString());
-		LOG.debug(holder);
 		return holder;
 
 	}
@@ -78,26 +77,27 @@ public final class SqlBuilder {
 	}
 
 	/**
-     * sqlite3 insert 后返回生成的主键（id）
-     * @param po
-     * @return
-     */
-    public static String buildGetInsertId(Object po) {
-        return "select max(id) from " + tableName(po);
+	 * sqlite3 insert 后返回生成的主键（id）
+	 * 
+	 * @param poClass
+	 * @return
+	 */
+    public static String buildGetInsertId(Class<?> poClass) {
+        return "select max(id) from " + tableName(poClass);
     }
     
     
     
     /**
-     * 生成按id查询的sql
+     *  生成按id查询的sql
      * 
-     * @param po
+     * @param poClass
      * @param id
      * @return
      */
-    public static SqlHolder buildQueryById(Object po,Long id) {
+    public static SqlHolder buildQueryById(Class<?> poClass,Long id) {
     	StringBuilder sb = new StringBuilder();
-    	sb.append("select * from ").append(tableName(po));
+    	sb.append("select * from ").append(tableName(poClass));
     	sb.append(" where id = ?");
     	return new SqlHolder(sb.toString(),id);
     }
@@ -109,7 +109,7 @@ public final class SqlBuilder {
      * @param id
      * @return
      */
-    public static SqlHolder buildDelete(Object po,Long id) {
+    public static SqlHolder buildDelete(Class<?> po,Long id) {
     	StringBuilder sb = new StringBuilder();
     	sb.append("delete from ").append(tableName(po));
     	sb.append(" where id = ?");
@@ -140,7 +140,7 @@ public final class SqlBuilder {
 	 * @return
 	 */
 	public static String countSql(String sql) {
-		if (StringUtils.isBlank(sql)) {
+		if (Strings.isBlank(sql)) {
 			return sql;
 		}
 		return sql.replaceFirst("select .* from", "select count(1) from");
@@ -159,7 +159,7 @@ public final class SqlBuilder {
 		Field[] fields = ReflectUtils.getVariableFields(po.getClass());
 
 		StringBuilder sql = new StringBuilder();
-		sql.append("UPDATE ").append(tableName(po)).append(" SET ");
+		sql.append("UPDATE ").append(tableName(po.getClass())).append(" SET ");
 
 		for (Field f : fields) {
 			if (isTransient(f) || !isUpdatable(f)) {
@@ -193,13 +193,14 @@ public final class SqlBuilder {
 	 * MyBeanProcessor中定义了查询时从数据库字段转 -> po属性 的规则,<br />
 	 * 此处po属性 -> 数据库字段 的规则和前面保持一致
 	 * 
-	 * @see DbUtilsBeanProcessor#j2db(String)
+	 * @see #j2db(String)
 	 * @param f
 	 * @return
 	 */
 	private static String columnName(Field f) {
-		return DbUtilsBeanProcessor.j2db(f.getName());
+		return Converter.j2db(f.getName());
 	}
+	
 
 	/**
 	 * 
@@ -236,13 +237,13 @@ public final class SqlBuilder {
 	 * 
 	 * 获取表名
 	 * 
-	 * @param obj
+	 * @param poClass
 	 * @return
 	 */
-	private static String tableName(Object obj) {
-		String tableName = obj.getClass().getSimpleName();
-		Table table = obj.getClass().getAnnotation(Table.class);
-		if (table != null && StringUtils.isNotEmpty(table.value())) {
+	private static String tableName(Class<?> poClass) {
+		String tableName = poClass.getSimpleName();
+		Table table = poClass.getAnnotation(Table.class);
+		if (table != null && Strings.isNotBlank(table.value())) {
 			tableName = table.value();
 		}
 		return tableName;

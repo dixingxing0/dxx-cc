@@ -281,7 +281,11 @@ public final class IocContext {
 				return (T) map.get(impls.get(0));
 			}
 		}
-		return (T) map.get(clazz);
+		T obj =  (T) map.get(clazz);
+		for(Decorator d : IocConfig.getDecorators()) {
+			obj = d.doDecorator(obj);
+		}
+		return obj;
 	}
 	
 	/**

@@ -7,7 +7,7 @@ package org.cc.db;
 
 import static org.junit.Assert.assertTrue;
 
-import org.cc.db.SqlHolder;
+import org.cc.db.dao.SqlHolder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class SqlHolderTest {
 	
 	
 	/**
-	 * Test method for {@link org.cc.db.SqlHolder#addParam(java.lang.Object)}.
+	 * Test method for {@link org.cc.db.dao.SqlHolder#addParam(java.lang.Object)}.
 	 */
 	@Test
 	public void testAddParam() {
@@ -38,7 +38,7 @@ public class SqlHolderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.SqlHolder#getParams()}.
+	 * Test method for {@link org.cc.db.dao.SqlHolder#getParams()}.
 	 */
 	@Test
 	public void testGetParams() {
@@ -46,7 +46,7 @@ public class SqlHolderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.SqlHolder#getSql()}.
+	 * Test method for {@link org.cc.db.dao.SqlHolder#getSql()}.
 	 */
 	@Test
 	public void testGetSql() {
@@ -54,7 +54,7 @@ public class SqlHolderTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.SqlHolder#setSql(java.lang.String)}.
+	 * Test method for {@link org.cc.db.dao.SqlHolder#setSql(java.lang.String)}.
 	 */
 	@Test
 	public void testSetSql() {

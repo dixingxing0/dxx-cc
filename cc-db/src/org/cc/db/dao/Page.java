@@ -1,4 +1,4 @@
-package org.cc.db;
+package org.cc.db.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;

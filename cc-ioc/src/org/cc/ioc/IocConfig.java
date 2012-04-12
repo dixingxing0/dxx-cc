@@ -1,6 +1,8 @@
 package org.cc.ioc;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -17,36 +19,66 @@ public final class IocConfig {
 	private static final Logger LOG = Logger.getLogger(IocConfig.class);
 	private static final String IOC_CONFIG_FILE= "ioc.properties";
 	
-
+	private static Properties p = null;
 	/** 所在的包名 */
 	private static String iocPackages;
 	
+	private static String decoratorNames;
 	
-	static {
-		loadProperities(IOC_CONFIG_FILE);
-	}
-
+	private static List<Decorator> decorators = new ArrayList<Decorator>();
+	
 	private IocConfig() {}
+	
+	public static void init() {
+		init(IOC_CONFIG_FILE);
+	}
 	
 	/**
 	 * 初始化配置文件
 	 * 
 	 * @param fileName
 	 */
-	private static void loadProperities(String fileName) {
+	public static void init(String fileName) {
+		if(p != null) {
+			return;
+		}
 		try {
-			Properties p = new Properties();
+			p = new Properties();
 			InputStream in = IocConfig.class.getResourceAsStream("/" + fileName);
 			p.load(in);
 			IocConfig config = new IocConfig();
 			for (Object s : p.keySet()) {
 				String key = s.toString();
 				String value = p.getProperty(key);
-				ReflectUtils.set(config, key, value);
+				if("decorators".equals(key)) {
+					decoratorNames = value;
+					initDecorators();
+				} else {
+					ReflectUtils.set(config, key, value);
+				}
+				
 			}
 		} catch (Exception e) {
 			LOG.debug(IOC_CONFIG_FILE, e);
 		} 
+		
+	}
+
+	/**
+	 * 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * 
+	 */
+	private static void initDecorators() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		if(decoratorNames == null) {
+			return ;
+		}
+		String[] names  = decoratorNames.split(",");
+		for(String name : names) {
+			decorators.add((Decorator)Class.forName(name).newInstance());
+		}
 		
 	}
 
@@ -57,5 +89,9 @@ public final class IocConfig {
 	 */
 	public static String getIocPackages() {
 		return iocPackages;
+	}
+
+	public static List<Decorator> getDecorators() {
+		return decorators;
 	}
 }

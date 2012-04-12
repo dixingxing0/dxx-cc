@@ -17,6 +17,7 @@
 		<cc-core.version>0.2-SNAPSHOT</cc-core.version>
 		<cc-web.version>0.1-SNAPSHOT</cc-web.version>
 		<cc-db.version>0.1-SNAPSHOT</cc-db.version>
+		<cc-ioc.version>0.1-SNAPSHOT</cc-ioc.version>
 		<shiro.version>1.2.0</shiro.version>
 		<jackson.version>1.9.4</jackson.version>
 		<slf4j.version>1.6.4</slf4j.version>
@@ -95,6 +96,11 @@
 				<groupId>org.cc</groupId>
 				<artifactId>cc-db</artifactId>
 				<version>${cc-db.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.cc</groupId>
+				<artifactId>cc-ioc</artifactId>
+				<version>${cc-ioc.version}</version>
 			</dependency>
 			<!-- SPRINGSIDE MODULES end -->
 			<!-- DB -->

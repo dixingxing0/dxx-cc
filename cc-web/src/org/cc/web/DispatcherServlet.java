@@ -66,7 +66,7 @@ public class DispatcherServlet extends HttpServlet {
 	 * @param e
 	 */
 	protected void exceptionOccured(WebMethod webMethod, long start, Throwable e) {
-
+		e.printStackTrace();
 	}
 
 	
@@ -118,7 +118,7 @@ public class DispatcherServlet extends HttpServlet {
 			request.setAttribute("uri", servletPath);
 			
 			LOG.debug("(结束)返回视图为：" + s);
-			request.getRequestDispatcher("/WEB-INF/views/" + s).forward(
+			request.getRequestDispatcher(WebConfig.getViewLocation() + s).forward(
 					request, response);
 			afterProcess(webMethod, start);
 		} catch (Exception e) {

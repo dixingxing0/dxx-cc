@@ -283,7 +283,7 @@ public final class IocContext {
 		}
 		T obj =  (T) map.get(clazz);
 		for(Decorator d : IocConfig.getDecorators()) {
-			obj = d.doDecorator(obj);
+			obj = (T) d.doDecorator(obj);
 		}
 		return obj;
 	}

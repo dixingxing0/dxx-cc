@@ -5,12 +5,11 @@
  */
 package org.cc.web.binding;
 
-import java.text.ParseException;
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
+import org.cc.core.common.Dates;
+import org.cc.core.common.Strings;
 
 /**
  * 默认的绑定对象实现
@@ -34,16 +33,17 @@ public class ObjectBuilderImpl implements ObjectBuilder{
 	 */
 	protected Date parseDate(String s) {
 		Date d = null;
-		if(StringUtils.isBlank(s)) {
+		if(Strings.isBlank(s)) {
 			return d;
 		}
-		try {
-			d = DateUtils.parseDate(s, datePattens);
-		} catch (ParseException e) {
-			LOG.error("解析Date出错，格式仅支持" + StringUtils.join(datePattens,","), e);
+		d = Dates.parse(s, datePattens);
+		if(d == null) {
+			LOG.error("解析Date出错，格式仅支持" + Strings.join(datePattens));
 		}
 		return d;
 	}
+	
+	
 	
 	/**
 	 * 
@@ -76,5 +76,13 @@ public class ObjectBuilderImpl implements ObjectBuilder{
 			//LOG.warn("类型转换错误 ：" + v + "->" + cls.getName(), e);
 		}
 		return value;
+	}
+	
+	public boolean isNativeClass(Class<?> cls) {
+		return cls.equals(Long.TYPE) || cls.equals(Long.class) 
+			|| cls.equals(Double.TYPE) || cls.equals(Double.class)
+		    || cls.equals(Integer.TYPE) || cls.equals(Integer.class)
+		    || cls.equals(String.class)
+		    || cls.equals(Date.class);
 	}
 }

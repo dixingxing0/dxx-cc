@@ -40,7 +40,7 @@ public class BinderImpl implements Binder{
 		LOG.debug("绑定controller中方法参数");
 		// 方法的参数
 		Class<?>[] paramClasses = webMethod.getMethod().getParameterTypes();
-
+		
 		Annotation[][] annotations = webMethod.getMethod().getParameterAnnotations();
 
 		Object[] paramValues = new Object[paramClasses.length];
@@ -69,6 +69,10 @@ public class BinderImpl implements Binder{
 				// 从uri中解析出来的path variable
 				paramValues[i] = pathVarBinder.getValue(request.getServletPath(), webMethod, cls,annotations[i]);
 			}
+//			// Long Integer String Date 等
+//			else if (objectBuilder.isNativeClass(cls)) {
+//				paramValues[i] = objectBuilder.build(cls, request.getParameter(tv[i].getName()));
+//			}
 			// pojo
 			else {
 				try {
@@ -145,6 +149,8 @@ public class BinderImpl implements Binder{
 	 * @throws IllegalAccessException
 	 */
 	protected Object bind(HttpServletRequest request, Object obj) {
+		
+		
 		for (Field f : ReflectUtils.getVariableFields(obj.getClass())) {
 
 			String param = request.getParameter(f.getName());

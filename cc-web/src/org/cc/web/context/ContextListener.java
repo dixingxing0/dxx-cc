@@ -15,6 +15,7 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.ScanUtils;
+import org.cc.web.WebConfig;
 import org.cc.web.WebException;
 import org.cc.web.WebMethod;
 import org.cc.web.annotation.Controller;
@@ -38,7 +39,7 @@ public class ContextListener implements ServletContextListener {
 		LOG.debug("初始化servletContext!");
 		ScanUtils helper = new ScanUtils(true, true, null);
 
-		Set<Class<?>> calssList = helper.getPackageAllClasses("org.cc.demo.web", true);
+		Set<Class<?>> calssList = helper.getPackageAllClasses(WebConfig.getControllerLocation(), true);
 		try {
 			for (Class<?> clazz : calssList) {
 				if (clazz.isAnnotationPresent(Controller.class)) {

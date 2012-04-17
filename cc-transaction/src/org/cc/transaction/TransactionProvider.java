@@ -91,8 +91,10 @@ public class TransactionProvider implements Provider {
 		StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 		try {
 			for (StackTraceElement ste : stacks) {
-				// 类名包含test说明是测试类。
-				// boolean isReadOnly = true;
+				// 说明是测试类。
+				if(ste.getClassName().indexOf("JUnit") >= 0) {
+					break;
+				}
 				Class<?> clazz = Class.forName(ste.getClassName());
 				// class级别
 				if (clazz.isAnnotationPresent(Transactional.class)) {

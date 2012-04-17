@@ -23,4 +23,12 @@ public interface ObjectBuilder {
 	 * @return
 	 */
 	Object build(Class<?> cls, String v);
+	
+	/**
+	 * 是否是可以转换的类型
+	 * 
+	 * @param cls
+	 * @return
+	 */
+	boolean isNativeClass(Class<?> cls);
 }

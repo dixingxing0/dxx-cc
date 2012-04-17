@@ -46,7 +46,7 @@ public final class JdbcConfig {
 		}
 		try {
 			p = new Properties();
-			InputStream in = Thread.class.getResourceAsStream("/"+ fileName);
+			InputStream in = JdbcConfig.class.getResourceAsStream("/"+ fileName);
 			p.load(in);
 			JdbcConfig config = new JdbcConfig();
 			for (Object s : p.keySet()) {
@@ -63,7 +63,7 @@ public final class JdbcConfig {
 			initConnectionProvider(connectionProviderClassName);
 			initTransactionProvider(transactionProviderClassName);
 		} catch (Exception e) {
-			LOG.debug(JDBC_CONFIG_FILE, e);
+			LOG.debug(fileName, e);
 		}
 	}
 

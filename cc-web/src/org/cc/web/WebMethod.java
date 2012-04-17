@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.cc.core.common.Strings;
 import org.cc.web.annotation.RequestMapping;
 import org.cc.web.annotation.RequestMethod;
 
@@ -75,6 +75,17 @@ public class WebMethod {
 	 * @return
 	 */
 	public boolean match(String servletPath) {
+		if(urlPathMain == null) {
+			for (String url : urlPath) {
+				Pattern p = Pattern.compile(url);
+				Matcher m = p.matcher(servletPath);
+				if (m.matches()) {
+					return true;
+				}
+			}
+			return false;
+		} 
+		
 		for (String main : urlPathMain) {
 			if (urlPath == null || urlPath.length == 0) {
 				Pattern p = Pattern.compile(main);
@@ -134,7 +145,7 @@ public class WebMethod {
 		for (int i = 0; i < m.groupCount(); i++) {
 			s[i] = m.group(i + 1);
 		}
-		LOG.debug("解析出pathVariable :" + StringUtils.join(s, ","));
+		LOG.debug("解析出pathVariable :" + Strings.join(s));
 		return s;
 	}
 	
@@ -197,9 +208,9 @@ public class WebMethod {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("method : ").append(method.getName()).append(",urlPathMain:")
-				.append(StringUtils.join(urlPathMain,","));
-		sb.append(",urlPath:").append(StringUtils.join(urlPath, ",")).append(",requestMethod:")
-				.append(StringUtils.join(requestMethod, ","));
+				.append(Strings.join(urlPathMain));
+		sb.append(",urlPath:").append(Strings.join(urlPath)).append(",requestMethod:")
+				.append(Strings.join(requestMethod));
 		return sb.toString();
 	}
 

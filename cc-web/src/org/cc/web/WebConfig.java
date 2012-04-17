@@ -29,6 +29,7 @@ public final class WebConfig {
 
 	/** controller 所在的包名 */
 	private static String controllerLocation;
+	private static String viewLocation;
 	
 	private static Binder binder;
 	
@@ -80,6 +81,10 @@ public final class WebConfig {
 
 	public static String getControllerLocation() {
 		return controllerLocation;
+	}
+	
+	public static String getViewLocation() {
+		return viewLocation;
 	}
 
 	/**

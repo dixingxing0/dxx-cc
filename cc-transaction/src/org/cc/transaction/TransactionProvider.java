@@ -39,7 +39,7 @@ public class TransactionProvider implements Provider {
 
 
 
-	public void putConnection(Connection conn) {
+	public boolean putConnection(Connection conn) {
 		Map<Method, Connection> map = holder.get();
 		if (map == null) {
 			map = new HashMap<Method, Connection>();
@@ -49,7 +49,7 @@ public class TransactionProvider implements Provider {
 		Method m = getTransactionMethod();
 		if(m == null) {
 			LOG.debug(String.format("put connection failed %s ",conn));
-			return ;
+			return false;
 		}
 		LOG.debug(String.format("put connection %s ,method %s",conn,m != null ? m.getName() : ""));
 		try {
@@ -59,6 +59,7 @@ public class TransactionProvider implements Provider {
 		}
 		// 定义transaction注解
 		map.put(m, conn);
+		return true;
 	}
 
 	public static void rollback(Method m) {

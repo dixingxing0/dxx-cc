@@ -27,7 +27,6 @@ import org.cc.db.dao.Converter;
  * @date Apr 10, 2012
  */
 public class JdbcHelper {
-	// private static final Logger LOG = Logger.getLogger(BaseDao.class);
 
 	public static PreparedStatement getPstmt(Connection cn, String sql) {
 		try {
@@ -78,36 +77,6 @@ public class JdbcHelper {
 			throw new RuntimeException(e);
 		}
 	}
-	
-//	public static void close(Connection cn) {
-//		try {
-//			if (cn != null) {
-//				cn.close();
-//			}
-//		} catch (SQLException e) {
-//			throw new RuntimeException(e);
-//		}
-//	}
-
-//	public static void setAutoCommit(Connection cn,boolean autoCommit) {
-//		try {
-//			if (cn != null) {
-//				cn.setAutoCommit(autoCommit);
-//			}
-//		} catch (SQLException e) {
-//			throw new RuntimeException(e);
-//		}
-//	}
-//	public static void commitAndClose(Connection cn) {
-//		try {
-//			if (cn != null) {
-//				cn.commit();
-//				cn.close();
-//			}
-//		} catch (SQLException e) {
-//			throw new RuntimeException(e);
-//		}
-//	}
 
 	public static boolean rsNext(ResultSet rs) {
 		try {

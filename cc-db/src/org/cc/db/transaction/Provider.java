@@ -10,7 +10,7 @@ import java.sql.Connection;
 import org.cc.db.jdbc.ConnectionProvider;
 
 /**
- * <li>将从{@link ConnectionProvider} 获取的连接保存在当前线程中</li>
+ * <li>将从{@link ConnectionProvider} 获取的连接保存在当前线程中（如果当前线程没有定义Transaction注解，那么不保存连接）</li>
  * <li>从当前线程中获取数据库连接，保证同一事务中使用同一个连接</li>
  * 
  * @author dixingxing	
@@ -19,10 +19,12 @@ import org.cc.db.jdbc.ConnectionProvider;
 public interface Provider {
 	/**
 	 * <p>将从{@link ConnectionProvider} 获取的连接保存在当前线程中</p>
+	 * <p>如果当前线程没有定义Transaction注解，那么返回false，说明不对连接做管理。</p>
 	 * 
 	 * @param conn
+	 * @return
 	 */
-	void putConnection(Connection conn);
+	boolean putConnection(Connection conn);
 	
 	/**
 	 * <p>从当前线程中获取数据库连接，保证同一事务中使用同一个连接</p>

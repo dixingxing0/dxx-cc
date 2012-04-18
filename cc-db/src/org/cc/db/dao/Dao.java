@@ -109,6 +109,7 @@ public class Dao<T> implements IDao<T> {
 		JdbcHelper.setParams(pstmt, holder.getParams());
 		ResultSet rs = JdbcHelper.executeQuery(pstmt);
 		Long result = JdbcHelper.getNumber(rs, Long.class);
+		JdbcHelper.close(rs, pstmt);
 		realese(cn);
 		return result;
 	}
@@ -143,7 +144,7 @@ public class Dao<T> implements IDao<T> {
 	 * 
 	 * @return
 	 */
-	public Connection getConnection() {
+	private static Connection getConnection() {
 		return JdbcConfig.getConnectionProvider().getConn();
 	}
 	
@@ -152,7 +153,7 @@ public class Dao<T> implements IDao<T> {
 	 * 
 	 * @param conn
 	 */
-	public static void realese(Connection conn) {
+	private static void realese(Connection conn) {
 		JdbcConfig.getConnectionProvider().release(conn);
 	}
 }

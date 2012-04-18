@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.cc.db.DbException;
@@ -95,15 +94,6 @@ public class MemoDaoTest {
 		dao.update(m1);
 	}
 
-	/**
-	 * Test method for {@link org.cc.db.dao.Dao#getConnection()}.
-	 */
-	@Test
-	public void testGetConnection() {
-		Connection conn = dao.getConnection();
-		assertNotNull(conn);
-	}
-	
 	public void testExecute() {
 		dao.execute("update memo set name=? where id=?", "memo2",2L);
 		Memo m2 = dao.query(2L);

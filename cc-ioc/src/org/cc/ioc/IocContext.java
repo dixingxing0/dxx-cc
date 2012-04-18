@@ -153,7 +153,7 @@ public final class IocContext {
 	 * @param clazz
 	 */
 	private static <T> T getInstance(Class<T> clazz) {
-		Field[] fields = ReflectUtils.getVariableFields(clazz);
+		Field[] fields = ReflectUtils.getNotFinalFields(clazz);
 		T obj = getInside(clazz);
 		if(obj != null) {
 			return obj;

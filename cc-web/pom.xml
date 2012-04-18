@@ -20,6 +20,11 @@
 			<groupId>org.cc</groupId>
 			<artifactId>cc-core</artifactId>
 		</dependency>
+		<!-- cc core -->
+		<dependency>
+			<groupId>org.cc</groupId>
+			<artifactId>cc-ioc</artifactId>
+		</dependency>
 
 		<!-- web begin -->
 		<dependency>

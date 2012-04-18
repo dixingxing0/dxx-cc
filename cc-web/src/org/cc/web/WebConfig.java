@@ -37,19 +37,18 @@ public final class WebConfig {
 
 	private static ObjectBuilder objectBuilder;
 	
-	
-	static {
-		loadProperities(WEB_CONFIG_FILE);
-	}
-
 	private WebConfig() {}
+	
+	public static void init() {
+		init(WEB_CONFIG_FILE);
+	}
 	
 	/**
 	 * 初始化配置文件
 	 * 
 	 * @param fileName
 	 */
-	private static void loadProperities(String fileName) {
+	public static void init(String fileName) {
 		try {
 			Properties p = new Properties();
 			InputStream in = WebConfig.class.getResourceAsStream("/" + fileName);

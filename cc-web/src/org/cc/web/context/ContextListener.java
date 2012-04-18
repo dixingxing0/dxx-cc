@@ -15,6 +15,7 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.ScanUtils;
+import org.cc.ioc.IocContext;
 import org.cc.web.WebConfig;
 import org.cc.web.WebException;
 import org.cc.web.WebMethod;
@@ -40,10 +41,15 @@ public class ContextListener implements ServletContextListener {
 		ScanUtils helper = new ScanUtils(true, true, null);
 
 		Set<Class<?>> calssList = helper.getPackageAllClasses(WebConfig.getControllerLocation(), true);
+		
 		try {
 			for (Class<?> clazz : calssList) {
 				if (clazz.isAnnotationPresent(Controller.class)) {
-					addMappings(clazz.newInstance());
+					Object o  = IocContext.get(clazz);
+					if(o == null) {
+						o = clazz.newInstance();
+					}
+					addMappings(o);
 				}
 			}
 		} catch (Exception e) {

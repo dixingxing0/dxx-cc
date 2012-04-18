@@ -29,4 +29,12 @@ public interface Provider {
 	 * 
 	 */
 	Connection getConnection() ;
+	
+	/**
+	 * 是否管理此连接
+	 * 
+	 * @param conn
+	 * @return
+	 */
+	boolean hasConn(Connection conn);
 }

@@ -6,7 +6,9 @@
 package org.cc.db.jdbc;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
 import org.cc.db.transaction.Provider;
 
 /**
@@ -17,6 +19,8 @@ import org.cc.db.transaction.Provider;
  */
 public abstract class AbstractConnectionProvider implements ConnectionProvider{
 
+	private static final Logger LOG = Logger.getLogger(AbstractConnectionProvider.class);
+	
 	public Connection getConn() {
 		try {
 			Connection conn = null;
@@ -24,11 +28,17 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider{
 			if(provider != null) {
 				conn = provider.getConnection();
 				if(conn == null) {
-					conn = createConn();
-					provider.putConnection(conn);
+					Connection connNew = createConn();
+					provider.putConnection(connNew);
+					conn = provider.getConnection();
+					if(conn == null) {
+						conn = createConn();
+						conn.setAutoCommit(false);
+					}
 				}
 			} else {
 				conn = createConn();
+				conn.setAutoCommit(false);
 			}
 			
 			return conn;
@@ -37,6 +47,27 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider{
 		}
 	}
 	
+	
+	
+	public void release(Connection conn) {
+		Provider provider = JdbcConfig.getTransactionProvider();
+		// 如果当前数据库连接是托管在transactionProvider中的那么不做处理，transactionProvider最终会释放连接
+		if(provider != null && provider.hasConn(conn)) {
+			LOG.debug(String.format("connection %s 托管在 transactionProvider中，不做释放",conn));
+			return;
+		}
+		
+		try {
+			conn.close();
+			LOG.debug(String.format("connection %s 没有被 transactionProvider管理，直接释放",conn));
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+
+
 	public abstract Connection createConn();
 	
 }

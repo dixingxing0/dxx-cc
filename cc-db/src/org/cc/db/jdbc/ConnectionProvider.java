@@ -14,5 +14,17 @@ import java.sql.Connection;
  * @date Apr 11, 2012
  */
 public interface ConnectionProvider {
+	/**
+	 * 获取数据库连接
+	 * 
+	 * @return
+	 */
 	Connection getConn() ;
+	
+	/**
+	 * 释放数据库连接
+	 * 
+	 * @param conn
+	 */
+	void release(Connection conn);
 }

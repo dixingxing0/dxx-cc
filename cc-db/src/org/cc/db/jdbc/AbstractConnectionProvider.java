@@ -56,10 +56,15 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider{
 		
 		try {
 			conn.rollback();
-			conn.close();
 			LOG.debug(String.format("回滚并释放 connection %s",conn));
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
 		}
 		
 	}

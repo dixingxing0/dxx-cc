@@ -27,10 +27,17 @@ public class TransactionProvider implements Provider {
 	private static ThreadLocal<Map<Method, Connection>> holder = new ThreadLocal<Map<Method, Connection>>();
 
 	public Connection getConnection() {
-
 		Method m = getTransactionMethod();
 		return getMap().get(m);
 	}
+	
+	
+
+	public boolean hasConn(Connection conn) {
+		return getMap().containsValue(conn);
+	}
+
+
 
 	public void putConnection(Connection conn) {
 		Map<Method, Connection> map = holder.get();
@@ -40,6 +47,11 @@ public class TransactionProvider implements Provider {
 		}
 
 		Method m = getTransactionMethod();
+		if(m == null) {
+			LOG.debug(String.format("put connection failed %s ",conn));
+			return ;
+		}
+		LOG.debug(String.format("put connection %s ,method %s",conn,m != null ? m.getName() : ""));
 		try {
 			conn.setAutoCommit(false);
 		} catch (SQLException e) {

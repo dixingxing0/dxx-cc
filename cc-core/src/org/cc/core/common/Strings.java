@@ -5,6 +5,8 @@
  */
 package org.cc.core.common;
 
+import java.util.Collection;
+
 
 /**
  * 
@@ -50,6 +52,20 @@ public class Strings {
 		}
 		StringBuilder sb = new StringBuilder();
 		for(Object s : ss) {
+			sb.append(s).append(",");
+		}
+		if(sb.length() > 0) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		return sb.toString();
+	}
+	
+	public static String join(Collection<?> c) {
+		if(c == null || c.isEmpty()) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder();
+		for(Object s : c) {
 			sb.append(s).append(",");
 		}
 		if(sb.length() > 0) {

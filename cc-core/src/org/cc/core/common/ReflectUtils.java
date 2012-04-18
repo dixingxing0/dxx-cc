@@ -56,6 +56,31 @@ public final class ReflectUtils {
 
 	}
 	
+	/**
+	 * 获取所有field，包括父类(但不包括Object类和接口中的属性) ,不包括final属性
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public static Field[] getNotFinalFields(Class<?> clazz) {
+		ArrayList<Field> list = new ArrayList<Field>();
+		for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass
+				.getSuperclass()) {
+			try{
+			Field[] fields = superClass.getDeclaredFields();
+			for (Field f : fields) {
+				if (!Modifier.isFinal(f.getModifiers())) {
+					list.add(f);
+				}
+			}
+			}catch (Exception e) {
+				break;
+			}
+		}
+		return list.toArray(new Field[0]);
+
+	}
+	
 
 	/**
 	 * 获取obj对象fieldName的Field

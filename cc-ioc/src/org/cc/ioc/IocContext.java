@@ -181,7 +181,7 @@ public final class IocContext {
 			if(c.isInterface()) {
 				// 取出接口的实现类
 				List<Class<?>> impls = I_MAP.get(c);
-				if(impls.size() == 0) {
+				if(impls == null || impls.size() == 0) {
 					LOG.debug(String.format("没有找到%s的实现类，或者实现类没有定义Ioc注解",c.getName()));
 					continue;
 				} else  if (impls.size() > 1) {

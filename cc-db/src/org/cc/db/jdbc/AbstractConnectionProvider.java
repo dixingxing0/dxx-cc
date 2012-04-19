@@ -30,12 +30,12 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider{
 				if(conn == null) {
 					conn = createConn();
 					if(!provider.putConnection(conn)) {
-						conn.setAutoCommit(false);
+//						conn.setAutoCommit(false);
 					}
 				}
 			} else {
 				conn = createConn();
-				conn.setAutoCommit(false);
+//				conn.setAutoCommit(false);
 			}
 			
 			return conn;
@@ -55,8 +55,10 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider{
 		}
 		
 		try {
-			conn.rollback();
-			LOG.debug(String.format("回滚并释放 connection %s",conn));
+			conn.commit();
+			LOG.debug(String.format("提交并释放 connection %s",conn));
+//			conn.rollback();
+//			LOG.debug(String.format("回滚并释放 connection %s",conn));
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

@@ -135,7 +135,7 @@ public class Dao<T> implements IDao<T> {
 	}
 
 	public void execute(String sql, Object... params) {
-		SqlHolder holder = new SqlHolder();
+		SqlHolder holder = new SqlHolder(sql,params);
 		update(holder);
 	}
 

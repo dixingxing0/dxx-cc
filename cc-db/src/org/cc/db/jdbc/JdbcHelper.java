@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.cc.db.DbException;
+import org.cc.db.annotation.Transient;
 import org.cc.db.dao.Converter;
 
 /**
@@ -92,6 +93,9 @@ public class JdbcHelper {
 			Map<String, Object> map = new HashMap<String, Object>();
 			StringBuilder sb = new StringBuilder("data : ");
 			for (Field f : fields) {
+				if(f.isAnnotationPresent(Transient.class)) {
+					continue;
+				}
 				map.put(f.getName(), rsGet(rs, f.getType(), Converter.j2db(f.getName())));
 				sb.append(f.getName()).append(":").append(map.get(f.getName()))
 						.append(",");

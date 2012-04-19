@@ -34,10 +34,10 @@ public class TransactionHandler implements InvocationHandler {
 		Method implMethod = getImplMethod(method);
 
 		if (tran == null || tran.readonly()) {
-			LOG.debug("当前方法定义了只读事务，开始回滚事务");
+			LOG.debug("当前方法" +method.getName()+ "定义了只读事务，开始回滚事务");
 			TransactionProvider.rollback(implMethod);
 		} else {
-			LOG.debug("当前方法定义了事务，开始提交事务");
+			LOG.debug("当前方法" +method.getName()+ "定义了事务，开始提交事务");
 			TransactionProvider.commit(implMethod);
 		}
 	}

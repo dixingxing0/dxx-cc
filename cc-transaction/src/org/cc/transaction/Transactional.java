@@ -12,6 +12,8 @@ import java.lang.annotation.Target;
 
 
 /**
+ * <p>定义事务的注解。</p>
+ * <li>目前只有一个{@link #readonly()}属性，默认为false</li>
  * 
  * @author dixingxing	
  * @date Apr 12, 2012

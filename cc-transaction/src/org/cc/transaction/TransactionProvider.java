@@ -18,16 +18,27 @@ import org.cc.db.transaction.Provider;
 
 /**
  * 
+ * <p>提供数据库事务的支持。</p>
+ * <li>不支持事务的嵌套。</li>
+ * <li>只管理定义了Transaction注解，并定义Ioc注解的类。</li>
+ * <li>基于jdk的代理来实现，故一定要实现接口。</li>
+ * <li>管理数据库连接</li>
  * 
- * @author dixingxing
- * @date Apr 12, 2012
+ * @author dixingxing	
+ * @date Apr 20, 2012
  */
 public class TransactionProvider implements Provider {
 	private static final Logger LOG = Logger
 			.getLogger(TransactionProvider.class);
-
+	/**保存数据库连接，目前不支持嵌套事务，所以其中最多只有一个数据库连接*/
 	private static ThreadLocal<Map<Method, Connection>> holder = new ThreadLocal<Map<Method, Connection>>();
 
+	/**
+	 * 
+	 * <p>当前{@link #holder}中没有数据库连接</p>
+	 *
+	 * @return
+	 */
 	public static boolean noTransaction() {
 		return getMap().values().isEmpty();
 	}
@@ -36,6 +47,12 @@ public class TransactionProvider implements Provider {
 		return getConn();
 	}
 	
+	/**
+	 * 
+	 * <p>获取{@link #holder}中的数据库连接</p>
+	 *
+	 * @return
+	 */
 	public static Connection getConn() {
 		if( getMap().values().size() == 0) {
 			return null;
@@ -81,6 +98,12 @@ public class TransactionProvider implements Provider {
 		return true;
 	}
 
+	/**
+	 * 
+	 * <p>回滚方法对应的数据库事务</p>
+	 *
+	 * @param m
+	 */
 	public static void rollback(Method m) {
 		Connection conn = getConn();
 		if (conn != null) {
@@ -96,6 +119,12 @@ public class TransactionProvider implements Provider {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>提交方法对应的数据库事务</p>
+	 *
+	 * @param m
+	 */
 	public static void commit(Method m) {
 		Connection conn = getConn();
 		if (conn != null) {
@@ -136,6 +165,12 @@ public class TransactionProvider implements Provider {
 	}
 
 
+	/**
+	 * 
+	 * <p>返回{@link #holder}中的map，如果没有则创建一个</p>
+	 *
+	 * @return
+	 */
 	private static Map<Method, Connection> getMap() {
 		Map<Method, Connection> map = holder.get();
 		if (map == null) {

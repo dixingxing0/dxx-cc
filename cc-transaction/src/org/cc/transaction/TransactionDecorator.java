@@ -60,6 +60,12 @@ public class TransactionDecorator implements Decorator{
 		
 	}
 	
+	/**
+	 * 
+	 * <p>获取实现的接口（多个接口时返回第一个）</p>
+	 * @param obj
+	 * @return
+	 */
 	private static Class<?> getInterfaceClass(Object obj){
 		Class<?>[] cls = obj.getClass().getInterfaces();
 		if (cls == null || cls.length == 0) {

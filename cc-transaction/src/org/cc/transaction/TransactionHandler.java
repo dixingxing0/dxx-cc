@@ -15,9 +15,10 @@ import org.cc.db.jdbc.JdbcConfig;
 
 /**
  * 
+ * <p>实现基于jdk的代理。（只能代理实现了接口的类。）</p>
  * 
- * @author dixingxing
- * @date Apr 12, 2012
+ * @author dixingxing	
+ * @date Apr 20, 2012
  */
 public class TransactionHandler implements InvocationHandler {
 	private static final Logger LOG = Logger
@@ -31,6 +32,13 @@ public class TransactionHandler implements InvocationHandler {
 		this.target = target;
 	}
 
+	/**
+	 * 
+	 * <p>先于被代理的方法之前执行</p>
+	 * 
+	 * @param method
+	 * @param args
+	 */
 	public void before(Method method, Object[] args) {
 		// TODO 嵌套 只读调用 读写
 		if (TransactionProvider.noTransaction()) {
@@ -41,6 +49,13 @@ public class TransactionHandler implements InvocationHandler {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>先于被代理的方法之前执行</p>
+	 * 
+	 * @param method
+	 * @param args
+	 */
 	public void after(Method method, Object[] args) {
 		Transactional tran = getDefinition(method);
 
@@ -84,6 +99,13 @@ public class TransactionHandler implements InvocationHandler {
 		return target.getClass().getAnnotation(Transactional.class);
 	}
 
+	/**
+	 * 
+	 * <p>获取实现类的method</p>
+	 *
+	 * @param m 接口类method
+	 * @return
+	 */
 	private Method getImplMethod(Method m) {
 		Method method = null;
 		try {
@@ -96,6 +118,15 @@ public class TransactionHandler implements InvocationHandler {
 		return method;
 	}
 
+	/**
+	 * 重写父类方法
+	 * 
+	 * @param proxy
+	 * @param method
+	 * @param args
+	 * @return
+	 * @see java.lang.reflect.InvocationHandler#invoke(java.lang.Object, java.lang.reflect.Method, java.lang.Object[])
+	 */
 	public Object invoke(Object proxy, Method method, Object[] args) {
 		before(method, args);
 		Object result = null;

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.cc</groupId>
+	<artifactId>cc-project</artifactId>
+	<version>0.2-SNAPSHOT</version>
+	<name>cc :: Project</name>
+	<packaging>pom</packaging>
+	<parent>
+		<groupId>org.cc</groupId>
+		<artifactId>cc-parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+		<relativePath>parent</relativePath>
+	</parent>
+
+	<modules>
+		<module>parent</module>
+		<module>cc-core</module>
+		<module>cc-db</module>
+		<module>cc-ioc</module>
+		<module>cc-transaction</module>
+		<module>cc-web</module>
+	</modules>
+</project>

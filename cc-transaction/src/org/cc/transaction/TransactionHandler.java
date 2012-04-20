@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 
 import org.apache.log4j.Logger;
+import org.cc.db.DbException;
 import org.cc.db.jdbc.JdbcConfig;
 
 /**
@@ -22,7 +23,7 @@ public class TransactionHandler implements InvocationHandler {
 	private static final Logger LOG = Logger
 			.getLogger(TransactionHandler.class);
 
-	TransactionProvider p = new TransactionProvider();
+	private static TransactionProvider p = new TransactionProvider();
 
 	private Object target;
 
@@ -74,7 +75,7 @@ public class TransactionHandler implements InvocationHandler {
 			method = target.getClass().getMethod(m.getName(),
 					m.getParameterTypes());
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new DbException(e);
 		}
 
 		if (method.isAnnotationPresent(Transactional.class)) {
@@ -89,19 +90,18 @@ public class TransactionHandler implements InvocationHandler {
 			method = target.getClass().getMethod(m.getName(),
 					m.getParameterTypes());
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new DbException(e);
 		}
 		return method;
 	}
 
-	public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
+	public Object invoke(Object proxy, Method method, Object[] args) {
 		before(method, args);
 		Object result = null;
 		try {
 			result = method.invoke(target, args);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 			TransactionProvider.rollback(method);
 		}
 		after(method, args);

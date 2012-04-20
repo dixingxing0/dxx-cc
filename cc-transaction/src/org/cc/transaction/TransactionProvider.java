@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.cc.db.jdbc.ConnectionProvider;
+import org.cc.db.DbException;
 import org.cc.db.transaction.Provider;
 
 /**
@@ -73,7 +73,7 @@ public class TransactionProvider implements Provider {
 		try {
 			conn.setAutoCommit(false);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new DbException(e);
 		}
 		// 定义transaction注解
 		map.put(m, conn);
@@ -88,7 +88,7 @@ public class TransactionProvider implements Provider {
 				LOG.debug(String.format("回滚方法%s.%s的事务", m.getDeclaringClass()
 						.getName(), m.getName()));
 			} catch (SQLException e) {
-				throw new RuntimeException("回滚失败", e);
+				throw new DbException("回滚失败", e);
 			} finally {
 				closeAndRemove(conn);
 			}
@@ -103,7 +103,7 @@ public class TransactionProvider implements Provider {
 				LOG.debug(String.format("提交方法%s.%s的事务", m.getDeclaringClass()
 						.getName(), m.getName()));
 			} catch (SQLException e) {
-				throw new RuntimeException("提交失败", e);
+				throw new DbException("提交失败", e);
 			} finally {
 				closeAndRemove(conn);
 			}
@@ -121,7 +121,7 @@ public class TransactionProvider implements Provider {
 			remove();
 			LOG.debug(String.format("释放数据库连接 %s",conn));
 		} catch (SQLException e) {
-			throw new RuntimeException("回滚失败", e);
+			throw new DbException("回滚失败", e);
 		}
 	}
 

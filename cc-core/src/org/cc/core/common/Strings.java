@@ -5,6 +5,7 @@
  */
 package org.cc.core.common;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 
@@ -85,14 +86,7 @@ public class Strings {
 		if(ss == null) {
 			return "";
 		}
-		StringBuilder sb = new StringBuilder();
-		for(Object s : ss) {
-			sb.append(s).append(",");
-		}
-		if(sb.length() > 0) {
-			sb.deleteCharAt(sb.length() - 1);
-		}
-		return sb.toString();
+		return Arrays.toString(ss);
 	}
 	
 	/**
@@ -106,13 +100,6 @@ public class Strings {
 		if(c == null || c.isEmpty()) {
 			return "";
 		}
-		StringBuilder sb = new StringBuilder();
-		for(Object s : c) {
-			sb.append(s).append(",");
-		}
-		if(sb.length() > 0) {
-			sb.deleteCharAt(sb.length() - 1);
-		}
-		return sb.toString();
+		return join(c.toArray());
 	}
 }

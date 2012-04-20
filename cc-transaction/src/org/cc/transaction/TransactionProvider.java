@@ -48,7 +48,7 @@ public class TransactionProvider implements Provider {
 
 		Method m = getTransactionMethod();
 		if(m == null) {
-			LOG.debug(String.format("put connection failed %s ",conn));
+//			LOG.debug(String.format("put connection failed %s ",conn));
 			return false;
 		}
 		LOG.debug(String.format("put connection %s ,method %s",conn,m != null ? m.getName() : ""));
@@ -71,7 +71,7 @@ public class TransactionProvider implements Provider {
 			} catch (SQLException e) {
 				throw new RuntimeException("回滚失败", e);
 			} finally {
-				closeConn(conn);
+				closeAndRemove(m,conn);
 			}
 		}
 	}
@@ -85,18 +85,34 @@ public class TransactionProvider implements Provider {
 			} catch (SQLException e) {
 				throw new RuntimeException("提交失败", e);
 			} finally {
-				closeConn(conn);
+				closeAndRemove(m,conn);
 			}
 		}
 	}
 
-	private static void closeConn(Connection conn) {
+	/**
+	 * 关闭连接并把连接从holder中移除
+	 * 
+	 * @param m
+	 * @param conn
+	 */
+	private static void closeAndRemove(Method m,Connection conn) {
 		try {
 			conn.close();
+			remove(m);
 			LOG.debug("释放数据库连接");
 		} catch (SQLException e) {
 			throw new RuntimeException("回滚失败", e);
 		}
+	}
+	
+	/**
+	 * 每个事务完成后要把map中的conn移除，。
+	 * 
+	 * @param m
+	 */
+	private static void remove(Method m) {
+		getMap().remove(m);
 	}
 
 	public static Method getTransactionMethod() {
@@ -142,5 +158,5 @@ public class TransactionProvider implements Provider {
 		}
 		return map;
 	}
-
+	
 }

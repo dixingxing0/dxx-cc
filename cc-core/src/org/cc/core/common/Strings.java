@@ -15,6 +15,7 @@ import java.util.Collection;
  * @date Apr 11, 2012
  */
 public class Strings {
+	private Strings() {}
 	
 	public static boolean isBlank(String s) {
 		return s == null || s.trim().equals("");
@@ -25,22 +26,20 @@ public class Strings {
 	}
 
 	public static String capitalize(String str) {
-        int strLen;
-        if (str == null || (strLen = str.length()) == 0) {
+        if (str == null || str.length() == 0) {
             return str;
         }
-        return new StringBuilder(strLen)
+        return new StringBuilder(str.length())
             .append(Character.toTitleCase(str.charAt(0)))
             .append(str.substring(1))
             .toString();
     }
 	
 	public static String uncapitalize(String str) {
-        int strLen;
-        if (str == null || (strLen = str.length()) == 0) {
+        if (str == null || str.length() == 0) {
             return str;
         }
-        return new StringBuilder(strLen)
+        return new StringBuilder(str.length())
             .append(Character.toLowerCase(str.charAt(0)))
             .append(str.substring(1))
             .toString();

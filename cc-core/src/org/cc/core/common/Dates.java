@@ -16,7 +16,7 @@ import java.util.Date;
  * @date Apr 17, 2012
  */
 public class Dates {
-
+	private Dates() {}
 	/**
 	 * 
 	 * @param dateStr

@@ -11,6 +11,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.cc.core.common.Exceptions;
+
 /**
  * 
  * 
@@ -30,7 +32,7 @@ public class JndiConnectionProvider extends AbstractConnectionProvider {
 			Context ic = new InitialContext();
 			ds = (DataSource) ic.lookup(jndiName);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
 		}
 	}
 
@@ -39,7 +41,8 @@ public class JndiConnectionProvider extends AbstractConnectionProvider {
 		try {
 			return ds.getConnection();
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
+			return null;
 		}
 	}
 

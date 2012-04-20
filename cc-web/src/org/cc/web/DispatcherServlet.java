@@ -66,7 +66,7 @@ public class DispatcherServlet extends HttpServlet {
 	 * @param e
 	 */
 	protected void exceptionOccured(WebMethod webMethod, long start, Throwable e) {
-		e.printStackTrace();
+		LOG.error(e);
 	}
 
 	

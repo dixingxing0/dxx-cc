@@ -17,7 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cc.db.DbException;
+import org.cc.core.CcException;
+import org.cc.core.common.Exceptions;
 import org.cc.db.annotation.Transient;
 import org.cc.db.dao.Converter;
 
@@ -27,13 +28,16 @@ import org.cc.db.dao.Converter;
  * @author dixingxing
  * @date Apr 10, 2012
  */
-public class JdbcHelper {
+public final class JdbcHelper {
+	
+	private JdbcHelper() {}
 
 	public static PreparedStatement getPstmt(Connection cn, String sql) {
 		try {
 			return cn.prepareStatement(sql);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
+			return null;
 		}
 	}
 
@@ -46,7 +50,7 @@ public class JdbcHelper {
 				pstmt.setObject(i + 1, params[i]);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
 		}
 	}
 
@@ -54,7 +58,8 @@ public class JdbcHelper {
 		try {
 			return pstmt.executeQuery();
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
+			return null;
 		}
 	}
 
@@ -62,7 +67,7 @@ public class JdbcHelper {
 		try {
 			pstmt.executeUpdate();
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
 		}
 	}
 
@@ -75,7 +80,7 @@ public class JdbcHelper {
 				pstmt.close();
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
 		}
 	}
 
@@ -83,7 +88,8 @@ public class JdbcHelper {
 		try {
 			return rs.next();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
+			return false;
 		}
 	}
 
@@ -112,7 +118,7 @@ public class JdbcHelper {
 		while (rsNext(rs)) {
 			number = (T) rsGet(rs, numberClazz, 1);
 			if (rsNext(rs)) {
-				throw new DbException("期望返回单条数据，实际返回多条记录");
+				throw new CcException("期望返回单条数据，实际返回多条记录");
 			}
 		}
 		return number;
@@ -159,7 +165,8 @@ public class JdbcHelper {
 			}
 			return rs.getObject(name);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
+			return null;
 		}
 
 	}
@@ -205,7 +212,8 @@ public class JdbcHelper {
 			}
 			return rs.getObject(index);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
+			return null;
 		}
 
 	}

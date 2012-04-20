@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.cc.core.CcException;
 import org.cc.core.common.ReflectUtils;
-import org.cc.db.DbException;
 import org.cc.db.jdbc.JdbcConfig;
 import org.cc.db.jdbc.JdbcHelper;
 
@@ -96,7 +96,7 @@ public class Dao<T> implements IDao<T> {
 		if (list.size() == 0) {
 			return null;
 		} else if (list.size() > 1) {
-			throw new DbException(format("期望返回1条数据，实际返回%d条记录", list.size()));
+			throw new CcException(format("期望返回1条数据，实际返回%d条记录", list.size()));
 		}
 		return list.get(0);
 	}

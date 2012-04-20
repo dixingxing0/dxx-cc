@@ -10,9 +10,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.cc.db.dao.SqlBuilder;
-
-
 /**
  * 
  * 指定属性和数据库无关(瞬时)

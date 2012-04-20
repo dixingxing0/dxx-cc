@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 
 import org.apache.log4j.Logger;
-import org.cc.db.DbException;
+import org.cc.core.common.Exceptions;
 import org.cc.db.jdbc.JdbcConfig;
 
 /**
@@ -75,7 +75,7 @@ public class TransactionHandler implements InvocationHandler {
 			method = target.getClass().getMethod(m.getName(),
 					m.getParameterTypes());
 		} catch (Exception e) {
-			throw new DbException(e);
+			Exceptions.uncheck(e);
 		}
 
 		if (method.isAnnotationPresent(Transactional.class)) {
@@ -90,7 +90,8 @@ public class TransactionHandler implements InvocationHandler {
 			method = target.getClass().getMethod(m.getName(),
 					m.getParameterTypes());
 		} catch (Exception e) {
-			throw new DbException(e);
+			Exceptions.uncheck(e);
+			return null;
 		}
 		return method;
 	}

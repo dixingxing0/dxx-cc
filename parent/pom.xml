@@ -57,10 +57,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>localRepository</id>
-			<url>http://192.168.0.253:93/maven2/</url>
-		</repository>
+		
 		<repository>  
             <id>maven2_a</id>  
             <url>http://mvnrepository.com/</url>  

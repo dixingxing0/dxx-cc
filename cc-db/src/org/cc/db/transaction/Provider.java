@@ -7,8 +7,6 @@ package org.cc.db.transaction;
 
 import java.sql.Connection;
 
-import org.cc.db.jdbc.ConnectionProvider;
-
 /**
  * <li>将从{@link ConnectionProvider} 获取的连接保存在当前线程中（如果当前线程没有定义Transaction注解，那么不保存连接）</li>
  * <li>从当前线程中获取数据库连接，保证同一事务中使用同一个连接</li>

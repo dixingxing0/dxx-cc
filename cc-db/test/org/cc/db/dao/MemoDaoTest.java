@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.cc.db.DbException;
+import org.cc.core.CcException;
 import org.cc.db.jdbc.JdbcConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,7 +79,7 @@ public class MemoDaoTest {
 		assertTrue(count > 0);
 	}
 
-	@Test(expected = DbException.class)
+	@Test(expected = CcException.class)
 	public void testQueryLongExeption() {
 		dao.queryLong("select id from memo");
 	}

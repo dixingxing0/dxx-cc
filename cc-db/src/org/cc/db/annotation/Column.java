@@ -10,9 +10,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.cc.db.dao.SqlBuilder;
-
-
 /**
  * 
  * 定义po某个属性对应到数据库列的详细规则

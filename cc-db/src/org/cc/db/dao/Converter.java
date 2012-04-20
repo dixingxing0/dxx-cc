@@ -16,9 +16,11 @@ import org.cc.core.common.Strings;
  * @author dixingxing
  * @date Apr 11, 2012
  */
-public class Converter {
+public final class Converter {
 	private static final Pattern P = Pattern.compile("([A-Z])");
 
+	private Converter() {}
+	
 	/**
 	 * 数据库列名 -> java属性名
 	 * 

@@ -8,6 +8,7 @@ package org.cc.db.dao;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import org.cc.core.common.Exceptions;
 import org.cc.core.common.ReflectUtils;
 
 
@@ -29,7 +30,7 @@ public class Mapper<T> {
 		try {
 			po = clazz.newInstance();
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
 		} 
 		
 		for(Field f : fields) {

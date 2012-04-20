@@ -8,6 +8,8 @@ package org.cc.db.jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.cc.core.common.Exceptions;
+
 /**
  * 
  * 
@@ -44,7 +46,8 @@ public class JdbcConnectionProvider extends AbstractConnectionProvider{
 			Class.forName(driverClassName);
 			return DriverManager.getConnection(url, userName, password);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Exceptions.uncheck(e);
+			return null;
 		}
 	}
 }

@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.cc.core.CcException;
 import org.cc.core.common.ReflectUtils;
 import org.cc.db.transaction.Provider;
 
@@ -76,7 +77,7 @@ public final class JdbcConfig {
 			try {
 				transactionProvider = (Provider) Class.forName(providerClassName).newInstance();
 			} catch (Exception e) {
-				throw new RuntimeException("请配置属性transactionProvider",e);
+				throw new CcException("请配置属性transactionProvider",e);
 			} 
 		}
 		
@@ -91,7 +92,7 @@ public final class JdbcConfig {
 			LOG.debug("使用jndicConnectionProvider");
 			connectionProvider = new JndiConnectionProvider(jndiDataSourceName);
 		} else {
-			throw new RuntimeException("请配置属性connectionProvider");
+			throw new CcException("请配置属性connectionProvider");
 		}
 	}
 

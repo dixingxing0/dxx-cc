@@ -12,5 +12,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/cc-core"/>
 	<classpathentry kind="var" path="commons-lang-2.6-sources"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cc-ioc"/>
+	<classpathentry kind="var" path="M2_REPO/javassist/javassist/3.4.GA/javassist-3.4.GA.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

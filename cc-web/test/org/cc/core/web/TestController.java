@@ -28,4 +28,8 @@ public class TestController {
 	public String logout() {
 		return "secure.jsp";
 	}
+	
+	public String testParams(String id,String name) {
+		return null;
+	}
 }

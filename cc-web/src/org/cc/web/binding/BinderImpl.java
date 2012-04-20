@@ -38,8 +38,12 @@ public class BinderImpl implements Binder{
 	
 	public Object[] fromRequest(HttpServletRequest request,HttpServletResponse response, WebMethod webMethod){
 		LOG.debug("绑定controller中方法参数");
+		
+		
 		// 方法的参数
 		Class<?>[] paramClasses = webMethod.getMethod().getParameterTypes();
+		// 方法的参数名
+		String[] paramNames = Classes.getMethodParamNames(webMethod.getHandler().getClass(), webMethod.getMethod().getName(), paramClasses);
 		
 		Annotation[][] annotations = webMethod.getMethod().getParameterAnnotations();
 
@@ -69,10 +73,10 @@ public class BinderImpl implements Binder{
 				// 从uri中解析出来的path variable
 				paramValues[i] = pathVarBinder.getValue(request.getServletPath(), webMethod, cls,annotations[i]);
 			}
-//			// Long Integer String Date 等
-//			else if (objectBuilder.isNativeClass(cls)) {
-//				paramValues[i] = objectBuilder.build(cls, request.getParameter(tv[i].getName()));
-//			}
+			// Long Integer String Date 等
+			else if (objectBuilder.isNativeClass(cls)) {
+				paramValues[i] = objectBuilder.build(cls, request.getParameter(paramNames[i]));
+			}
 			// pojo
 			else {
 				try {

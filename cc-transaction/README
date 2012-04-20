@@ -1,2 +1,1 @@
-提供依赖注入的能力 ，目前只能根据类型注入，支持接口，但不支持循环依赖。提供Ioc 和 Inject 两个annotation，用起来挺简单的 。
-最新增加了IocTestCase，测试类也可以使用@Inject了。
+依赖cc-ioc和cc-db，给数据库访问提供事务支持。提供一个Transactional注解。正在考虑嵌套事务的支持。

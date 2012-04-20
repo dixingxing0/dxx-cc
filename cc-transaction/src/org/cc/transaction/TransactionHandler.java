@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
+import org.cc.db.jdbc.JdbcConfig;
 
 /**
  * 
@@ -19,6 +20,8 @@ import org.apache.log4j.Logger;
 public class TransactionHandler implements InvocationHandler {
 	private static final Logger LOG = Logger.getLogger(TransactionHandler.class);
 
+	TransactionProvider p = new TransactionProvider();
+	
 	private Object target;
 
 	public TransactionHandler(Object target) {
@@ -26,6 +29,10 @@ public class TransactionHandler implements InvocationHandler {
 	}
 
 	public void before(Method method, Object[] args) {
+		//TODO 嵌套 只读调用 读写
+		if(TransactionProvider.noTransaction()) {
+			p.putConnection(method,JdbcConfig.getConnectionProvider().getConn());
+		}
 	}
 
 	public void after(Method method, Object[] args) {

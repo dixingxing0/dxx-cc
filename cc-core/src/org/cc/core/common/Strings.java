@@ -10,6 +10,7 @@ import java.util.Collection;
 
 /**
  * 
+ * String 工具类
  * 
  * @author dixingxing	
  * @date Apr 11, 2012
@@ -17,14 +18,35 @@ import java.util.Collection;
 public class Strings {
 	private Strings() {}
 	
+	/**
+	 * 
+	 * <p>return s == null || s.trim().equals("");</p>
+	 *
+	 * @param s
+	 * @return
+	 */
 	public static boolean isBlank(String s) {
 		return s == null || s.trim().equals("");
 	}
 	
+	/***
+	 * 
+	 * <p>return !isBlank(s);</p>
+	 *
+	 * @param s
+	 * @return
+	 */
 	public static boolean isNotBlank(String s) {
 		return !isBlank(s);
 	}
 
+	/**
+	 * 
+	 * <p>首字母大写</p>
+	 *
+	 * @param str
+	 * @return
+	 */
 	public static String capitalize(String str) {
         if (str == null || str.length() == 0) {
             return str;
@@ -35,6 +57,13 @@ public class Strings {
             .toString();
     }
 	
+	/**
+	 * 首字母小写
+	 * <p></p>
+	 *
+	 * @param str
+	 * @return
+	 */
 	public static String uncapitalize(String str) {
         if (str == null || str.length() == 0) {
             return str;
@@ -45,6 +74,13 @@ public class Strings {
             .toString();
     }
 	
+	/**
+	 * 
+	 * <p>数据转字符串，用“,”分隔</p>
+	 *
+	 * @param ss
+	 * @return
+	 */
 	public static String join(Object[] ss) {
 		if(ss == null) {
 			return "";
@@ -59,6 +95,13 @@ public class Strings {
 		return sb.toString();
 	}
 	
+	/**
+	 * 
+	 * <p>collection转字符串，用“,”分隔</p>
+	 *
+	 * @param ss
+	 * @return
+	 */
 	public static String join(Collection<?> c) {
 		if(c == null || c.isEmpty()) {
 			return "";

@@ -8,7 +8,8 @@ package org.cc.core.common;
 
 /**
  * 
- * Annotation 工具类
+ * <p>Annotation 工具类</p>
+ * 
  * @author dixingxing	
  * @date Apr 1, 2012
  */
@@ -17,7 +18,7 @@ public final class AnnotationUtils {
 	private AnnotationUtils() {}
 	
 	/**
-	 * 没有则返回 null
+	 * <p>判断对象是否有注解并返回。没有则返回 null</p>
 	 * 
 	 * @param <A>
 	 * @param obj

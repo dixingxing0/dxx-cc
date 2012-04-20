@@ -11,14 +11,18 @@ import java.util.Date;
 
 /**
  * 
+ * <p>Date工具类</p>
  * 
  * @author dixingxing	
- * @date Apr 17, 2012
+ * @date Apr 20, 2012
  */
 public class Dates {
 	private Dates() {}
+	
 	/**
 	 * 
+	 * <p>字符串转date对象，多个pattern</p>
+	 *
 	 * @param dateStr
 	 * @param datePattens
 	 * @return
@@ -33,6 +37,14 @@ public class Dates {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * <p>字符串转date对象</p>
+	 *
+	 * @param dateStr
+	 * @param datePatten
+	 * @return
+	 */
 	public static Date parse(String dateStr , String datePatten) {
 		SimpleDateFormat sdf = new SimpleDateFormat(datePatten);
 		try {

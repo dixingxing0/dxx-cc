@@ -50,13 +50,13 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider{
 		Provider provider = JdbcConfig.getTransactionProvider();
 		// 如果当前数据库连接是托管在transactionProvider中的那么不做处理，transactionProvider最终会释放连接
 		if(provider != null && provider.hasConn(conn)) {
-			LOG.debug(String.format("connection %s 托管在 transactionProvider中，不做释放",conn));
+			LOG.debug(String.format("conn %s 托管在 transactionProvider中，不做释放",conn));
 			return;
 		}
 		
 		try {
 			conn.commit();
-			LOG.debug(String.format("提交并释放 connection %s",conn));
+			LOG.debug(String.format("conn 提交并释放 %s",conn));
 //			conn.rollback();
 //			LOG.debug(String.format("回滚并释放 connection %s",conn));
 		} catch (SQLException e) {

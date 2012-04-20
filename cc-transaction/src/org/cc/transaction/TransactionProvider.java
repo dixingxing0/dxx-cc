@@ -32,6 +32,10 @@ public class TransactionProvider implements Provider {
 	}
 	
 	public Connection getConnection() {
+		return getConn();
+	}
+	
+	public static Connection getConn() {
 		if( getMap().values().size() == 0) {
 			return null;
 		}
@@ -66,8 +70,6 @@ public class TransactionProvider implements Provider {
 			// LOG.debug(String.format("put connection failed %s ",conn));
 			return false;
 		}
-		LOG.debug(String.format("put connection %s ,method %s", conn,
-				m != null ? m.getName() : ""));
 		try {
 			conn.setAutoCommit(false);
 		} catch (SQLException e) {
@@ -79,7 +81,7 @@ public class TransactionProvider implements Provider {
 	}
 
 	public static void rollback(Method m) {
-		Connection conn = getMap().get(m);
+		Connection conn = getConn();
 		if (conn != null) {
 			try {
 				conn.rollback();
@@ -88,13 +90,13 @@ public class TransactionProvider implements Provider {
 			} catch (SQLException e) {
 				throw new RuntimeException("回滚失败", e);
 			} finally {
-				closeAndRemove(m, conn);
+				closeAndRemove(conn);
 			}
 		}
 	}
 
 	public static void commit(Method m) {
-		Connection conn = getMap().get(m);
+		Connection conn = getConn();
 		if (conn != null) {
 			try {
 				conn.commit();
@@ -103,7 +105,7 @@ public class TransactionProvider implements Provider {
 			} catch (SQLException e) {
 				throw new RuntimeException("提交失败", e);
 			} finally {
-				closeAndRemove(m, conn);
+				closeAndRemove(conn);
 			}
 		}
 	}
@@ -111,14 +113,13 @@ public class TransactionProvider implements Provider {
 	/**
 	 * 关闭连接并把连接从holder中移除
 	 * 
-	 * @param m
 	 * @param conn
 	 */
-	private static void closeAndRemove(Method m, Connection conn) {
+	private static void closeAndRemove(Connection conn) {
 		try {
 			conn.close();
-			remove(m);
-			LOG.debug("释放数据库连接");
+			remove();
+			LOG.debug(String.format("释放数据库连接 %s",conn));
 		} catch (SQLException e) {
 			throw new RuntimeException("回滚失败", e);
 		}
@@ -129,8 +130,8 @@ public class TransactionProvider implements Provider {
 	 * 
 	 * @param m
 	 */
-	private static void remove(Method m) {
-		getMap().remove(m);
+	private static void remove() {
+		getMap().clear();
 	}
 
 

@@ -68,6 +68,7 @@ public final class Classes {
 		try {
 			cr = new ClassReader(n);
 		} catch (IOException e) {
+			e.printStackTrace();
 			Exceptions.uncheck(e);
 		}
 		cr.accept(new ClassVisitor(Opcodes.ASM4, cw) {

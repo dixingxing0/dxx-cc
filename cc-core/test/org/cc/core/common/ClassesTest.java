@@ -54,29 +54,4 @@ public class ClassesTest {
 		names = Classes.getMethodParamNames(Foo.class.getMethod("m4",Object[].class,Integer[].class));
 		assertArrayEquals(new String[] { "objs","integers" }, names);
 	}
-
-	static class Foo {
-		String local;
-
-		public void m1(String s) {
-
-		}
-
-		public void m2(int i, String s) {
-
-		}
-
-		public void m3(Integer i, String[] s) {
-			
-		}
-		
-		public void m3(Integer[] i, String[] s) {
-
-		}
-
-		public static void m4(Object[] objs, Integer[] integers) {
-
-		}
-	}
-
 }

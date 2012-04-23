@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.cc.core.CcException;
+import org.cc.core.common.Classes;
 import org.cc.core.common.ReflectUtils;
 import org.cc.web.Model;
 import org.cc.web.WebConfig;
@@ -43,7 +44,7 @@ public class BinderImpl implements Binder{
 		// 方法的参数
 		Class<?>[] paramClasses = webMethod.getMethod().getParameterTypes();
 		// 方法的参数名
-		String[] paramNames = Classes.getMethodParamNames(webMethod.getHandler().getClass(), webMethod.getMethod().getName(), paramClasses);
+		String[] paramNames = Classes.getMethodParamNames(webMethod.getMethod());
 		
 		Annotation[][] annotations = webMethod.getMethod().getParameterAnnotations();
 

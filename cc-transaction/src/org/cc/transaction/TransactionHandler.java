@@ -133,7 +133,7 @@ public class TransactionHandler implements InvocationHandler {
 		try {
 			result = method.invoke(target, args);
 		} catch (Exception e) {
-			LOG.error(e);
+			Exceptions.uncheck(e);
 			TransactionProvider.rollback(method);
 		}
 		after(method, args);

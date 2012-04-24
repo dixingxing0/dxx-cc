@@ -134,8 +134,26 @@ public class Dao<T> implements IDao<T> {
 		realese(cn);
 	}
 
+	/**
+	 * 执行sql语句
+	 * 
+	 * @param sql
+	 * @param params
+	 * @see org.cc.db.dao.IDao#execute(java.lang.String, java.lang.Object[])
+	 */
 	public void execute(String sql, Object... params) {
 		SqlHolder holder = new SqlHolder(sql,params);
+		update(holder);
+	}
+	
+	/**
+	 * 
+	 * <p>根据ID删除</p>
+	 *
+	 * @param id
+	 */
+	public void delete(Long id) {
+		SqlHolder holder = SqlBuilder.buildDelete(poClass(), id);
 		update(holder);
 	}
 

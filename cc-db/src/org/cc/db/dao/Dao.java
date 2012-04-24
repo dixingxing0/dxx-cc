@@ -69,12 +69,25 @@ public class Dao<T> implements IDao<T> {
 	}
 
 	public Long insert(T po) {
+		String getSeq = SqlBuilder.buildGetSeq(po);
+		
+		Long id  = (Long) ReflectUtils.getValueByFieldName(po, "id");
+		// 如果id为空，并定义了序列，那么从数据库序列中查询id的值
+		if(id == null && getSeq != null) {
+			id = queryLong(getSeq);
+			ReflectUtils.set(po, "id", id);
+		}
+		
 		SqlHolder holder = SqlBuilder.buildInsert(po);
 		update(holder);
+		
+		// 如果是自增主键
+		if(id == null) {
+			// 返回id
+			id = queryLong(SqlBuilder.buildGetInsertId(poClass()));
+			ReflectUtils.set(po, "id", id);
+		}
 
-		// 返回id
-		Long id = queryLong(SqlBuilder.buildGetInsertId(poClass()));
-		ReflectUtils.set(po, "id", id);
 		return id;
 	}
 

@@ -77,6 +77,23 @@ public final class SqlBuilder {
 	}
 
 	/**
+	 * 
+	 * <p>oracle 查询序列</p>
+	 *
+	 * @param po
+	 * @return
+	 */
+	public static String buildGetSeq(Object po) {
+		if(po.getClass().isAnnotationPresent(Table.class)) {
+			Table t = po.getClass().getAnnotation(Table.class);
+			if(Strings.isNotBlank(t.seq())) {
+				return String.format("select %s.nextval from dual",t.seq());
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * sqlite3 insert 后返回生成的主键（id）
 	 * 
 	 * @param poClass

@@ -76,7 +76,6 @@ public final class Classes {
 			public MethodVisitor visitMethod(final int access,
 					final String name, final String desc,
 					final String signature, final String[] exceptions) {
-
 				final Type[] args = Type.getArgumentTypes(desc);
 				// 方法名相同并且参数个数相同
 				if (!name.equals(m.getName())
@@ -112,9 +111,6 @@ public final class Classes {
 	public static void main(String[] args) throws SecurityException,
 			NoSuchMethodException {
 		String[] s = getMethodParamNames(Dates.class.getMethod("parse",
-				String.class));
-		System.out.println(Strings.join(s));
-		s = getMethodParamNames(Dates.class.getMethod("parse",
 				String.class,String.class));
 		System.out.println(Strings.join(s));
 		s = getMethodParamNames(Dates.class.getMethod("parse",

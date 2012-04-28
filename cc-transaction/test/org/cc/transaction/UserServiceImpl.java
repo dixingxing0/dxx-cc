@@ -10,7 +10,9 @@ package org.cc.transaction;
  * @author dixingxing	
  * @date Apr 12, 2012
  */
+@Transactional
 public class UserServiceImpl implements UserService{
+	@Transactional
 	public void print() {
 		System.out.println("print");
 	}

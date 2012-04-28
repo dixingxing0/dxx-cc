@@ -40,8 +40,10 @@ public class TransactionHandler implements InvocationHandler {
 	 * @param args
 	 */
 	public void before(Method method, Object[] args) {
+		TranContext context = TransactionProvider.getContext();
+		
 		// TODO 嵌套 只读调用 读写
-		if (TransactionProvider.noTransaction()) {
+		if (TransactionProvider.needToNewTx() || context.current() == null) {
 			Connection conn = JdbcConfig.getConnectionProvider().getConn();
 			LOG.debug(String.format("开始事务：获取新连接 %s ,method %s", conn, method
 					.getName()));

@@ -9,5 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/cc-core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cc-db"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cc-ioc"/>
+	<classpathentry kind="var" path="M2_REPO/javassist/javassist/3.12.1.GA/javassist-3.12.1.GA.jar" sourcepath="/javassit_source"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

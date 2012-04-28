@@ -6,19 +6,20 @@
 package org.cc.transaction;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import org.cc.core.common.ReflectUtils;
 import org.cc.ioc.Decorator;
+import org.cc.transaction.javassit.EnhanceFactory;
 
 /**
  * 
- * 
+ * <p>
+ * 事务装饰器
+ * </p>
  * @author dixingxing	
  * @date Apr 12, 2012
  */
 public class TransactionDecorator implements Decorator{
-
 	@SuppressWarnings("unchecked")
 	public <T> T doDecorator(Object obj) {
 		if(obj == null) {
@@ -32,11 +33,8 @@ public class TransactionDecorator implements Decorator{
 		if(!isTransactional(obj)) {
 			return (T) obj;
 		}
-		
-		return (T) Proxy.newProxyInstance(
-				inter.getClassLoader(),
-                new Class[]{inter},
-                new TransactionHandler(obj));
+		T enhanced = (T) EnhanceFactory.getInstance(obj);
+		return enhanced;
 	}
 	
 	/**

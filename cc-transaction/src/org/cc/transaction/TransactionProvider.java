@@ -8,8 +8,6 @@ package org.cc.transaction;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.Exceptions;
@@ -28,23 +26,29 @@ import org.cc.db.transaction.Provider;
  * @date Apr 20, 2012
  */
 public class TransactionProvider implements Provider {
-	private static final Logger LOG = Logger
-			.getLogger(TransactionProvider.class);
+	private static final Logger LOG = Logger.getLogger(TransactionProvider.class);
 	/**保存数据库连接，目前不支持嵌套事务，所以其中最多只有一个数据库连接*/
-	private static ThreadLocal<Map<Method, Connection>> holder = new ThreadLocal<Map<Method, Connection>>();
-
+	private static ThreadLocal<TranContext> holder = new ThreadLocal<TranContext>();
+	
 	/**
 	 * 
-	 * <p>当前{@link #holder}中没有数据库连接</p>
+	 * <p>判断是否需要开始一个新事务，以下两种情况会创建新事物</p>
+	 * <li> 1.进入最外层定义了{@link Transactional}的方法。
+	 * <li> 2.手动开始事务后，进入第一个定义了{@link Transactional}的方法。
 	 *
 	 * @return
 	 */
-	public static boolean noTransaction() {
-		return getMap().values().isEmpty();
+	public static boolean needToNewTx() {
+		return holder.get() == null || holder.get().current() == null;
 	}
 	
 	public Connection getConnection() {
 		return getConn();
+	}
+	
+	protected static  TranContext getContext() {
+		TranContext context = holder.get();
+		return context;
 	}
 	
 	/**
@@ -54,15 +58,17 @@ public class TransactionProvider implements Provider {
 	 * @return
 	 */
 	public static Connection getConn() {
-		if( getMap().values().size() == 0) {
+		TranContext context =holder.get();
+		if(context == null || context.isEmpty()) {
 			return null;
 		}
 		// 取第一个连接TODO此处假设没有嵌套事务
-		return getMap().values().iterator().next();
+		return context.current();
 	}
 
 	public boolean hasConn(Connection conn) {
-		return getMap().containsValue(conn);
+		TranContext context = holder.get();
+		return context != null && context.contains(conn);
 	}
 
 	/**
@@ -78,23 +84,21 @@ public class TransactionProvider implements Provider {
 	 * @return
 	 */
 	public boolean putConnection(Method m, Connection conn) {
-		Map<Method, Connection> map = holder.get();
-		if (map == null) {
-			map = new HashMap<Method, Connection>();
-			holder.set(map);
+		LOG.debug(String.format("开始事务(%s - %s)：获取新连接 %s", m.getName(),m.getDeclaringClass(),conn));
+		TranContext context = holder.get();
+		if (context == null) {
+			context = new TranContext(m,conn);
+			holder.set(context);
+		} else if(context.current() == null){
+			context.setCurrent(conn);
 		}
+		
 
-		if (m == null) {
-			// LOG.debug(String.format("put connection failed %s ",conn));
-			return false;
-		}
 		try {
 			conn.setAutoCommit(false);
 		} catch (SQLException e) {
 			Exceptions.uncheck(e);
 		}
-		// 定义transaction注解
-		map.put(m, conn);
 		return true;
 	}
 
@@ -108,9 +112,8 @@ public class TransactionProvider implements Provider {
 		Connection conn = getConn();
 		if (conn != null) {
 			try {
+				LOG.debug(String.format("结束事务(%s - %s)：开始回滚事务", m.getName(),m.getDeclaringClass()));
 				conn.rollback();
-				LOG.debug(String.format("回滚方法%s.%s的事务", m.getDeclaringClass()
-						.getName(), m.getName()));
 			} catch (SQLException e) {
 				Exceptions.uncheck(e);
 			} finally {
@@ -129,9 +132,56 @@ public class TransactionProvider implements Provider {
 		Connection conn = getConn();
 		if (conn != null) {
 			try {
+				LOG.debug(String.format("结束事务(%s - %s)：开始提交事务",m.getName(), m.getDeclaringClass()));
 				conn.commit();
-				LOG.debug(String.format("提交方法%s.%s的事务", m.getDeclaringClass()
-						.getName(), m.getName()));
+			} catch (SQLException e) {
+				Exceptions.uncheck(e);
+			} finally {
+				closeAndRemove(conn);
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * <p>手动提交事务</p>
+	 *
+	 */
+	protected static void commitCurrent() {
+		TranContext context = holder.get();
+		if(context == null || !context.hasManualTx()) {
+			LOG.warn(String.format("没有手动开始的事务，不能进行commit"));
+			return;
+		}
+		Connection conn = getConn();
+		if (conn != null) {
+			try {
+				conn.commit();
+				LOG.debug(String.format(" ** 手动提交事务:%s",conn));
+			} catch (SQLException e) {
+				Exceptions.uncheck(e);
+			} finally {
+				closeAndRemove(conn);
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * <p>手动回滚事务</p>
+	 *
+	 */
+	protected static void rollbackCurrent() {
+		TranContext context = holder.get();
+		if(context == null || !context.hasManualTx()) {
+			LOG.warn(String.format("没有手动开始的事务，不能进行rollback"));
+			return;
+		}
+		Connection conn = getConn();
+		if (conn != null) {
+			try {
+				conn.commit();
+				LOG.debug(String.format(" ** 手动回滚事务%s",conn));
 			} catch (SQLException e) {
 				Exceptions.uncheck(e);
 			} finally {
@@ -161,23 +211,17 @@ public class TransactionProvider implements Provider {
 	 * @param m
 	 */
 	private static void remove() {
-		getMap().clear();
-	}
-
-
-	/**
-	 * 
-	 * <p>返回{@link #holder}中的map，如果没有则创建一个</p>
-	 *
-	 * @return
-	 */
-	private static Map<Method, Connection> getMap() {
-		Map<Method, Connection> map = holder.get();
-		if (map == null) {
-			map = new HashMap<Method, Connection>();
-			holder.set(map);
+		TranContext context = holder.get();
+		if(context == null) {
+			return;
 		}
-		return map;
+		boolean isLast  = context.isLast();
+		if(!context.isEmpty()) {
+			context.next();
+		}
+		if(isLast){
+			LOG.debug("TxContext最后一个数据库连接已经被移除，清空TxContext");
+			holder.set(null);
+		}
 	}
-
 }

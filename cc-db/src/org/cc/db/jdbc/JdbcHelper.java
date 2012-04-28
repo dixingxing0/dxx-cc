@@ -32,6 +32,14 @@ public final class JdbcHelper {
 	
 	private JdbcHelper() {}
 
+	/**
+	 * 
+	 * <p>创建PreparedStatement</p>
+	 *
+	 * @param cn
+	 * @param sql
+	 * @return
+	 */
 	public static PreparedStatement getPstmt(Connection cn, String sql) {
 		try {
 			return cn.prepareStatement(sql);
@@ -41,6 +49,13 @@ public final class JdbcHelper {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>给PreparedStatement set参数</p>
+	 *
+	 * @param pstmt
+	 * @param params
+	 */
 	public static void setParams(PreparedStatement pstmt, Object... params) {
 		if (params == null) {
 			return;
@@ -54,6 +69,13 @@ public final class JdbcHelper {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>执行PreparedStatement(executeQuery)，返回ResultSet</p>
+	 *
+	 * @param pstmt
+	 * @return
+	 */
 	public static ResultSet executeQuery(PreparedStatement pstmt) {
 		try {
 			return pstmt.executeQuery();
@@ -63,6 +85,12 @@ public final class JdbcHelper {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>执行PreparedStatement (executeUpdate)</p>
+	 *
+	 * @param pstmt
+	 */
 	public static void executeUpdate(PreparedStatement pstmt) {
 		try {
 			pstmt.executeUpdate();
@@ -71,6 +99,13 @@ public final class JdbcHelper {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>关闭资源</p>
+	 *
+	 * @param rs
+	 * @param pstmt
+	 */
 	public static void close(ResultSet rs, PreparedStatement pstmt) {
 		try {
 			if (rs != null) {
@@ -84,6 +119,13 @@ public final class JdbcHelper {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>从ResultSet中获取下一条记录</p>
+	 *
+	 * @param rs
+	 * @return
+	 */
 	public static boolean rsNext(ResultSet rs) {
 		try {
 			return rs.next();
@@ -93,6 +135,14 @@ public final class JdbcHelper {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>把ResultSet转换成List</p>
+	 *
+	 * @param rs
+	 * @param fields
+	 * @return
+	 */
 	public static List<Map<String, Object>> getMap(ResultSet rs, Field[] fields) {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		while (rsNext(rs)) {
@@ -112,6 +162,15 @@ public final class JdbcHelper {
 		return list;
 	}
 
+	/**
+	 * 
+	 * <p>从ResultSet中获取数字</p>
+	 *
+	 * @param <T>
+	 * @param rs
+	 * @param numberClazz
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getNumber(ResultSet rs, Class<?> numberClazz) {
 		T number = null;
@@ -124,6 +183,15 @@ public final class JdbcHelper {
 		return number;
 	}
 
+	/**
+	 * 
+	 * <p>根据名称和类型从ResultSet中获取对象</p>
+	 *
+	 * @param rs
+	 * @param propType 字段对应的java类型
+	 * @param name 字段名
+	 * @return
+	 */
 	public static Object rsGet(ResultSet rs, Class<?> propType, String name) {
 		try {
 			if (propType.equals(String.class)) {
@@ -171,6 +239,15 @@ public final class JdbcHelper {
 
 	}
 
+	/**
+	 * 
+	 * <p>根据索引值和类型从ResultSet中获取对象</p>
+	 *
+	 * @param rs
+	 * @param propType 字段对应的java类型
+	 * @param index 索引值(第几列)
+	 * @return
+	 */
 	public static Object rsGet(ResultSet rs, Class<?> propType, int index) {
 		try {
 			if (propType.equals(String.class)) {

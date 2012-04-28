@@ -13,7 +13,7 @@ import org.cc.core.common.ReflectUtils;
 
 
 /**
- * 
+ * <p>把从数据库查询返回的结果封转成对象</p>
  * 
  * @author dixingxing	
  * @date Apr 10, 2012
@@ -25,6 +25,14 @@ public class Mapper<T> {
 		this.clazz = clazz;
 	}
 	
+	/**
+	 * 
+	 * <p>把从数据库查询返回的结果封转成对象</p>
+	 *
+	 * @param map
+	 * @param fields
+	 * @return
+	 */
 	public T mapObject(Map<String, Object> map,Field[] fields ) {
 		T po = null;
 		try {

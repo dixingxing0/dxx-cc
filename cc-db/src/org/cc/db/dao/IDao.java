@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 
+ * 通用dao接口
  * 
  * @author dixingxing
  * @date Apr 10, 2012

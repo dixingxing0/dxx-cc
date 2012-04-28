@@ -13,10 +13,18 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.cc.core.CcException;
+import org.cc.core.common.Exceptions;
 import org.cc.core.common.ReflectUtils;
 import org.cc.db.jdbc.JdbcConfig;
 import org.cc.db.jdbc.JdbcHelper;
 
+/**
+ * 
+ * <p>通用dao实现</p>
+ * 
+ * @author dixingxing	
+ * @date Apr 24, 2012
+ */
 public class Dao<T> implements IDao<T> {
 	private static final Logger LOG = Logger.getLogger(Dao.class);
 	
@@ -50,9 +58,22 @@ public class Dao<T> implements IDao<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	private Class<T> poClass() {
+		try{
 		// 使用cglib代理，获取实际类型为getSuperclass()
-		return (Class<T>) ((ParameterizedType) getClass()
+		 return (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
+		}catch (Exception e) {
+			try {
+				return (Class<T> )Class.forName(getType());
+			} catch (ClassNotFoundException e1) {
+				Exceptions.uncheck(e);
+				return null;
+			}
+		}
+	}
+	
+	protected String getType() {
+		return null;
 	}
 
 	public T query(Long id) {

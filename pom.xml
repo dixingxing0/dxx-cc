@@ -18,7 +18,7 @@
 		<module>cc-core</module>
 		<module>cc-db</module>
 		<module>cc-ioc</module>
-		<module>cc-transaction</module>
+		<module>cc-tx</module>
 		<module>cc-web</module>
 	</modules>
 </project>

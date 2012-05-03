@@ -21,8 +21,8 @@ cd ../cc-ioc
 call %MVN% sonar:sonar 
 if errorlevel 1 goto error
 
-echo [cc-transaction] 
-cd ../cc-transaction
+echo [cc-tx] 
+cd ../cc-tx
 call %MVN% sonar:sonar 
 if errorlevel 1 goto error
 

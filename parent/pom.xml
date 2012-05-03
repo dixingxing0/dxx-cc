@@ -18,7 +18,7 @@
 		<cc-web.version>0.1-SNAPSHOT</cc-web.version>
 		<cc-db.version>0.1-SNAPSHOT</cc-db.version>
 		<cc-ioc.version>0.1-SNAPSHOT</cc-ioc.version>
-		<cc-transaction.version>0.1-SNAPSHOT</cc-transaction.version>
+		<cc-tx.version>0.1-SNAPSHOT</cc-tx.version>
 		<shiro.version>1.2.0</shiro.version>
 		<jackson.version>1.9.4</jackson.version>
 		<slf4j.version>1.6.4</slf4j.version>
@@ -103,8 +103,8 @@
 			</dependency>
 			<dependency>
 				<groupId>org.cc</groupId>
-				<artifactId>cc-transaction</artifactId>
-				<version>${cc-transaction.version}</version>
+				<artifactId>cc-tx</artifactId>
+				<version>${cc-tx.version}</version>
 			</dependency>
 			<!-- SPRINGSIDE MODULES end -->
 			<!-- DB -->

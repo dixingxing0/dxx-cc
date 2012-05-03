@@ -6,7 +6,7 @@ set MVN=mvn
 set MAVEN_OPTS=%MAVEN_OPTS% -XX:MaxPermSize=128m
 
 echo [Step 1] Install all cc modules to local maven repository.
-call %MVN% clean install -pl org.cc:cc-parent,org.cc:cc-core,org.cc:cc-db,org.cc:cc-ioc,,org.cc:cc-transaction,org.cc:cc-web -Dmaven.test.skip=true
+call %MVN% clean install -pl org.cc:cc-parent,org.cc:cc-core,org.cc:cc-db,org.cc:cc-ioc,,org.cc:cc-tx,org.cc:cc-web -Dmaven.test.skip=true
 if errorlevel 1 goto error
 
 goto end

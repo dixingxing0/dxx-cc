@@ -25,7 +25,6 @@ public class TxHandler {
 	private static TxProvider p = new TxProvider();
 
 	public static void before(String methodInfo) {
-		System.out.println(methodInfo);
 		Method m = getMethod(methodInfo);
 		
 		//判断是否需要开始一个新事务 
@@ -133,15 +132,5 @@ public class TxHandler {
 			return m.getAnnotation(Transactional.class);
 		}
 		return m.getDeclaringClass().getAnnotation(Transactional.class);
-	}
-
-	public static boolean isTran(String desc) {
-		return desc != null && "Lorg/junit/After;".equals(desc);
-	}
-	
-	public static void main(String[] args) throws ClassNotFoundException {
-//		String s = "org.cc.transaction.UserServiceImpl.print|()V";
-//		String s2 = "org.cc.transaction.UserServiceImpl.print|(Ljava/lang/String;[Ljava/lang/String;)Ljava/util/Date;";
-//		before(s);
 	}
 }

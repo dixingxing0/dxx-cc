@@ -1,1 +1,3 @@
-依赖cc-ioc和cc-db，给数据库访问提供事务支持。提供一个Transactional注解。正在考虑嵌套事务的支持。
+依赖cc-ioc和cc-db，给数据库访问提供事务支持。提供一个Transactional注解。
+支持在当前事务中再创建一个新的、完全独立的事务：TxUtils.begin(),TxUtils.commit(),TxUtils.rollback()。
+支持创建savepoint(控制流程):TxUtils.createSavepoint(), TxUtils.rollbackToSavepoint(Savepoint) (回滚到创建savepoint时的状态)。

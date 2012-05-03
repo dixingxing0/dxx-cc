@@ -34,7 +34,7 @@ public final class ReflectUtils {
 		}
 		return null;
 	}
-
+	
 	/**
 	 * 获取所有field，包括父类(但不包括Object类和接口中的属性) ,不包括常量static,final
 	 * 

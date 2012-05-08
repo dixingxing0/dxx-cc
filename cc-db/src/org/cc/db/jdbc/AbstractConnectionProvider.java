@@ -25,38 +25,56 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider {
 	private static final Logger LOG = Logger
 			.getLogger(AbstractConnectionProvider.class);
 
-	public Connection getConn() {
+	/**
+	 * 
+	 * <p>设置事务隔离级别</p>
+	 *
+	 * @param conn
+	 */
+	public static void setTransactionIsolation(Connection conn) {
 		try {
-			Connection conn = null;
-			Provider provider = JdbcConfig.getTransactionProvider();
-			if (provider != null) {
-				conn = provider.getConnection();
-				if (conn == null) {
-					conn = createConn();
-					conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-				}
-			} else {
-				conn = createConn();
+			if ("org.sqlite.Conn".equals(conn.getClass().getName())) {
+				conn.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+
+			} else if ("oracle.jdbc.driver.T4CConnection".equals(conn
+					.getClass().getName())) {
 				conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 			}
-
-			return conn;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			Exceptions.uncheck(e);
-			return null;
 		}
+	}
+
+	public Connection getConn() {
+		Connection conn = null;
+		Provider provider = JdbcConfig.getTransactionProvider();
+		
+		if (provider != null) {
+			conn = provider.getConnection();
+			if (conn == null) {
+				conn = createConn();
+				setTransactionIsolation(conn);
+			}
+		} else {
+			conn = createConn();
+			setTransactionIsolation(conn);
+		}
+		return conn;
 	}
 
 	public void release(Connection conn) {
 		Provider provider = JdbcConfig.getTransactionProvider();
 		// 如果当前数据库连接是托管在transactionProvider中的那么不做处理，transactionProvider最终会释放连接
 		if (provider != null && provider.hasConn(conn)) {
-			 LOG.debug(String.format("conn %s 托管在transactionProvider中，不做释放",conn));
+			LOG.debug(String.format("conn %s 托管在transactionProvider中，不做释放",
+					conn));
 			return;
 		}
 
 		try {
-			conn.commit();
+			if(!conn.getAutoCommit()) {
+				conn.commit();
+			}
 			LOG.debug(String.format("conn 提交并释放 %s", conn));
 		} catch (SQLException e) {
 			Exceptions.uncheck(e);

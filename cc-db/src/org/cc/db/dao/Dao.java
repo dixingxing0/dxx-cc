@@ -78,14 +78,20 @@ public class Dao<T> implements IDao<T> {
 
 	public T query(Long id) {
 		final Connection cn = getConnection();
-		SqlHolder holder = SqlBuilder.buildQueryById(poClass(), id);
-		LOG.debug(holder);
-		PreparedStatement pstmt = JdbcHelper.getPstmt(cn, holder.getSql());
-		JdbcHelper.setParams(pstmt, holder.getParams());
-		ResultSet rs = JdbcHelper.executeQuery(pstmt);
-		T po = mapOne(rs, poClass());
-		JdbcHelper.close(rs, pstmt);
-		realese(cn);
+		T po = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			SqlHolder holder = SqlBuilder.buildQueryById(poClass(), id);
+			LOG.debug(holder);
+			pstmt = JdbcHelper.getPstmt(cn, holder.getSql());
+			JdbcHelper.setParams(pstmt, holder.getParams());
+			rs = JdbcHelper.executeQuery(pstmt);
+			po = mapOne(rs, poClass());
+		} finally {
+			JdbcHelper.close(rs, pstmt);
+			realese(cn);
+		}
 		return po;
 	}
 
@@ -114,15 +120,22 @@ public class Dao<T> implements IDao<T> {
 
 	public List<T> queryList(String sql, Object... params) {
 		final Connection cn = getConnection();
-		SqlHolder holder = new SqlHolder(sql, params);
-		LOG.debug(holder);
-		PreparedStatement pstmt = JdbcHelper.getPstmt(cn, holder.getSql());
-		JdbcHelper.setParams(pstmt, holder.getParams());
-		ResultSet rs = JdbcHelper.executeQuery(pstmt);
-		List<T> list = mapList(rs, poClass());
-		JdbcHelper.close(rs, pstmt);
-		realese(cn);
-		return list;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		List<T> list = null;
+		try {
+			SqlHolder holder = new SqlHolder(sql, params);
+			LOG.debug(holder);
+			pstmt = JdbcHelper.getPstmt(cn, holder.getSql());
+			JdbcHelper.setParams(pstmt, holder.getParams());
+			rs = JdbcHelper.executeQuery(pstmt);
+			list = mapList(rs, poClass());
+
+		} finally {
+			JdbcHelper.close(rs, pstmt);
+			realese(cn);
+		}
+		return list == null ? new ArrayList<T>() : list;
 	}
 
 	public T query(String sql, Object... params) {
@@ -137,14 +150,20 @@ public class Dao<T> implements IDao<T> {
 
 	public Long queryLong(String sql, Object... params) {
 		final Connection cn = getConnection();
-		SqlHolder holder = new SqlHolder(sql, params);
-		LOG.debug(holder);
-		PreparedStatement pstmt = JdbcHelper.getPstmt(cn, holder.getSql());
-		JdbcHelper.setParams(pstmt, holder.getParams());
-		ResultSet rs = JdbcHelper.executeQuery(pstmt);
-		Long result = JdbcHelper.getNumber(rs, Long.class);
-		JdbcHelper.close(rs, pstmt);
-		realese(cn);
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		Long result = null;
+		try {
+			SqlHolder holder = new SqlHolder(sql, params);
+			LOG.debug(holder);
+			pstmt = JdbcHelper.getPstmt(cn, holder.getSql());
+			JdbcHelper.setParams(pstmt, holder.getParams());
+			rs = JdbcHelper.executeQuery(pstmt);
+			result = JdbcHelper.getNumber(rs, Long.class);
+		} finally {
+			JdbcHelper.close(rs, pstmt);
+			realese(cn);
+		}
 		return result;
 	}
 
@@ -160,12 +179,16 @@ public class Dao<T> implements IDao<T> {
 	 */
 	public void update(SqlHolder holder) {
 		final Connection cn = getConnection();
-		LOG.debug(holder);
-		PreparedStatement pstmt = JdbcHelper.getPstmt(cn, holder.getSql());
-		JdbcHelper.setParams(pstmt, holder.getParams());
-		JdbcHelper.executeUpdate(pstmt);
-		JdbcHelper.close(null, pstmt);
-		realese(cn);
+		PreparedStatement pstmt = null;
+		try {
+			LOG.debug(holder);
+			pstmt = JdbcHelper.getPstmt(cn, holder.getSql());
+			JdbcHelper.setParams(pstmt, holder.getParams());
+			JdbcHelper.executeUpdate(pstmt);
+		} finally {
+			JdbcHelper.close(null, pstmt);
+			realese(cn);
+		}
 	}
 
 	/**

@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.cc.core.common.Strings;
 import org.cc.web.WebMethod;
 import org.cc.web.annotation.RequestMethod;
 import org.junit.Before;
@@ -83,7 +82,7 @@ public class WebMethodTest {
 	 */
 	@Test
 	public void testGetPathVars() {
-		assertEquals("123", Strings.join(webMethod.getPathVars("/test/123")));
+		assertEquals("123", webMethod.getPathVars("/test/123")[0]);
 	}
 
 }

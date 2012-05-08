@@ -31,16 +31,16 @@ public class IocJunit4Runner extends BlockJUnit4ClassRunner{
 	 */
 	private Object iocTarget;
 	
-	public IocJunit4Runner(Class<?> klass) throws InitializationError{
-		super(klass);
-		if(klass.getSuperclass() != null && klass.getSuperclass().isAnnotationPresent(IocTest.class)) {
-			String configfile = klass.getSuperclass().getAnnotation(IocTest.class).value();
-			System.out.println(configfile);
-			IocConfig.init(configfile);
+	public IocJunit4Runner(Class<?> clazz) throws InitializationError{
+		super(clazz);
+		if(clazz.isAnnotationPresent(IocTest.class)) {
+			IocConfig.init(clazz.getAnnotation(IocTest.class).value());
+		} else if(clazz.getSuperclass() != null && clazz.getSuperclass().isAnnotationPresent(IocTest.class)) {
+			IocConfig.init(clazz.getSuperclass().getAnnotation(IocTest.class).value());
 		} else {
 			IocConfig.init();
 		}
-		this.iocTarget = IocContext.get(klass);
+		this.iocTarget = IocContext.get(clazz);
 	}
 	
 	@Override

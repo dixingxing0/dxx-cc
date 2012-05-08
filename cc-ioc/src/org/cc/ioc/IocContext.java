@@ -229,6 +229,7 @@ public final class IocContext {
 			instanceCount++;
 			LOG.debug(String.format("%d注入%s.%s", instanceCount,clazz.getSimpleName(),f.getName()));
 		}
+		
 		return obj;
 	}
 
@@ -240,9 +241,14 @@ public final class IocContext {
 	 * @param clazz
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private static <T> T newInstance(Class<T> clazz) {
 		try {
-			return clazz.newInstance();
+			T obj =  clazz.newInstance();
+			for(Decorator d : IocConfig.getDecorators()) {
+				obj = (T) d.doDecorator(obj);
+			}
+			return obj;
 		} catch (Exception e) {
 			throw new CcException(e);
 		}
@@ -282,9 +288,6 @@ public final class IocContext {
 			}
 		}
 		T obj =  (T) map.get(clazz);
-		for(Decorator d : IocConfig.getDecorators()) {
-			obj = (T) d.doDecorator(obj);
-		}
 		return obj;
 	}
 	

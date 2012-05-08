@@ -10,7 +10,7 @@
 	<artifactId>cc-tx</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>cc transaction</name>
+	<name>cc tx</name>
 
 	<!-- 依赖项定义 -->
 	<dependencies>

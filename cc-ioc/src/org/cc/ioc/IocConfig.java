@@ -17,7 +17,7 @@ import org.cc.core.common.ReflectUtils;
  */
 public final class IocConfig {
 	private static final Logger LOG = Logger.getLogger(IocConfig.class);
-	private static final String IOC_CONFIG_FILE= "ioc.properties";
+	public static final String DEFAULT_IOC_CONFIG_FILE= "ioc.properties";
 	
 	private static Properties p = null;
 	/** 所在的包名 */
@@ -30,7 +30,7 @@ public final class IocConfig {
 	private IocConfig() {}
 	
 	public static void init() {
-		init(IOC_CONFIG_FILE);
+		init(DEFAULT_IOC_CONFIG_FILE);
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public final class IocConfig {
 				
 			}
 		} catch (Exception e) {
-			LOG.debug(IOC_CONFIG_FILE, e);
+			LOG.debug(DEFAULT_IOC_CONFIG_FILE, e);
 		} 
 		
 	}

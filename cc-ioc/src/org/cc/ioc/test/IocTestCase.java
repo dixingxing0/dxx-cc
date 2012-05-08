@@ -5,6 +5,7 @@
  */
 package org.cc.ioc.test;
 
+import org.cc.ioc.annotation.IocTest;
 import org.junit.runner.RunWith;
 
 /**
@@ -22,6 +23,7 @@ import org.junit.runner.RunWith;
  * @date Apr 9, 2012
  */
 @RunWith(IocJunit4Runner.class)
+@IocTest
 public class IocTestCase {
 
 }

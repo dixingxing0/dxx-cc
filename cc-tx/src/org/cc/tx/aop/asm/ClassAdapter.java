@@ -79,6 +79,7 @@ public class ClassAdapter extends ClassVisitor implements Opcodes{
 	 */
 	private static void doBefore(MethodVisitor mWriter,String methodInfo) {
 //		mWriter.visitFieldInsn(GETSTATIC,"java/lang/System","out","Ljava/io/PrintStream;");  
+		// 调用静态方法
 		mWriter.visitLdcInsn(methodInfo);  
 		mWriter.visitMethodInsn(INVOKESTATIC,toAsmCls(TxHandler.class.getName()),"before","(Ljava/lang/String;)V"); 
 	}

@@ -26,7 +26,6 @@ public class TxHandler {
 
 	public static void before(String methodInfo) {
 		Method m = getMethod(methodInfo);
-		
 		//判断是否需要开始一个新事务 
 		if (TxProvider.needToNewTx() ) {
 			Connection conn = JdbcConfig.getConnectionProvider().getConn();

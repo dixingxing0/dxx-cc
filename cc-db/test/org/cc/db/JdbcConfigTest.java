@@ -7,7 +7,6 @@ package org.cc.db;
 
 import static org.junit.Assert.*;
 
-import org.cc.db.jdbc.JdbcConfig;
 import org.junit.Test;
 
 /**
@@ -19,7 +18,7 @@ import org.junit.Test;
 public class JdbcConfigTest {
 
 	/**
-	 * Test method for {@link org.cc.db.jdbc.JdbcConfig#getDriverClassName()}.
+	 * Test method for {@link org.cc.db.JdbcConfig#getDriverClassName()}.
 	 */
 	@Test
 	public void testGetDriverClassName() {
@@ -27,7 +26,7 @@ public class JdbcConfigTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.jdbc.JdbcConfig#getUserName()}.
+	 * Test method for {@link org.cc.db.JdbcConfig#getUserName()}.
 	 */
 	@Test
 	public void testGetUserName() {
@@ -35,7 +34,7 @@ public class JdbcConfigTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.jdbc.JdbcConfig#getPassword()}.
+	 * Test method for {@link org.cc.db.JdbcConfig#getPassword()}.
 	 */
 	@Test
 	public void testGetPassword() {
@@ -43,7 +42,7 @@ public class JdbcConfigTest {
 	}
 
 	/**
-	 * Test method for {@link org.cc.db.jdbc.JdbcConfig#getUrl()}.
+	 * Test method for {@link org.cc.db.JdbcConfig#getUrl()}.
 	 */
 	@Test
 	public void testGetUrl() {

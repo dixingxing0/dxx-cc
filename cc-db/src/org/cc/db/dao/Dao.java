@@ -15,8 +15,7 @@ import org.apache.log4j.Logger;
 import org.cc.core.CcException;
 import org.cc.core.common.Exceptions;
 import org.cc.core.common.ReflectUtils;
-import org.cc.db.jdbc.JdbcConfig;
-import org.cc.db.jdbc.JdbcHelper;
+import org.cc.db.common.DbUtils;
 
 /**
  * 
@@ -220,7 +219,7 @@ public class Dao<T> implements IDao<T> {
 	 * @return
 	 */
 	private static Connection getConnection() {
-		return JdbcConfig.getConnectionProvider().getConn();
+		return DbUtils.getConnProvider().getConn();
 	}
 	
 	/**
@@ -229,6 +228,6 @@ public class Dao<T> implements IDao<T> {
 	 * @param conn
 	 */
 	private static void realese(Connection conn) {
-		JdbcConfig.getConnectionProvider().release(conn);
+		DbUtils.getConnProvider().release(conn);
 	}
 }

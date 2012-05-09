@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.db.transaction;
+package org.cc.db.common;
 
 import java.sql.Connection;
 
@@ -14,7 +14,7 @@ import java.sql.Connection;
  * @author dixingxing	
  * @date Apr 12, 2012
  */
-public interface Provider {
+public interface TxProvider {
 	/**
 	 * <p>从当前线程中获取数据库连接，保证同一事务中使用同一个连接</p>
 	 * 

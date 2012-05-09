@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.db.jdbc;
+package org.cc.db.dao;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -20,7 +20,6 @@ import java.util.Map;
 import org.cc.core.CcException;
 import org.cc.core.common.Exceptions;
 import org.cc.db.annotation.Transient;
-import org.cc.db.dao.Converter;
 
 /**
  * 封装一些jdbc方法，使代码看起来干净些

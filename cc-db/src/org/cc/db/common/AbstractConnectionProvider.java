@@ -3,14 +3,13 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.db.jdbc;
+package org.cc.db.common;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.Exceptions;
-import org.cc.db.transaction.Provider;
 
 /**
  * <p>
@@ -22,16 +21,15 @@ import org.cc.db.transaction.Provider;
  */
 public abstract class AbstractConnectionProvider implements ConnectionProvider {
 
-	private static final Logger LOG = Logger
-			.getLogger(AbstractConnectionProvider.class);
-
+	private static final Logger LOG = Logger.getLogger(AbstractConnectionProvider.class);
+	
 	/**
 	 * 
 	 * <p>设置事务隔离级别</p>
 	 *
 	 * @param conn
 	 */
-	public static void setTransactionIsolation(Connection conn) {
+	private static void setTransactionIsolation(Connection conn) {
 		try {
 			if ("org.sqlite.Conn".equals(conn.getClass().getName())) {
 				conn.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
@@ -47,7 +45,7 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider {
 
 	public Connection getConn() {
 		Connection conn = null;
-		Provider provider = JdbcConfig.getTransactionProvider();
+		TxProvider provider = DbUtils.getTxProvider();
 		
 		if (provider != null) {
 			conn = provider.getConnection();
@@ -63,7 +61,7 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider {
 	}
 
 	public void release(Connection conn) {
-		Provider provider = JdbcConfig.getTransactionProvider();
+		TxProvider provider = DbUtils.getTxProvider();
 		// 如果当前数据库连接是托管在transactionProvider中的那么不做处理，transactionProvider最终会释放连接
 		if (provider != null && provider.hasConn(conn)) {
 			LOG.debug(String.format("conn %s 托管在transactionProvider中，不做释放",

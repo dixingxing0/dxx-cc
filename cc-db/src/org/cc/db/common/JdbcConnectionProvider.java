@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.db.jdbc;
+package org.cc.db.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -6,7 +6,7 @@
 	<artifactId>cc-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>cc :: Module :: Parent</name>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.3-SNAPSHOT</version>
 	<organization>
 		<name>dxx cc</name>
 		<url>https://github.com/dijingran/dxx-cc</url>
@@ -14,11 +14,11 @@
 
 	<properties>
 		<!-- 主要依赖库的版本定义 -->
-		<cc-core.version>0.2-SNAPSHOT</cc-core.version>
-		<cc-web.version>0.1-SNAPSHOT</cc-web.version>
-		<cc-db.version>0.1-SNAPSHOT</cc-db.version>
-		<cc-ioc.version>0.1-SNAPSHOT</cc-ioc.version>
-		<cc-tx.version>0.1-SNAPSHOT</cc-tx.version>
+		<cc-core.version>0.3-SNAPSHOT</cc-core.version>
+		<cc-web.version>0.3-SNAPSHOT</cc-web.version>
+		<cc-db.version>0.3-SNAPSHOT</cc-db.version>
+		<cc-ioc.version>0.3-SNAPSHOT</cc-ioc.version>
+		<cc-tx.version>0.3-SNAPSHOT</cc-tx.version>
 		<shiro.version>1.2.0</shiro.version>
 		<jackson.version>1.9.4</jackson.version>
 		<slf4j.version>1.6.4</slf4j.version>

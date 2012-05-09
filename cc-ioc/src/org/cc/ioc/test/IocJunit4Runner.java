@@ -7,7 +7,6 @@ package org.cc.ioc.test;
 
 import org.cc.ioc.IocConfig;
 import org.cc.ioc.IocContext;
-import org.cc.ioc.annotation.Inject;
 import org.cc.ioc.annotation.IocTest;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
@@ -31,6 +30,12 @@ public class IocJunit4Runner extends BlockJUnit4ClassRunner{
 	 */
 	private Object iocTarget;
 	
+	/**
+	 * 重写父类构造方法，设置iocTarget为IocContext中获取的对象。
+	 * 
+	 * @param clazz
+	 * @throws InitializationError
+	 */
 	public IocJunit4Runner(Class<?> clazz) throws InitializationError{
 		super(clazz);
 		if(clazz.isAnnotationPresent(IocTest.class)) {

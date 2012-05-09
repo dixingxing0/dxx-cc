@@ -29,6 +29,11 @@ public final class IocConfig {
 	
 	private IocConfig() {}
 	
+	/**
+	 * 
+	 * <p>加载默认的配置文件{@link #DEFAULT_IOC_CONFIG_FILE}，并初始化。</p>
+	 *
+	 */
 	public static void init() {
 		init(DEFAULT_IOC_CONFIG_FILE);
 	}
@@ -91,7 +96,13 @@ public final class IocConfig {
 		return iocPackages;
 	}
 
-	public static List<Decorator> getDecorators() {
+	/**
+	 * 
+	 * <p>获取配置文件中指定的decorators</p>
+	 *
+	 * @return
+	 */
+	protected static List<Decorator> getDecorators() {
 		return decorators;
 	}
 }

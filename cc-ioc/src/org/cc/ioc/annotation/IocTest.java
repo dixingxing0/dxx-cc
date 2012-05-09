@@ -23,5 +23,11 @@ import org.cc.ioc.IocConfig;
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IocTest {
+	/**
+	 * 
+	 * <p>配置文件的路径默认为{@link IocConfig#DEFAULT_IOC_CONFIG_FILE}</p>
+	 *
+	 * @return
+	 */
 	String value() default IocConfig.DEFAULT_IOC_CONFIG_FILE;
 }

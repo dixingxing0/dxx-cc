@@ -32,6 +32,7 @@ import org.cc.ioc.annotation.Ioc;
  * @author dixingxing
  * @date Apr 7, 2012
  */
+@SuppressWarnings("unchecked")
 public final class IocContext {
 	private static final Logger LOG = Logger.getLogger(IocContext.class);
 	
@@ -61,7 +62,6 @@ public final class IocContext {
 	 * @param clazz 可以是接口类
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> T get(Class<T> clazz) {
 		return get(clazz, false);
 	}
@@ -108,7 +108,6 @@ public final class IocContext {
 	 * 
 	 * @param clazzSet
 	 */
-	@SuppressWarnings("unchecked")
 	private static void initInterfaceMap(Set<Class<?>> clazzSet) {
 		// 把所有接口放到iMap中
 		for (Class<?> clazz : clazzSet) {
@@ -241,7 +240,6 @@ public final class IocContext {
 	 * @param clazz
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	private static <T> T newInstance(Class<T> clazz) {
 		try {
 			T obj =  clazz.newInstance();
@@ -275,7 +273,6 @@ public final class IocContext {
 	 * @param clazz 可以是接口类
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	private static <T> T get(Class<T> clazz,boolean inside) {
 		if(!inside && !initialized) {
 			init();
@@ -287,8 +284,7 @@ public final class IocContext {
 				return (T) map.get(impls.get(0));
 			}
 		}
-		T obj =  (T) map.get(clazz);
-		return obj;
+		return (T) map.get(clazz);
 	}
 	
 	/**

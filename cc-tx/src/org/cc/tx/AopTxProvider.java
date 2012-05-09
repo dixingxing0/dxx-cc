@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.Exceptions;
-import org.cc.db.transaction.Provider;
+import org.cc.db.common.TxProvider;
 
 /**
  * 
@@ -24,8 +24,8 @@ import org.cc.db.transaction.Provider;
  * @author dixingxing	
  * @date Apr 20, 2012
  */
-public class TxProvider implements Provider {
-	private static final Logger LOG = Logger.getLogger(TxProvider.class);
+public class AopTxProvider implements TxProvider{
+	private static final Logger LOG = Logger.getLogger(AopTxProvider.class);
 	/**保存数据库连接，目前不支持嵌套事务，所以其中最多只有一个数据库连接*/
 	private static ThreadLocal<TxContext> holder = new ThreadLocal<TxContext>();
 	
@@ -45,7 +45,7 @@ public class TxProvider implements Provider {
 	 * <p>获取{@link #holder}中的数据库连接</p>
 	 * 
 	 * @return
-	 * @see org.cc.db.transaction.Provider#getConnection()
+	 * @see org.cc.db.common.TxProvider#getConnection()
 	 */
 	public Connection getConnection() {
 		TxContext context = getContext();

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cc.core.common.Exceptions;
-import org.cc.db.jdbc.JdbcConfig;
+import org.cc.db.common.DbUtils;
 
 /**
  * <p>
@@ -23,7 +23,7 @@ import org.cc.db.jdbc.JdbcConfig;
  */
 @SuppressWarnings("serial")
 public final class TxHandler {
-	private static TxProvider p = new TxProvider();
+	private static AopTxProvider p = new AopTxProvider();
 
 	private TxHandler(){}
 	
@@ -36,8 +36,8 @@ public final class TxHandler {
 	public static void before(String methodInfo) {
 		Method m = getMethod(methodInfo);
 		//判断是否需要开始一个新事务 
-		if (TxProvider.needToNewTx() ) {
-			Connection conn = JdbcConfig.getConnectionProvider().getConn();
+		if (AopTxProvider.needToNewTx() ) {
+			Connection conn = DbUtils.getConnProvider().getConn();
 			p.putConnection(m, conn);
 		}
 	}
@@ -50,7 +50,7 @@ public final class TxHandler {
 	 */
 	public static void after(String methodInfo) {
 		Method method = getMethod(methodInfo);
-		TxContext context = TxProvider.getContext();
+		TxContext context = AopTxProvider.getContext();
 		// 如果事务不是自己开启的则不能对当前事务进行操作。
 		if(context == null || !context.isOwner(method)) {
 			return;

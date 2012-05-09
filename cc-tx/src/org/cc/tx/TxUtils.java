@@ -24,7 +24,7 @@ import org.cc.core.CcException;
 public final class TxUtils {
 	private static final Logger LOG = Logger.getLogger(TxUtils.class);
 	
-	private static TxProvider p = new TxProvider();
+	private static AopTxProvider p = new AopTxProvider();
 	
 	private TxUtils() {}
 	/**
@@ -33,7 +33,7 @@ public final class TxUtils {
 	 *
 	 */
 	private static void check() {
-		TxContext context = TxProvider.getContext();
+		TxContext context = AopTxProvider.getContext();
 		if(context == null) {
 			throw new CcException("还没有开启任何事务，");
 		}
@@ -48,7 +48,7 @@ public final class TxUtils {
 	public static void begin() {
 		LOG.debug("--- 手动开始事务 ---");
 		check();
-		TxContext context = TxProvider.getContext();
+		TxContext context = AopTxProvider.getContext();
 		context.addInternalTx();
 	}
 	
@@ -83,7 +83,7 @@ public final class TxUtils {
 	 */
 	public static Savepoint createSavepoint() {
 		check();
-		TxContext context = TxProvider.getContext();
+		TxContext context = AopTxProvider.getContext();
 		try {
 			LOG.debug("--- 手动创建savepoint ---");
 			return context.current().setSavepoint();
@@ -101,7 +101,7 @@ public final class TxUtils {
 	 */
 	public static void rollbackToSavepoint(Savepoint sp) {
 		check();
-		TxContext context = TxProvider.getContext();
+		TxContext context = AopTxProvider.getContext();
 		try {
 			LOG.debug("--- 回滚savepoint ---");
 			context.current().rollback(sp);

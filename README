@@ -1,6 +1,6 @@
 cc是一套完整的web开发框架。主要包括:
-<li>cc-core ：包括一些工具类，供其他项目使用。其中内置了asm-core。
-<li>cc-db : 对jdbc进行简单的封装，提供一个dao基类，包含一些常用方法,支持直接insert/update po。不支持关系映射。需配合cc-tx使用。
-<li>cc-ioc : 使用Ioc和Inject两个注解实现简单的依赖注入，提供IocJunit4Runner使junit测试类中可以使用Inject注解。
-<li>cc-tx : 为cc-db提供事务支持。基于asm实现动态代理。TxUtils类提供开启子事务（新的独立的事务）和事务嵌套（设置savepoint）。
-<li>cc-web : 借鉴spring3的mvc，实现类似的功能。
+    1.cc-core ：包括一些工具类，供其他项目使用。其中内置了asm-core。
+    2.cc-db : 对jdbc进行简单的封装，提供一个dao基类，包含一些常用方法,支持直接insert/update po。不支持关系映射。需配合cc-tx使用。
+    3.cc-ioc : 使用Ioc和Inject两个注解实现简单的依赖注入，提供IocJunit4Runner使junit测试类中可以使用Inject注解。
+    4.cc-tx : 为cc-db提供事务支持。基于asm实现动态代理。TxUtils类提供开启子事务（新的独立的事务）和事务嵌套（设置savepoint）。
+    5.cc-web : 借鉴spring3的mvc，实现类似的功能。

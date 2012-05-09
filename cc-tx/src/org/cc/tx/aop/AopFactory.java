@@ -3,16 +3,20 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.tx.aop.common;
+package org.cc.tx.aop;
 
 import java.lang.reflect.Field;
 
 import org.apache.log4j.Logger;
+import org.cc.core.common.Exceptions;
 import org.cc.core.common.ReflectUtils;
 
 /**
- * <p></p>
+ * <p>aop工厂</p>
+ * <li> aop handler : org.cc.tx.TxHandler
  * 
+ * @see AsmFactory
+ * @see JavassistFactory
  * @author dixingxing	
  * @date Apr 29, 2012
  */
@@ -20,9 +24,17 @@ public abstract class AopFactory {
 	private static final Logger LOG = Logger.getLogger(AopFactory.class);
 	public static final String SUFIX = "$EnhancedByCc";
 	
-	public static final String BEFORE = "org.cc.tx.TxHandler.before(\"%s\");";
-	public static final String AFTER = "org.cc.tx.TxHandler.after(\"%s\");";
+	public static final String HANDLER_NAME = "org.cc.tx.TxHandler";
 	
+	/**
+	 * 
+	 * <p>代理对象</p>
+	 * <li> 生成代理类
+	 * <li> 获得代理类的实例（要赋值源对象的属性值）
+	 * @param <T>
+	 * @param obj
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T proxy(T obj)  {
 		Class<T> cls = (Class<T>)obj.getClass();
@@ -49,10 +61,18 @@ public abstract class AopFactory {
 			}
 			return eObj;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Exceptions.uncheck(e);
 		} 
 		return null;
 	}
 	
+	/**
+	 * 
+	 * <p>获取代理类</p>
+	 *
+	 * @param <C>
+	 * @param cls
+	 * @return
+	 */
 	protected abstract <C> Class<C> getEnhancedClass(Class<C> cls);
 }

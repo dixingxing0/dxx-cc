@@ -5,8 +5,9 @@ import java.io.IOException;
 import org.cc.core.asm.ClassReader;
 import org.cc.core.asm.ClassVisitor;
 import org.cc.core.asm.ClassWriter;
-import org.cc.tx.aop.common.AopFactory;
-import org.cc.tx.aop.common.Aops;
+import org.cc.core.common.Exceptions;
+import org.cc.tx.aop.AopFactory;
+import org.cc.tx.aop.Aops;
 
 /**
  * 
@@ -18,6 +19,7 @@ import org.cc.tx.aop.common.Aops;
  * @date Apr 29, 2012
  */
 public class AsmFactory extends AopFactory {
+
 	/**
 	 * 
 	 * <p>
@@ -39,7 +41,7 @@ public class AsmFactory extends AopFactory {
 			try {
 				reader = new ClassReader(clazz.getName());
 			} catch (IOException ioexception) {
-				throw new RuntimeException(ioexception);
+				Exceptions.uncheck(ioexception);
 			}
 			ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 			ClassVisitor visitor = new ClassAdapter(enhancedClassName, clazz,

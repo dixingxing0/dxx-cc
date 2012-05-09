@@ -10,8 +10,8 @@ import org.cc.core.asm.FieldVisitor;
 import org.cc.core.asm.MethodVisitor;
 import org.cc.core.asm.Opcodes;
 import org.cc.core.asm.Type;
-import org.cc.tx.TxHandler;
-import org.cc.tx.aop.common.Aops;
+import org.cc.tx.aop.AopFactory;
+import org.cc.tx.aop.Aops;
 
 /**
  * 
@@ -81,7 +81,7 @@ public class ClassAdapter extends ClassVisitor implements Opcodes{
 //		mWriter.visitFieldInsn(GETSTATIC,"java/lang/System","out","Ljava/io/PrintStream;");  
 		// 调用静态方法
 		mWriter.visitLdcInsn(methodInfo);  
-		mWriter.visitMethodInsn(INVOKESTATIC,toAsmCls(TxHandler.class.getName()),"before","(Ljava/lang/String;)V"); 
+		mWriter.visitMethodInsn(INVOKESTATIC,toAsmCls(AopFactory.HANDLER_NAME),"before","(Ljava/lang/String;)V"); 
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class ClassAdapter extends ClassVisitor implements Opcodes{
 	 */
 	private static void doAfter(MethodVisitor mWriter,String methodInfo) {
 		mWriter.visitLdcInsn(methodInfo);  
-		mWriter.visitMethodInsn(INVOKESTATIC,toAsmCls(TxHandler.class.getName()),"after","(Ljava/lang/String;)V"); 
+		mWriter.visitMethodInsn(INVOKESTATIC,toAsmCls(AopFactory.HANDLER_NAME),"after","(Ljava/lang/String;)V"); 
 	}
 	
 	@Override
@@ -113,23 +113,15 @@ public class ClassAdapter extends ClassVisitor implements Opcodes{
 		// 获取所有方法，并重写(main方法 和 Object的方法除外)
 		Method[] methods = originalClass.getMethods();
 		for(Method m : methods) {
+			// 判断是否需要重写
 			if(!Aops.needOverride(m)) {
 				continue;
 			}
 			Type mt = Type.getType(m);
 			LOG.debug(mt);
 
-			StringBuilder methodInfo = new StringBuilder(originalClassName);
-			methodInfo.append(".").append(m.getName());
-			methodInfo.append("|");
-			
-			Class<?>[] paramTypes = m.getParameterTypes();
-			for(Class<?> t : paramTypes) {
-				methodInfo.append(t.getName()).append(",");
-			} 
-			if(paramTypes.length > 0) {
-				methodInfo.deleteCharAt(methodInfo.length() - 1);
-			}
+			// build methodinfo begin :className.methodName|parametertypes
+			String methodInfo = buildMethodInfo(m);
 			
 			// 方法是被哪个类定义的
 			String declaringCls = toAsmCls(m.getDeclaringClass().getName());
@@ -138,7 +130,7 @@ public class ClassAdapter extends ClassVisitor implements Opcodes{
 			MethodVisitor mWriter = classWriter.visitMethod(ACC_PUBLIC, m.getName(), mt.toString(), null, null); 
 			
 			// insert code here (before)
-			doBefore(mWriter,methodInfo.toString());
+			doBefore(mWriter,methodInfo);
 			
 			
 			int i = 0;
@@ -166,7 +158,7 @@ public class ClassAdapter extends ClassVisitor implements Opcodes{
 			Type rt = Type.getReturnType(m);
 			// 没有返回值
 			if(rt.toString().equals("V")) {
-				doAfter(mWriter,methodInfo.toString());
+				doAfter(mWriter,methodInfo);
 				mWriter.visitInsn(RETURN);
 			}
 			// 把return xxx() 转变成 ： Object o = xxx(); return o;
@@ -176,7 +168,7 @@ public class ClassAdapter extends ClassVisitor implements Opcodes{
 				int returnCode = rtCode(rt);
 				
 				mWriter.visitVarInsn(storeCode, i);
-				doAfter(mWriter,methodInfo.toString());
+				doAfter(mWriter,methodInfo);
 				mWriter.visitVarInsn(loadCode, i);
 				mWriter.visitInsn(returnCode);
 			}
@@ -186,6 +178,27 @@ public class ClassAdapter extends ClassVisitor implements Opcodes{
 	        mWriter.visitEnd(); 
 		}
 		cv.visitEnd();
+	}
+
+	/**
+	 * <p>build methodinfo :className.methodName|parametertypes</p>
+	 *
+	 * @param m
+	 * @return
+	 */
+	private String buildMethodInfo(Method m) {
+		StringBuilder sb = new StringBuilder(originalClassName);
+		sb.append(".").append(m.getName());
+		sb.append("|");
+		
+		Class<?>[] paramTypes = m.getParameterTypes();
+		for(Class<?> t : paramTypes) {
+			sb.append(t.getName()).append(",");
+		} 
+		if(paramTypes.length > 0) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		return sb.toString();
 	}
 	
 	/**

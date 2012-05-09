@@ -3,12 +3,10 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.tx.aop.common;
+package org.cc.tx.aop;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -26,12 +24,14 @@ import org.cc.tx.aop.asm.AsmFactory;
  * @author dixingxing
  * @date Apr 29, 2012
  */
-public class Aops {
+public final class Aops {
 //	private static AopFactory factory = new JavassistFactory();
 	private static AopFactory factory = new AsmFactory();
 
-	public static BytecodeLoader classLoader = new BytecodeLoader();
+	public static final BytecodeLoader classLoader = new BytecodeLoader();
 
+	private Aops() {}
+	
 	/**
 	 * 
 	 * <p>
@@ -136,15 +136,11 @@ public class Aops {
 
 	/**
 	 * 
-	 * <p>
-	 * 把java字节码写入class文件
-	 * </p>
-	 * 
+	 * <p>把java字节码写入class文件</p>
+	 *
 	 * @param <T>
 	 * @param name
 	 * @param data
-	 * @throws FileNotFoundException
-	 * @throws IOException
 	 */
 	public static <T> void writeClazz(String name, byte[] data) {
 		try {

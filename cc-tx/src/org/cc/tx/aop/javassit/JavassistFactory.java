@@ -15,9 +15,8 @@ import javassist.NotFoundException;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.Exceptions;
-import org.cc.tx.TxHandler;
-import org.cc.tx.aop.common.AopFactory;
-import org.cc.tx.aop.common.Aops;
+import org.cc.tx.aop.AopFactory;
+import org.cc.tx.aop.Aops;
 
 /**
  * <p>
@@ -31,6 +30,7 @@ import org.cc.tx.aop.common.Aops;
  */
 public class JavassistFactory extends AopFactory{
 	private static final Logger LOG = Logger.getLogger(JavassistFactory.class);
+	private static final String VOID = "void";
 	/**
 	 * 
 	 * <p>
@@ -77,7 +77,7 @@ public class JavassistFactory extends AopFactory{
 				try{
 				m1 = CtMethod.make(mmm, cc);
 				}catch (Exception e) {
-					e.printStackTrace();
+					Exceptions.uncheck(e);
 				}
 				cc.addMethod(m1);
 				if(!isSpecial) {
@@ -86,7 +86,7 @@ public class JavassistFactory extends AopFactory{
 			}
 			
 			// 所有成员变量
-			CtField[] fields = ccOrg.getFields();
+			CtField[] fields = ccOrg.getDeclaredFields();
 			for(CtField f : fields) {
 				CtField f1 = new CtField(f.getType(),f.getName(),cc);
 				cc.addField(f1);
@@ -96,7 +96,7 @@ public class JavassistFactory extends AopFactory{
 			Aops.writeClazz(cls.getSimpleName() + SUFIX, bytecodes);
 			return cc.toClass();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Exceptions.uncheck(e);
 		}
 		return null;
 	}
@@ -116,18 +116,14 @@ public class JavassistFactory extends AopFactory{
 		StringBuilder sb = new StringBuilder();
 		try {
 			String rtName = m.getReturnType().getName();
-			String rt = "void";
-			
-			// 返回值类型是否为void
-			boolean isVoid = rtName.equalsIgnoreCase("void");
 			// 参数名
 			String[] paramNames = Classes.getMethodParamNames(m);
 			// 参数类型
 			CtClass[] types = m.getParameterTypes();
-			getMethodHead(m, sb, rtName, rt, isVoid, paramNames, types);
+			getMethodHead(m, sb, rtName, paramNames, types);
 
 			// 开始进入方法
-			if (isVoid) {
+			if (rtName.equalsIgnoreCase(VOID)) {
 				sb.append("{ ");
 			} else {
 				sb.append("{ return ");
@@ -147,7 +143,7 @@ public class JavassistFactory extends AopFactory{
 			sb.append("}");
 			LOG.debug(String.format("覆盖父类方法:%s", sb.toString()));
 		} catch (Exception e) {
-			e.printStackTrace();
+			Exceptions.uncheck(e);
 		}
 
 		return sb.toString();
@@ -162,15 +158,12 @@ public class JavassistFactory extends AopFactory{
 			StringBuilder sb = new StringBuilder();
 			String rtName = m.getReturnType().getName();
 
-			String rt = "void";
-
-			// 返回值类型是否为void
-			boolean isVoid = rtName.equalsIgnoreCase("void");
+			
 			// 参数名
 			String[] paramNames = Classes.getMethodParamNames(m);
 			// 参数类型
 			CtClass[] types = m.getParameterTypes();
-			getMethodHead(m, sb, rtName, rt, isVoid, paramNames, types);
+			getMethodHead(m, sb, rtName, paramNames, types);
 			return sb.toString();
 		} catch (NotFoundException e) {
 			Exceptions.uncheck(e);
@@ -185,14 +178,15 @@ public class JavassistFactory extends AopFactory{
 	 * @param m
 	 * @param sb
 	 * @param rtName
-	 * @param rt
-	 * @param isVoid
 	 * @param paramNames
 	 * @param types
 	 */
 	private static void getMethodHead(CtMethod m, StringBuilder sb,
-			String rtName, String rt, boolean isVoid, String[] paramNames,
+			String rtName, String[] paramNames,
 			CtClass[] types) {
+		String rt = VOID;
+		// 返回值类型是否为void
+		boolean isVoid = rtName.equalsIgnoreCase(VOID);
 		if (!isVoid) {
 			rt = (rtName.equals("java.lang.String") ? "String" : rtName);
 		}
@@ -232,7 +226,7 @@ public class JavassistFactory extends AopFactory{
 				String name  = type.getName();
 				// 增加参数定义
 				if(type.isArray()) {
-					sb.append("[L").append(name.substring(0,name.indexOf("["))).append(";");
+					sb.append("[L").append(name.substring(0,name.indexOf('['))).append(";");
 				} else {
 					sb.append(name);
 				}
@@ -242,12 +236,13 @@ public class JavassistFactory extends AopFactory{
 				sb.deleteCharAt(sb.length() - 1);
 			}
 		} catch (NotFoundException e) {
-			e.printStackTrace();
+			Exceptions.uncheck(e);
 		}
+		// className.methodName|parametertypes
 		String methodInfo = originalClass.getName() + "." + m1.getName() + "|" + sb.toString();
 		LOG.debug(methodInfo);
-		m1.insertBefore(String.format(BEFORE, methodInfo));
-		m1.insertBefore(String.format(AFTER, methodInfo));
+		m1.insertBefore(String.format("%s.before(\"%s\");",HANDLER_NAME ,methodInfo));
+		m1.insertBefore(String.format("%s.after(\"%s\");",HANDLER_NAME, methodInfo));
 	}
 	
 }

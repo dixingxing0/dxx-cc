@@ -15,15 +15,24 @@ import org.cc.db.jdbc.JdbcConfig;
 
 /**
  * <p>
+ * aop拦截时执行before 和 after的类（判断并开始和结束事务）
  * </p>
  * 
  * @author dixingxing
  * @date Apr 26, 2012
  */
 @SuppressWarnings("serial")
-public class TxHandler {
+public final class TxHandler {
 	private static TxProvider p = new TxProvider();
 
+	private TxHandler(){}
+	
+	/**
+	 * 
+	 * <p>前置方法</p>
+	 *
+	 * @param methodInfo
+	 */
 	public static void before(String methodInfo) {
 		Method m = getMethod(methodInfo);
 		//判断是否需要开始一个新事务 
@@ -33,6 +42,12 @@ public class TxHandler {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>后置方法</p>
+	 *
+	 * @param methodInfo
+	 */
 	public static void after(String methodInfo) {
 		Method method = getMethod(methodInfo);
 		TxContext context = TxProvider.getContext();
@@ -42,24 +57,28 @@ public class TxHandler {
 		}
 		Transactional tran = getDefinition(method);
 		if (tran == null || tran.readonly()) {
-			TxProvider.rollback(method);
+			p.rollback(method);
 		} else {
-			TxProvider.commit(method);
+			p.commit(method);
 		}
 	}
 
 	/**
 	 * <p>
+	 * 根据methodInfo创建java.lang.reflect.Method
 	 * </p>
 	 * 
 	 * @param method
 	 */
 	private static Method getMethod(String method) {
 //		LOG.debug("method info : " + method);
+		// 参数类型
 		String desc = method.substring(method.indexOf('|') + 1);
-		method = method.substring(0,method.indexOf('|'));
-		String clazz = method.substring(0, method.lastIndexOf('.'));
-		String name = method.substring(method.lastIndexOf('.') + 1);
+		String temp= method.substring(0,method.indexOf('|'));
+		// 类名
+		String clazz = temp.substring(0, temp.lastIndexOf('.'));
+		// 方法名
+		String name = temp.substring(temp.lastIndexOf('.') + 1);
 //		LOG.debug(String.format("clazz : %s,name : %s,desc : %s", clazz, name,desc));
 		Method m = null;
 		try {

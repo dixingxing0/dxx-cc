@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.cc.core.common.Exceptions;
-import org.cc.db.jdbc.ConnectionProvider;
 import org.cc.db.transaction.Provider;
 
 /**
@@ -42,32 +41,33 @@ public class TxProvider implements Provider {
 		return holder.get() == null || holder.get().current() == null;
 	}
 	
-	public Connection getConnection() {
-		return getConn();
-	}
-	
-	protected static  TxContext getContext() {
-		TxContext context = holder.get();
-		return context;
-	}
-	
 	/**
-	 * 
 	 * <p>获取{@link #holder}中的数据库连接</p>
-	 *
+	 * 
 	 * @return
+	 * @see org.cc.db.transaction.Provider#getConnection()
 	 */
-	public static Connection getConn() {
-		TxContext context =holder.get();
+	public Connection getConnection() {
+		TxContext context = getContext();
 		if(context == null || context.isEmpty()) {
 			return null;
 		}
 		// 取第一个连接TODO此处假设没有嵌套事务
 		return context.current();
 	}
-
+	
+	/**
+	 * 
+	 * <p>holder.get()</p>
+	 *
+	 * @return
+	 */
+	protected static TxContext getContext() {
+		return holder.get();
+	}
+	
 	public boolean hasConn(Connection conn) {
-		TxContext context = holder.get();
+		TxContext context = getContext();
 		return context != null && context.contains(conn);
 	}
 
@@ -108,8 +108,8 @@ public class TxProvider implements Provider {
 	 *
 	 * @param m
 	 */
-	public static void rollback(Method m) {
-		Connection conn = getConn();
+	public void rollback(Method m) {
+		Connection conn = getConnection();
 		if (conn != null) {
 			try {
 				LOG.debug(String.format("结束事务(%s - %s)：开始回滚事务", m.getName(),m.getDeclaringClass()));
@@ -128,8 +128,8 @@ public class TxProvider implements Provider {
 	 *
 	 * @param m
 	 */
-	public static void commit(Method m) {
-		Connection conn = getConn();
+	public void commit(Method m) {
+		Connection conn = getConnection();
 		if (conn != null) {
 			try {
 				LOG.debug(String.format("结束事务(%s - %s)：开始提交事务",m.getName(), m.getDeclaringClass()));
@@ -147,13 +147,11 @@ public class TxProvider implements Provider {
 	 * <p>手动提交事务</p>
 	 *
 	 */
-	protected static void commitCurrent() {
-		TxContext context = holder.get();
-		if(context == null || !context.hasManualTx()) {
-			LOG.warn(String.format("没有手动开始的事务，不能进行commit"));
+	protected void commitCurrent() {
+		if(!hasManualTx()) {
 			return;
 		}
-		Connection conn = getConn();
+		Connection conn = getConnection();
 		if (conn != null) {
 			try {
 				conn.commit();
@@ -168,16 +166,30 @@ public class TxProvider implements Provider {
 	
 	/**
 	 * 
+	 * <p>判断是否有手动开始的事务</p>
+	 *
+	 * @return
+	 */
+	private static boolean hasManualTx() {
+		TxContext context = holder.get();
+		if(context == null || !context.hasManualTx()) {
+			LOG.warn(String.format("没有手动开始的事务，不能手动进行commit/rollback"));
+			return false;
+		}
+		return true;
+	}
+	
+	
+	/**
+	 * 
 	 * <p>手动回滚事务</p>
 	 *
 	 */
-	protected static void rollbackCurrent() {
-		TxContext context = holder.get();
-		if(context == null || !context.hasManualTx()) {
-			LOG.warn(String.format("没有手动开始的事务，不能进行rollback"));
+	protected void rollbackCurrent() {
+		if(!hasManualTx()) {
 			return;
 		}
-		Connection conn = getConn();
+		Connection conn = getConnection();
 		if (conn != null) {
 			try {
 				conn.commit();
@@ -195,7 +207,7 @@ public class TxProvider implements Provider {
 	 * 
 	 * @param conn
 	 */
-	private static void closeAndRemove(Connection conn) {
+	private void closeAndRemove(Connection conn) {
 		try {
 			conn.close();
 			remove();
@@ -210,7 +222,7 @@ public class TxProvider implements Provider {
 	 * 
 	 * @param m
 	 */
-	private static void remove() {
+	private void remove() {
 		TxContext context = holder.get();
 		if(context == null) {
 			return;

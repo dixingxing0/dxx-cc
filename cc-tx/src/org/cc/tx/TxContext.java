@@ -29,13 +29,14 @@ public class TxContext {
 	/**
 	 * 
 	 * <p>简单堆栈LIFO</p>
-	 * 
+	 * <li>最多放入10个connections
 	 * @author dixingxing	
 	 * @date Apr 28, 2012
 	 */
 	static class TranStack {
+		private static final int MAX_CONN_SIZE = 10;
 		private int top = -1;
-		private Connection[] conns = new Connection[10];
+		private Connection[] conns = new Connection[MAX_CONN_SIZE];
 		
 		void push(Connection conn) {
 			conns[++top] = conn;

@@ -8,7 +8,7 @@ package org.cc.tx.aop.asm;
 import static org.junit.Assert.assertEquals;
 
 import org.cc.core.common.ReflectUtils;
-import org.cc.tx.aop.common.AopFactory;
+import org.cc.tx.aop.AopFactory;
 import org.cc.tx.fortest.RoleService;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class AsmFactoryTest {
 
 	/**
 	 * Test method for
-	 * {@link org.cc.tx.aop.common.AopFactory#proxy(java.lang.Object)}.
+	 * {@link org.cc.tx.aop.AopFactory#proxy(java.lang.Object)}.
 	 * @throws NoSuchFieldException 
 	 * @throws SecurityException 
 	 */

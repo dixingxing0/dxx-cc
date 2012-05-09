@@ -5,7 +5,6 @@
  */
 package org.cc.tx;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 
@@ -22,9 +21,12 @@ import org.cc.core.CcException;
  * @author dixingxing
  * @date Apr 25, 2012
  */
-public class TxUtils {
+public final class TxUtils {
 	private static final Logger LOG = Logger.getLogger(TxUtils.class);
 	
+	private static TxProvider p = new TxProvider();
+	
+	private TxUtils() {}
 	/**
 	 * 
 	 * <p>如果当前没有开始事务则抛出异常</p>
@@ -58,7 +60,7 @@ public class TxUtils {
 	public static void commit() {
 		LOG.debug("--- 手动提交事务 ---");
 		check();
-		TxProvider.commitCurrent();
+		p.commitCurrent();
 	}
 	
 	/**
@@ -69,7 +71,7 @@ public class TxUtils {
 	public static void rollback() {
 		LOG.debug("--- 手动回滚事务 ---");
 		check();
-		TxProvider.rollbackCurrent();
+		p.rollbackCurrent();
 	}
 	
 	/**

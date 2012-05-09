@@ -19,7 +19,7 @@ import org.cc.core.common.Exceptions;
  * @author dixingxing
  * @date Apr 20, 2012
  */
-public class Classes {
+public final class Classes {
 	private Classes() {}
 
 	/**
@@ -72,8 +72,9 @@ public class Classes {
 			cc = pool.get(clazz.getName());
 
 			String[] paramTypeNames = new String[paramTypes.length];
-			for (int i = 0; i < paramTypes.length; i++)
+			for (int i = 0; i < paramTypes.length; i++) {
 				paramTypeNames[i] = paramTypes[i].getName();
+			}
 
 			cm = cc.getDeclaredMethod(method, pool.get(paramTypeNames));
 		} catch (NotFoundException e) {
@@ -105,16 +106,6 @@ public class Classes {
 			Exceptions.uncheck(e);
 		}
 		return getMethodParamNames(cm);
-	}
-
-	/**
-	 * 
-	 * <p>for test</p>
-	 *
-	 * @param args
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception {
 	}
 
 	/**

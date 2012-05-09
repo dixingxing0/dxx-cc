@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 
 import org.cc.core.common.ReflectUtils;
 import org.cc.ioc.Decorator;
-import org.cc.tx.aop.common.Aops;
+import org.cc.tx.aop.Aops;
 
 /**
  * 
@@ -33,8 +33,7 @@ public class TxDecorator implements Decorator{
 		if(!isTransactional(obj)) {
 			return (T) obj;
 		}
-		T enhanced = (T) Aops.proxy(obj);
-		return enhanced;
+		return (T) Aops.proxy(obj);
 	}
 	
 	/**

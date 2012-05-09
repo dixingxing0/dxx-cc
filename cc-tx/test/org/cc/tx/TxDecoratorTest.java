@@ -6,9 +6,11 @@
 package org.cc.tx;
 
 
+import org.cc.ioc.test.IocJunit4Runner;
 import org.cc.tx.TxDecorator;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * 
@@ -16,6 +18,7 @@ import org.junit.Test;
  * @author dixingxing	
  * @date Apr 12, 2012
  */
+@RunWith(IocJunit4Runner.class)
 public class TxDecoratorTest {
 	private TxDecorator decorator = new TxDecorator();
 	/**

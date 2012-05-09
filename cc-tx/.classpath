@@ -10,5 +10,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/cc-db"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cc-ioc"/>
 	<classpathentry kind="var" path="M2_REPO/javassist/javassist/3.12.1.GA/javassist-3.12.1.GA.jar" sourcepath="/javassit_source"/>
+	<classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

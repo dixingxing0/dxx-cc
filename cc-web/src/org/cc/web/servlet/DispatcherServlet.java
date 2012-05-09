@@ -3,7 +3,7 @@
  *
  * Copyright(c) 2000-2012 HC360.COM, All Rights Reserved.
  */
-package org.cc.web;
+package org.cc.web.servlet;
 
 import java.io.IOException;
 
@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.cc.web.WebConfig;
+import org.cc.web.WebMethod;
 import org.cc.web.binding.Binder;
+import org.cc.web.binding.BindUtils;
 import org.cc.web.context.WebContext;
 
 
@@ -27,7 +30,7 @@ import org.cc.web.context.WebContext;
 public class DispatcherServlet extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(DispatcherServlet.class);
 
-	private Binder binder = WebConfig.getBinder();
+	private Binder binder = BindUtils.getBinder();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -66,6 +69,7 @@ public class DispatcherServlet extends HttpServlet {
 	 * @param e
 	 */
 	protected void exceptionOccured(WebMethod webMethod, long start, Throwable e) {
+		e.printStackTrace();
 		LOG.error(e);
 	}
 

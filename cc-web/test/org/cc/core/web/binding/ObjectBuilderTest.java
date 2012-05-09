@@ -5,12 +5,12 @@
  */
 package org.cc.core.web.binding;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.cc.web.WebConfig;
+import org.cc.web.binding.BindUtils;
 import org.cc.web.binding.ObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class ObjectBuilderTest {
 	
 	@Before
 	public void setUp() {
-		objectBuilder = WebConfig.getObjectBuilder();
+		objectBuilder = BindUtils.getObjectBuilder();
 	}
 
 	/**

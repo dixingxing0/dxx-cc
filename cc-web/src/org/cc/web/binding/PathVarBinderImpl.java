@@ -8,7 +8,6 @@ package org.cc.web.binding;
 import java.lang.annotation.Annotation;
 
 import org.apache.log4j.Logger;
-import org.cc.web.WebConfig;
 import org.cc.web.WebMethod;
 import org.cc.web.annotation.PathVar;
 
@@ -21,7 +20,7 @@ import org.cc.web.annotation.PathVar;
 public final class PathVarBinderImpl implements PathVarBinder{
 	private static final Logger LOG = Logger.getLogger(PathVarBinderImpl.class);
 
-	private ObjectBuilder objectBuilder = WebConfig.getObjectBuilder();
+	private ObjectBuilder objectBuilder = BindUtils.getObjectBuilder();
 	/**
 	 * 参数是否标注了PathVar注解
 	 * 

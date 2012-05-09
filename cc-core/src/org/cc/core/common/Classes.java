@@ -111,6 +111,25 @@ public final class Classes {
 		}, 0);
 		return paramNames;
 	}
+	
+	/**
+	 * 
+	 * <p>根据类名获取类的实例</p>
+	 *
+	 * @param <T>
+	 * @param className
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T newInstance(String className) {
+		T obj = null;
+		try {
+			obj = (T) Class.forName(className).newInstance();
+		} catch (Exception e) {
+			Exceptions.uncheck(e);
+		}
+		return obj;
+	}
 
 	public static void main(String[] args) throws SecurityException,
 			NoSuchMethodException {
